@@ -42,7 +42,7 @@ Compass cmps;
 void setup() {
     Serial.begin(9600);
     us.init();
-    cmps.init();
+    //cmps.init();
 }
 
 //###################################################################################################
@@ -58,6 +58,6 @@ void setup() {
 void loop() {
     us.update();
    // cmps.update();
-    Serial.println(100);
+    Serial.println(us.back());
 
 }

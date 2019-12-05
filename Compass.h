@@ -11,7 +11,7 @@ class Compass
     public:
         Compass();
         void init();
-        float angle();
+        float getAngle();
         void update();
     private:
         const int ardess = COMPASS_ADRESS;
