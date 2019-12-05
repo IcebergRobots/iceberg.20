@@ -16,13 +16,13 @@ Compass::Compass() {
 
 void Compass::init() {
   Wire.begin();
-  this->update();
+  Wire.beginTransmission(COMPASS_ADRESS);
+  Wire.write(ANGLE_8);                     //Sends the register we wish to start reading from
+  Wire.endTransmission();
 }
 
 void Compass::update() {
-  Wire.beginTransmission(COMPASS_ADRESS);  //starts communication with CMPS12
-  Wire.write(ANGLE_8);                     //Sends the register we wish to start reading from
-  Wire.endTransmission();
+  
 
   // Request 5 bytes from the CMPS12
   // this will give us the 8 bit bearing,
@@ -44,6 +44,6 @@ void Compass::update() {
   richtung = (float)angle16 / (float)10;
 }
 
-float Compass::angle() {
+float Compass::getAngle() {
   return richtung;
 }

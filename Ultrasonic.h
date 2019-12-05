@@ -1,7 +1,7 @@
 //Datasheet: http://coecsl.ece.illinois.edu/ge423/DevantechSRF08UltraSonicRanger.pdf
 
-#ifndef Ultrasonic_h // was ist ifndef
-#define Ultrasonic_h  //wozu sind diese 2 zeilen
+#ifndef Ultrasonic_h
+#define Ultrasonic_h 
 
 #include "Config.h"
 
