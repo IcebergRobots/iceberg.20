@@ -1,13 +1,13 @@
-#ifndef Pilot_hpp
-#define Pilot_hpp
+#ifndef Chassis_h
+#define Chassis_h
 
-#include "Config.hpp"
+#include "Config.h"
 
-class Pilot
+class Chassis
 {
   public:
-    Pilot();
-    Pilot(byte angle);
+    Chassis();
+    Chassis(byte angle);
 
     void setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens);
     void setAngle(byte angle);

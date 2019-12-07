@@ -1,12 +1,12 @@
-#include "Pilot.hpp"
+#include "Chassis.h"
 
-// Implementierung: OBJEKTE
-extern Display d;
-extern Player p;
-extern Led led;
-extern Mate mate;
-//extern Pilot m;
-extern Ultrasonic us;
+// // Implementierung: OBJEKTE
+// extern Display d;
+// extern Player p;
+// extern Led led;
+// extern Mate mate;
+// //extern Chassis m;
+// extern Ultrasonic us;
 
 // array auslesen ist schneller als berechnen
 const int sinus[360] = {0, 175, 349, 523, 698, 872, 1045, 1219, 1392, 1564, 1736, 1908, 2079, 2250, 2419, 2588, 2756, 2924, 3090, 3256, 3420, 3584, 3746, 3907, 4067, 4226, 4384, 4540, 4695, 4848, 5000, 5150, 5299, 5446, 5592, 5736, 5878, 6018, 6157, 6293, 6428, 6561, 6691, 6820, 6947, 7071, 7193, 7314, 7431, 7547, 7660, 7771, 7880, 7986, 8090, 8192, 8290, 8387, 8480, 8572, 8660, 8746, 8829, 8910, 8988, 9063, 9135, 9205, 9272, 9336, 9397, 9455, 9511, 9563, 9613, 9659, 9703, 9744, 9781, 9816, 9848, 9877, 9903, 9925, 9945, 9962, 9976, 9986, 9994, 9998, 10000, 9998, 9994, 9986, 9976, 9962, 9945, 9925, 9903, 9877, 9848, 9816, 9781, 9744, 9703, 9659, 9613, 9563, 9511, 9455, 9397, 9336, 9272, 9205, 9135, 9063, 8988, 8910, 8829, 8746, 8660, 8572, 8480, 8387, 8290, 8192, 8090, 7986, 7880, 7771, 7660, 7547, 7431, 7314, 7193, 7071, 6947, 6820, 6691, 6561, 6428, 6293, 6157, 6018, 5878, 5736, 5592, 5446, 5299, 5150, 5000, 4848, 4695, 4540, 4384, 4226, 4067, 3907, 3746, 3584, 3420, 3256, 3090, 2924, 2756, 2588, 2419, 2250, 2079, 1908, 1736, 1564, 1392, 1219, 1045, 872, 698, 523, 349, 175, 0, -175, -349, -523, -698, -872, -1045, -1219, -1392, -1564, -1736, -1908, -2079, -2250, -2419, -2588, -2756, -2924, -3090, -3256, -3420, -3584, -3746, -3907, -4067, -4226, -4384, -4540, -4695, -4848, -5000, -5150, -5299, -5446, -5592, -5736, -5878, -6018, -6157, -6293, -6428, -6561, -6691, -6820, -6947, -7071, -7193, -7314, -7431, -7547, -7660, -7771, -7880, -7986, -8090, -8192, -8290, -8387, -8480, -8572, -8660, -8746, -8829, -8910, -8988, -9063, -9135, -9205, -9272, -9336, -9397, -9455, -9511, -9563, -9613, -9659, -9703, -9744, -9781, -9816, -9848, -9877, -9903, -9925, -9945, -9962, -9976, -9986, -9994, -9998, -10000, -9998, -9994, -9986, -9976, -9962, -9945, -9925, -9903, -9877, -9848, -9816, -9781, -9744, -9703, -9659, -9613, -9563, -9511, -9455, -9397, -9336, -9272, -9205, -9135, -9063, -8988, -8910, -8829, -8746, -8660, -8572, -8480, -8387, -8290, -8192, -8090, -7986, -7880, -7771, -7660, -7547, -7431, -7314, -7193, -7071, -6947, -6820, -6691, -6561, -6428, -6293, -6157, -6018, -5878, -5736, -5592, -5446, -5299, -5150, -5000, -4848, -4695, -4540, -4384, -4226, -4067, -3907, -3746, -3584, -3420, -3256, -3090, -2924, -2756, -2588, -2419, -2250, -2079, -1908, -1736, -1564, -1392, -1219, -1045, -872, -698, -523, -349, -175};
@@ -14,7 +14,7 @@ const int sinus[360] = {0, 175, 349, 523, 698, 872, 1045, 1219, 1392, 1564, 1736
 /*****************************************************
   setze Achsenwinkel auf 70°
 *****************************************************/
-Pilot::Pilot() {
+Chassis::Chassis() {
   _angle = 70;
   _motEn = false;
 }
@@ -23,7 +23,7 @@ Pilot::Pilot() {
   setze Achsenwinkel
   @param angle: Achsenwinkel
 *****************************************************/
-Pilot::Pilot(byte angle) {
+Chassis::Chassis(byte angle) {
   _angle = angle;
   _motEn = false;
 }
@@ -35,7 +35,7 @@ Pilot::Pilot(byte angle) {
   @param bwd: Pin für Rückwärtsdrehung
   @param pwm: Pin für Geschwindigkeit
 *****************************************************/
-void Pilot::setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens) {
+void Chassis::setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens) {
   if (id < 0 || id > 3) { // ungueltige Eingabe
     return;
   }
@@ -55,7 +55,7 @@ void Pilot::setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens) {
   setze den Winkel zwischen zwei Motoren einer Seite (Achsenwinkel)
   @param angle: Achsenwinkel
 *****************************************************/
-void Pilot::setAngle(byte angle) {
+void Chassis::setAngle(byte angle) {
   _angle = angle % 180;
 }
 
@@ -70,7 +70,7 @@ void Pilot::setAngle(byte angle) {
   1 \    / 2
      '--'
 *****************************************************/
-void Pilot::steerMotor(byte id, int power) {
+void Chassis::steerMotor(byte id, int power) {
   if (_motEn) {
     if (id < 0 || id > 3) {     //Eingabeueberpruefung
       return;
@@ -97,15 +97,15 @@ void Pilot::steerMotor(byte id, int power) {
      \    /
       '--'
 *****************************************************/
-void Pilot::drive(int angle, int power, int rotation) {
+void Chassis::drive(int angle, int power, int rotation) {
   calculate(angle, power, rotation);
   drive();
 }
-void Pilot::drive(int angle, int power) {
+void Chassis::drive(int angle, int power) {
   calculate(angle, power);
   drive();
 }
-void Pilot::drive() {
+void Chassis::drive() {
   drive(_values);
 }
 
@@ -114,7 +114,7 @@ void Pilot::drive() {
   @param values: Zwischenspeicher
   - nutze Berechnungen des Zwischenspeichers
 *****************************************************/
-void Pilot::drive(int values[]) {
+void Chassis::drive(int values[]) {
   for (int i = 0; i < 4; i++) {
     steerMotor(i, values[i]);
   }
@@ -127,7 +127,7 @@ void Pilot::drive(int values[]) {
   @param power [-255 bis 255]: Geschwindigkeit
   @param (optional) rotation [-255 bis 255]: Eigenrotation -> Korrekturdrehung, um wieder zum Gegnertor ausgerichtet zu sein
 *****************************************************/
-void Pilot::calculate(int angle, int power, int rotation) {
+void Chassis::calculate(int angle, int power, int rotation) {
   driveDirection = angle;   // setze die Displaywerte
   drivePower = power;       // setze die Displaywerte
   driveRotation = rotation; // setze die Displaywerte
@@ -161,7 +161,7 @@ void Pilot::calculate(int angle, int power, int rotation) {
   _values[2] = axis02 + rotation;
   _values[3] = axis13 + rotation;
 }
-void Pilot::calculate(int angle, int power) {
+void Chassis::calculate(int angle, int power) {
   calculate(angle, power, 0);
 }
 
@@ -171,7 +171,7 @@ void Pilot::calculate(int angle, int power) {
   bremse aktiv oder passiv alle Motoren
   @param activ: aktives Bremsen?
 *****************************************************/
-void Pilot::brake(bool activ) {
+void Chassis::brake(bool activ) {
   drivePower = 0;     // setze die Displaywerte
   driveRotation = 0;  // setze die Displaywerte
 
@@ -182,22 +182,16 @@ void Pilot::brake(bool activ) {
   }
 }
 
-void Pilot::setMotEn(bool motEn) {
+void Chassis::setMotEn(bool motEn) {
   if (_motEn != motEn) {
     _motEn = motEn;
-    if (motEn) {
-      p.setRusher(true);
-      p.setKeeper(true);
-    } else {
-      brake(true);
-    }
   }
 }
 
-void Pilot::switchMotEn() {
+void Chassis::switchMotEn() {
   setMotEn(!_motEn);
 }
 
-bool Pilot::getMotEn() {
+bool Chassis::getMotEn() {
   return _motEn;
 }
