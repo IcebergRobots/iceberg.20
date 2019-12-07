@@ -15,7 +15,6 @@ Compass::Compass() {
 }
 
 void Compass::init() {
-  Wire.begin();
   Wire.beginTransmission(COMPASS_ADRESS);
   Wire.write(ANGLE_8);                     //Sends the register we wish to start reading from
   Wire.endTransmission();
