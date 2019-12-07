@@ -14,7 +14,8 @@ const int sinus[360] = {0, 175, 349, 523, 698, 872, 1045, 1219, 1392, 1564, 1736
 /*****************************************************
   setze Achsenwinkel auf 70°
 *****************************************************/
-Chassis::Chassis() {
+Chassis::Chassis()
+{
   _angle = 70;
   _motEn = false;
 }
@@ -23,9 +24,19 @@ Chassis::Chassis() {
   setze Achsenwinkel
   @param angle: Achsenwinkel
 *****************************************************/
-Chassis::Chassis(byte angle) {
+Chassis::Chassis(byte angle)
+{
   _angle = angle;
   _motEn = false;
+}
+
+void Chassis::init()
+{
+  this->setPins(0, FWD0, BWD0, PWM0, M0_CURR);
+  this->setPins(1, FWD1, BWD1, PWM1, M1_CURR);
+  this->setPins(2, FWD2, BWD2, PWM2, M2_CURR);
+  this->setPins(3, FWD3, BWD3, PWM3, M3_CURR);
+  this->setMotEn(true);
 }
 
 /*****************************************************
@@ -35,18 +46,20 @@ Chassis::Chassis(byte angle) {
   @param bwd: Pin für Rückwärtsdrehung
   @param pwm: Pin für Geschwindigkeit
 *****************************************************/
-void Chassis::setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens) {
-  if (id < 0 || id > 3) { // ungueltige Eingabe
+void Chassis::setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens)
+{
+  if (id < 0 || id > 3)
+  { // ungueltige Eingabe
     return;
   }
 
-  _fwd[id] = fwd;         // speichere Pins
+  _fwd[id] = fwd; // speichere Pins
   _bwd[id] = bwd;
   _pwm[id] = pwm;
 
   _curSens[id] = curSens;
 
-  pinMode(fwd, OUTPUT);   // definiere Pins als Output
+  pinMode(fwd, OUTPUT); // definiere Pins als Output
   pinMode(bwd, OUTPUT);
   pinMode(pwm, OUTPUT);
 }
@@ -55,7 +68,8 @@ void Chassis::setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens) {
   setze den Winkel zwischen zwei Motoren einer Seite (Achsenwinkel)
   @param angle: Achsenwinkel
 *****************************************************/
-void Chassis::setAngle(byte angle) {
+void Chassis::setAngle(byte angle)
+{
   _angle = angle % 180;
 }
 
@@ -70,13 +84,16 @@ void Chassis::setAngle(byte angle) {
   1 \    / 2
      '--'
 *****************************************************/
-void Chassis::steerMotor(byte id, int power) {
-  if (_motEn) {
-    if (id < 0 || id > 3) {     //Eingabeueberpruefung
+void Chassis::steerMotor(byte id, int power)
+{
+  if (_motEn)
+  {
+    if (id < 0 || id > 3)
+    { //Eingabeueberpruefung
       return;
     }
 
-    power = min(255, power);    //Eingabekorrektur
+    power = min(255, power); //Eingabekorrektur
     power = max(-255, power);
 
     digitalWrite(_fwd[id], power > 0);  //drehe Motor vorwarts
@@ -97,15 +114,18 @@ void Chassis::steerMotor(byte id, int power) {
      \    /
       '--'
 *****************************************************/
-void Chassis::drive(int angle, int power, int rotation) {
+void Chassis::drive(int angle, int power, int rotation)
+{
   calculate(angle, power, rotation);
   drive();
 }
-void Chassis::drive(int angle, int power) {
+void Chassis::drive(int angle, int power)
+{
   calculate(angle, power);
   drive();
 }
-void Chassis::drive() {
+void Chassis::drive()
+{
   drive(_values);
 }
 
@@ -114,12 +134,13 @@ void Chassis::drive() {
   @param values: Zwischenspeicher
   - nutze Berechnungen des Zwischenspeichers
 *****************************************************/
-void Chassis::drive(int values[]) {
-  for (int i = 0; i < 4; i++) {
+void Chassis::drive(int values[])
+{
+  for (int i = 0; i < 4; i++)
+  {
     steerMotor(i, values[i]);
   }
 }
-
 
 /*****************************************************
   berechne Zwischenspeicher für Motoransteuerung
@@ -127,24 +148,28 @@ void Chassis::drive(int values[]) {
   @param power [-255 bis 255]: Geschwindigkeit
   @param (optional) rotation [-255 bis 255]: Eigenrotation -> Korrekturdrehung, um wieder zum Gegnertor ausgerichtet zu sein
 *****************************************************/
-void Chassis::calculate(int angle, int power, int rotation) {
+void Chassis::calculate(int angle, int power, int rotation)
+{
   driveDirection = angle;   // setze die Displaywerte
   drivePower = power;       // setze die Displaywerte
   driveRotation = rotation; // setze die Displaywerte
 
-  if (power < 0) {      //bei negativen Geschwindigkeiten,
-    power = -power;     //positive Geschwindigkeit
-    angle += 180;       //bei 180° Drehung verwenden
+  if (power < 0)
+  {                 //bei negativen Geschwindigkeiten,
+    power = -power; //positive Geschwindigkeit
+    angle += 180;   //bei 180° Drehung verwenden
   }
 
   power = constrain(power, 0, 255);
 
-  while (angle < 0) {   //Eingabekorrektur
-    angle += 360;       //
-  }                     //
-  angle %= 360;         //
+  while (angle < 0)
+  {               //Eingabekorrektur
+    angle += 360; //
+  }               //
+  angle %= 360;   //
 
-  if (power + abs(rotation) > 255) {        //Wenn die Gesamtgeschwindigkeit zu groß ist,
+  if (power + abs(rotation) > 255)
+  {                                         //Wenn die Gesamtgeschwindigkeit zu groß ist,
     power -= (power + abs(rotation)) - 255; //wird die Geschwindigkeit ausreichend reduziert
   }
 
@@ -155,43 +180,42 @@ void Chassis::calculate(int angle, int power, int rotation) {
   int axis02 = power * (double)sinA02 / 10000; //berechne Motorstärken für Achse 1&3
   int axis13 = power * (double)sinA13 / 10000; //berechne Motorstärken für Achse 2&4
 
-
-  _values[0] = axis02 - rotation;       //erstelle Zwischenspeicher für alle Motorstärken
+  _values[0] = axis02 - rotation; //erstelle Zwischenspeicher für alle Motorstärken
   _values[1] = axis13 - rotation;
   _values[2] = axis02 + rotation;
   _values[3] = axis13 + rotation;
 }
-void Chassis::calculate(int angle, int power) {
+void Chassis::calculate(int angle, int power)
+{
   calculate(angle, power, 0);
 }
-
-
 
 /*****************************************************
   bremse aktiv oder passiv alle Motoren
   @param activ: aktives Bremsen?
 *****************************************************/
-void Chassis::brake(bool activ) {
-  drivePower = 0;     // setze die Displaywerte
-  driveRotation = 0;  // setze die Displaywerte
+void Chassis::brake(bool activ)
+{
+  drivePower = 0;    // setze die Displaywerte
+  driveRotation = 0; // setze die Displaywerte
 
-  for (byte i = 0; i < 4; i++) {
+  for (byte i = 0; i < 4; i++)
+  {
     digitalWrite(_fwd[i], activ);
     digitalWrite(_bwd[i], activ);
     analogWrite(_pwm[i], 255);
   }
 }
 
-void Chassis::setMotEn(bool motEn) {
-  if (_motEn != motEn) {
+void Chassis::setMotEn(bool motEn)
+{
+  if (_motEn != motEn)
+  {
     _motEn = motEn;
   }
 }
 
-void Chassis::switchMotEn() {
-  setMotEn(!_motEn);
-}
-
-bool Chassis::getMotEn() {
+bool Chassis::getMotEn()
+{
   return _motEn;
 }
