@@ -51,7 +51,7 @@
 
      int Ultrasonic::frontLeft() { return distance[0]; }
      int Ultrasonic::left() { return distance[1]; }
-     int Ultrasonic::back() {distance[2] = 100; return distance[2]; }
+     int Ultrasonic::back() { return distance[2]; }
      int Ultrasonic::right() { return distance[3]; }
      int Ultrasonic::frontRight() { return distance[4]; }
      int Ultrasonic::front() { return min(frontLeft(), frontRight()); }
