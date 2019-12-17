@@ -20,7 +20,9 @@ public:
     void update();
 
     int getValue();
-    int getTheshold();
+    int getThreshold();
+    int getNoBallThreshold();
+    int getBallThreshold();
     bool hasBall();
 
 private:

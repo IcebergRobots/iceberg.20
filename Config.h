@@ -4,6 +4,7 @@
 #include "Ultrasonic.h"
 #include "Compass.h"
 #include "Chassis.h"
+#include "BallTouch.h"
 
 // Implementierung: FAHREN
 extern bool start, onLine, isHeadstart, isAvoidMate, isKeeperLeft, wasMotor, wasStart;

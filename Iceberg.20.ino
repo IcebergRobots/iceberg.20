@@ -29,6 +29,7 @@
 Ultrasonic us;
 Compass cmps;
 Chassis m;
+BallTouch ballTouch;
 
 
 //###################################################################################################
@@ -51,6 +52,8 @@ int driveOrientation = 0;           // [-180 bis 180] Ziel-Orientierungswinkel
 void setup() {
     Serial.begin(9600);
       Wire.begin();
+      ballTouch.init();
+      ballTouch.calibrate();
      // m.setAngle(70);
 
 
@@ -70,8 +73,11 @@ void setup() {
 
 void loop() {
     us.update();
+    ballTouch.update();
+    Serial.println(ballTouch.hasBall());
+    //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
 //m.drive(90,40);
    // cmps.update();
-    Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
+   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
 
 }

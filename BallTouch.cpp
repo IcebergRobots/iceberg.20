@@ -15,12 +15,13 @@ void BallTouch::calibrate()
     _counter = 0;
     _summe = 0;
     //without Ball
-    while (_counter < 10)
+    while (_counter < 20)
     {
 
         if (_state == LED_ON && millis() - _onTimer > 10)
         {
             turnOff();
+            _counter++;
             calculate();
             _summe += _value;
         }
@@ -28,35 +29,44 @@ void BallTouch::calibrate()
         {
             turnOn();
         }
-        _counter++;
     }
-    _thresholdNoBall = _summe / 10;
+    _thresholdNoBall = _summe / 20;
+
     //as long no display, visual message to calibrate with ball todo
     _counter = 0;
     _summe = 0;
+
     while (millis() - _onTimer < 5000)
     {
         digitalWrite(LED_PIN, HIGH);
     }
-
-        //with ball
-    while (_counter < 10)
+    digitalWrite(LED_PIN, LOW);
+    _state == LED_OFF;
+    //with ball
+    while (_counter < 20)
     {
 
         if (_state == LED_ON && millis() - _onTimer > 10)
         {
             turnOff();
+            _counter++;
+            calculate();
+            _summe += _value;
         }
         else if (_state == LED_OFF && millis() - _offTimer > 10)
         {
             turnOn();
-            calculate();
-            _summe += _value;
         }
-        _counter++;
     }
-    _thresholdBall = _summe / 10;
-    _threshold = (_thresholdBall + _thresholdNoBall) /2;
+    _thresholdBall = _summe / 20;
+    _threshold = (_thresholdBall + _thresholdNoBall) / 2;
+    
+    while (millis() - _onTimer < 2000)
+    {
+        digitalWrite(LED_PIN, HIGH);
+    }
+    digitalWrite(LED_PIN, LOW);
+    _state == LED_OFF;
 }
 
 void BallTouch::update()
@@ -73,14 +83,10 @@ void BallTouch::update()
     }
 }
 
-int BallTouch::getValue()
-{
-    return _value;
-}
-
-int BallTouch::getTheshold() {
-    return _threshold;
-}
+int BallTouch::getValue() { return _value; }
+int BallTouch::getThreshold() { return _threshold; }
+int BallTouch::getBallThreshold() { return _thresholdBall; }
+int BallTouch::getNoBallThreshold() { return _thresholdNoBall; }
 
 bool BallTouch::hasBall()
 {
