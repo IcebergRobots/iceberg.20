@@ -28,6 +28,8 @@
 #include "Config.h"
 Ultrasonic us;
 Compass cmps;
+Chassis m;
+
 
 //###################################################################################################
 //##                                                                                               ##
@@ -39,9 +41,20 @@ Compass cmps;
 //##                                                                                               ##
 //###################################################################################################
 
+
+
+int drivePower = 0;                 // [-255 bis 255] aktuelle maximale Motorstärke
+int driveRotation = 0;              // [-255 bis 255] aktuelle Rotationsstärke
+int driveDirection = 0;             // [-180 bis 180] Ziel-Fahrrichtung
+int driveOrientation = 0;           // [-180 bis 180] Ziel-Orientierungswinkel
+
 void setup() {
     Serial.begin(9600);
-    us.init();
+      Wire.begin();
+      m.setAngle(70);
+
+
+    //us.init();
     //cmps.init();
 }
 
@@ -56,8 +69,9 @@ void setup() {
 //###################################################################################################
 
 void loop() {
-    us.update();
+    //us.update();
+m.drive(90,40);
    // cmps.update();
-    Serial.println(us.back());
+   // Serial.println((String)us.frontLeft() + " | " + us.left() + " | " + us.back() + " | " + us.right() + " | " + us.frontRight());
 
 }

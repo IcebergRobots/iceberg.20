@@ -1,3 +1,5 @@
+//https://www.robot-electronics.co.uk/files/cmps12.pdf
+
 #ifndef Compass_h
 #define Compass_h
 

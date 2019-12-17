@@ -33,7 +33,7 @@ private:
     bool fetched = true;
 
     unsigned long lastMeasurement = 0;
-    const byte addresses[NUM_OF_US] = {FRONT_LEFT, LEFT, FRONT_RIGHT, BACK, RIGHT}; //vorher progmen, um im flash und nicht im sram zu speichern, braucht bestimmte funktionen um wert auszulesen, diese wurden nicht benutzt
+    const byte addresses[NUM_OF_US] = {FRONT_LEFT, LEFT, BACK, RIGHT, FRONT_RIGHT}; //vorher progmen, um im flash und nicht im sram zu speichern, braucht bestimmte funktionen um wert auszulesen, diese wurden nicht benutzt
     int distance[NUM_OF_US] = {0, 0, 0, 0, 0};
 };
 #endif
