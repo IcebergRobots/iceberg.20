@@ -51,10 +51,10 @@ int driveOrientation = 0;           // [-180 bis 180] Ziel-Orientierungswinkel
 void setup() {
     Serial.begin(9600);
       Wire.begin();
-      m.setAngle(70);
+     // m.setAngle(70);
 
 
-    //us.init();
+    us.init();
     //cmps.init();
 }
 
@@ -69,9 +69,9 @@ void setup() {
 //###################################################################################################
 
 void loop() {
-    //us.update();
-m.drive(90,40);
+    us.update();
+//m.drive(90,40);
    // cmps.update();
-   // Serial.println((String)us.frontLeft() + " | " + us.left() + " | " + us.back() + " | " + us.right() + " | " + us.frontRight());
+    Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
 
 }
