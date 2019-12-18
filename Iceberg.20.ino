@@ -48,6 +48,7 @@ int drivePower = 0;                 // [-255 bis 255] aktuelle maximale Motorst√
 int driveRotation = 0;              // [-255 bis 255] aktuelle Rotationsst√§rke
 int driveDirection = 0;             // [-180 bis 180] Ziel-Fahrrichtung
 int driveOrientation = 0;           // [-180 bis 180] Ziel-Orientierungswinkel
+unsigned long kickTimer = 2000;
 
 void setup() {
     Serial.begin(9600);
@@ -55,7 +56,8 @@ void setup() {
       ballTouch.init();
       ballTouch.calibrate();
      // m.setAngle(70);
-
+    m.init();
+  startSound();
 
     us.init();
     //cmps.init();
@@ -74,9 +76,12 @@ void setup() {
 void loop() {
     us.update();
     ballTouch.update();
-    Serial.println(ballTouch.hasBall());
+    if (ballTouch.hasBall())
+    {
+      startSound();
+    }
     //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
-//m.drive(90,40);
+m.drive(0,40);
    // cmps.update();
    // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
 

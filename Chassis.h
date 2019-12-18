@@ -3,13 +3,15 @@
 
 #include "Config.h"
 
+#define NUM_OF_M        4
+
 #define FWD0            23
 #define BWD0            25
 #define PWM0            8
 
 #define FWD1            27
 #define BWD1            29
-#define PWM1            9
+#define PWM1            9 
 
 #define FWD2            37
 #define BWD2            35
@@ -28,22 +30,16 @@ class Chassis
 {
   public:
     Chassis();
-    Chassis(byte angle);
 
     void init();
-
-    void setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens);
-    void setAngle(byte angle);
 
     void steerMotor(byte id, int power);
 
     void drive();
     void drive(int values[]);
-    void drive(int angle, int power);
-    void drive(int angle, int power, int rotation);
+    void drive(int angle, int power, int rotation = 0);
 
-    void calculate(int angle, int power);
-    void calculate(int angle, int power, int rotation);
+    void calculate(int angle, int power, int rotation = 0);
 
     void brake(bool activ);
 
@@ -65,6 +61,8 @@ class Chassis
     bool _halfSpeed = false;
 
     int _curr;
+
+    void setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens);
 };
 
 #endif
