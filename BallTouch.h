@@ -3,8 +3,6 @@
 
 #include "Config.h"
 
-#define LED_PIN 47
-#define SENSOR_PIN A15
 #define LED_OFF false
 #define LED_ON true
 

@@ -1,8 +1,8 @@
-#ifndef Utility_cpp
-#define Utility_cpp
+#ifndef Utility_h
+#define Utility_h
 
 #include "Config.h"
 
-void kick();
+void kick();            //wie funktioniert das bei Antons program?
 void startSound();
 #endif

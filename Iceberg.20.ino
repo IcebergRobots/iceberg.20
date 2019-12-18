@@ -31,7 +31,6 @@ Compass cmps;
 Chassis m;
 BallTouch ballTouch;
 
-
 //###################################################################################################
 //##                                                                                               ##
 //##    ####   ######  ######  ##  ##  #####                                                       ##
@@ -42,25 +41,24 @@ BallTouch ballTouch;
 //##                                                                                               ##
 //###################################################################################################
 
-
-
-int drivePower = 0;                 // [-255 bis 255] aktuelle maximale Motorstärke
-int driveRotation = 0;              // [-255 bis 255] aktuelle Rotationsstärke
-int driveDirection = 0;             // [-180 bis 180] Ziel-Fahrrichtung
-int driveOrientation = 0;           // [-180 bis 180] Ziel-Orientierungswinkel
+int drivePower = 0;       // [-255 bis 255] aktuelle maximale Motorstärke
+int driveRotation = 0;    // [-255 bis 255] aktuelle Rotationsstärke
+int driveDirection = 0;   // [-180 bis 180] Ziel-Fahrrichtung
+int driveOrientation = 0; // [-180 bis 180] Ziel-Orientierungswinkel
 unsigned long kickTimer = 2000;
 
-void setup() {
-    Serial.begin(9600);
-      Wire.begin();
-      ballTouch.init();
-      ballTouch.calibrate();
-     // m.setAngle(70);
-    m.init();
+void setup()
+{
+  Serial.begin(9600);
+  Wire.begin();
+  ballTouch.init();
+  ballTouch.calibrate();
+  // m.setAngle(70);
+  m.init();
   startSound();
 
-    us.init();
-    //cmps.init();
+  us.init();
+  //cmps.init();
 }
 
 //###################################################################################################
@@ -73,16 +71,17 @@ void setup() {
 //##...............................................................................................##
 //###################################################################################################
 
-void loop() {
-    us.update();
-    ballTouch.update();
-    if (ballTouch.hasBall())
-    {
-      startSound();
-    }
-    //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
-m.drive(0,40);
-   // cmps.update();
-   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
-
+void loop()
+{
+  us.update();
+  ballTouch.update();
+  if (ballTouch.hasBall())
+  {
+    //startSound();
+    Serial.println("yo");
+  }
+  //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
+  //m.drive(0, 40);
+  // cmps.update();
+  Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
 }

@@ -6,10 +6,10 @@ void kick() {
     kickTimer = millis();
     while (millis() - kickTimer <50)
     {
-        analogWrite(12, map(analogRead(A0),0,1023,190,255));    // schuss bei 12, Poti bei A0
+        analogWrite(KICKER, map(analogRead(POTKICK),0,1023,190,255));    // schuss bei 12, Poti bei A0
     }
            kickTimer = millis(); 
-    analogWrite(12,0);
+    analogWrite(KICKER,0);
   }
 }
 
@@ -20,9 +20,9 @@ void startSound() {
     // if(isTypeA)
     // tone(BUZZER, i);
     // else
-    tone(13, 2010-i);
+    tone(BUZZER, 2010-i);
     
     delay(1);
   }
-  noTone(13);
+  noTone(BUZZER);
 }

@@ -5,13 +5,6 @@
 
 #include "Config.h"
 
-//addresses of the Ultrasonicsensors named by their position
-#define NUM_OF_US 5
-#define FRONT_LEFT 112
-#define LEFT 113
-#define FRONT_RIGHT 116
-#define BACK 114
-#define RIGHT 115
 
 class Ultrasonic
 {

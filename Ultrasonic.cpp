@@ -10,6 +10,7 @@
      for (int i = 0; i < NUM_OF_US; i++)
      {
          Wire.beginTransmission(_addresses[i]);
+        Wire.write(byte(0x02));
          Wire.write(byte(70)); //warum 70? sehe im datenblatt nichts
          Wire.endTransmission();
      }
@@ -17,7 +18,7 @@
 
  void Ultrasonic::fetch()
  {
-     for(int i = 0; i < 5; i++) {
+     for(int i = 0; i < NUM_OF_US; i++) {
      Wire.beginTransmission(_addresses[i]);
      Wire.write(byte(0x02));
      Wire.endTransmission();
