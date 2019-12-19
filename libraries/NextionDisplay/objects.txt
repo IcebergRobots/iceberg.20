@@ -1,0 +1,13 @@
+Beispiele:
+Overview pageid 2:
+    Type:       id, objname
+    Slider:     3, h0
+    STATE: :    4, t0
+    ON:         5, b1
+    OFF:        6, b2 
+
+Balltouch pageid 7:
+    Ball:       3, b1
+    NoBall:     4, b2
+    threshold:  5, b3
+
