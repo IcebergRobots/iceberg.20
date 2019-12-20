@@ -69,6 +69,58 @@ void BallTouch::calibrate()
     _state == LED_OFF;
 }
 
+void BallTouch::calibrateNoBall() {
+    _counter = 0;
+    _summe = 0;
+    //without Ball
+    while (_counter < 20)
+    {
+
+        if (_state == LED_ON && millis() - _onTimer > 10)
+        {
+            turnOff();
+            _counter++;
+            calculate();
+            _summe += _value;
+        }
+        else if (_state == LED_OFF && millis() - _offTimer > 10)
+        {
+            turnOn();
+        }
+    }
+    _thresholdNoBall = _summe / 20;
+    digitalWrite(LED_PIN, LOW);
+    _state == LED_OFF;
+}
+
+void BallTouch::calibrateBall() {
+     _counter = 0;
+    _summe = 0;
+    //with ball
+    while (_counter < 20)
+    {
+
+        if (_state == LED_ON && millis() - _onTimer > 10)
+        {
+            turnOff();
+            _counter++;
+            calculate();
+            _summe += _value;
+        }
+        else if (_state == LED_OFF && millis() - _offTimer > 10)
+        {
+            turnOn();
+        }
+    }
+    _thresholdBall = _summe / 20;
+    digitalWrite(LED_PIN, LOW);
+    _state == LED_OFF;
+}
+
+void BallTouch::calculateTreshold() {
+     _threshold = (_thresholdBall + _thresholdNoBall) / 2;
+}
+
 void BallTouch::update()
 {
     if (_state == LED_ON && millis() - _onTimer > 10)
@@ -93,7 +145,7 @@ bool BallTouch::hasBall()
     return _value > _threshold;
 }
 
-void BallTouch::turnOn()
+void BallTouch::turnOn() 
 {
     _darkValue = analogRead(SENSOR_PIN);
     digitalWrite(LED_PIN, HIGH);

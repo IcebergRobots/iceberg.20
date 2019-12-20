@@ -13,7 +13,11 @@ public:
     BallTouch();
     void init();
     void calibrate();
-    
+
+    //only call this in combination
+    void calibrateNoBall();
+    void calibrateBall();
+    void calculateTreshold();
 
     void update();
 
