@@ -60,7 +60,7 @@ void BallTouch::calibrate()
     }
     _thresholdBall = _summe / 20;
     _threshold = (_thresholdBall + _thresholdNoBall) / 2;
-    
+
     while (millis() - _onTimer < 2000)
     {
         digitalWrite(LED_PIN, HIGH);
@@ -69,7 +69,8 @@ void BallTouch::calibrate()
     _state == LED_OFF;
 }
 
-void BallTouch::calibrateNoBall() {
+void BallTouch::calibrateNoBall()
+{
     _counter = 0;
     _summe = 0;
     //without Ball
@@ -93,8 +94,9 @@ void BallTouch::calibrateNoBall() {
     _state == LED_OFF;
 }
 
-void BallTouch::calibrateBall() {
-     _counter = 0;
+void BallTouch::calibrateBall()
+{
+    _counter = 0;
     _summe = 0;
     //with ball
     while (_counter < 20)
@@ -117,33 +119,34 @@ void BallTouch::calibrateBall() {
     _state == LED_OFF;
 }
 
-void BallTouch::calculateTreshold() {
+void BallTouch::calculateTreshold()
+{
     if (_thresholdBall != 0)
     {
         caliBall = true;
         if (_thresholdNoBall != 0)
         {
-        _threshold = (_thresholdBall + _thresholdNoBall) / 2;
-        caliNoBall = true;
+            _threshold = (_thresholdBall + _thresholdNoBall) / 2;
+            caliNoBall = true;
         }
     }
 }
 
 void BallTouch::update()
 {
-    if(calibrated) {
+    if (calibrated)
+    {
         if (_state == LED_ON && millis() - _onTimer > 10)
-    {
-        turnOff();
-        calculate();
+        {
+            turnOff();
+            calculate();
+        }
+        else if (_state == LED_OFF && millis() - _offTimer > 10)
+        {
+            turnOn();
+            calculate();
+        }
     }
-    else if (_state == LED_OFF && millis() - _offTimer > 10)
-    {
-        turnOn();
-        calculate();
-    }
-    }
-    
 }
 
 int BallTouch::getValue() { return _value; }
@@ -155,16 +158,15 @@ bool BallTouch::hasBall()
 {
     if (calibrated)
     {
-    return _value > _threshold;
-    }else
+        return _value > _threshold;
+    }
+    else
     {
         return false;
     }
-    
-    
 }
 
-void BallTouch::turnOn() 
+void BallTouch::turnOn()
 {
     _darkValue = analogRead(SENSOR_PIN);
     digitalWrite(LED_PIN, HIGH);

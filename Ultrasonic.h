@@ -1,10 +1,9 @@
 //Datasheet: http://coecsl.ece.illinois.edu/ge423/DevantechSRF08UltraSonicRanger.pdf
 
 #ifndef Ultrasonic_h
-#define Ultrasonic_h 
+#define Ultrasonic_h
 
 #include "Config.h"
-
 
 class Ultrasonic
 {
@@ -18,7 +17,7 @@ public:
 
     int getFront();
 
-    void init();         //kein return?
+    void init(); //kein return?
     void update();
 
 private:

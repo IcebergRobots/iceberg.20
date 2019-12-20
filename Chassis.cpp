@@ -72,8 +72,10 @@ void Chassis::steerMotor(byte id, int power)
     digitalWrite(_fwd[id], power > 0);  //drehe Motor vorwarts
     digitalWrite(_bwd[id], power <= 0); //drehe Motor rueckwaerts
     analogWrite(_pwm[id], abs(power));  //drehe Motor mit Geschwindigkeit
-  }else {
-    this->brake(false);     //Muss ich machen, sonst fahren die weiter auch wenn disabled
+  }
+  else
+  {
+    this->brake(false); //Muss ich machen, sonst fahren die weiter auch wenn disabled
   }
 }
 
@@ -176,7 +178,7 @@ void Chassis::brake(bool activ)
 
 void Chassis::setMotEn(bool motEn)
 {
-    _motEn = motEn;
+  _motEn = motEn;
 }
 
 bool Chassis::getMotEn()

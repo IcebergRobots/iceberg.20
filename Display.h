@@ -10,8 +10,9 @@ class Display
 public:
     static void init();
     static void update();
+
 private:
-Display();
+    Display();
 
     //Example
     static void bLedOnPopCallback(void *ptr);
@@ -55,6 +56,5 @@ Display();
     static NexButton _updateEnable;
 
     static NexTouch *_nex_listen_list[NUM_OBJECTS];
-
 };
 #endif

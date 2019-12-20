@@ -36,7 +36,6 @@ int driveRotation = 0;    // [-255 bis 255] aktuelle Rotationsstärke
 int driveDirection = 0;   // [-180 bis 180] Ziel-Fahrrichtung
 int driveOrientation = 0; // [-180 bis 180] Ziel-Orientierungswinkel
 
-
 BallTouch ballTouch;
 bool calibrated = false;
 bool caliNoBall = false;
@@ -44,7 +43,6 @@ bool caliBall = false;
 
 unsigned long kickTimer = 0;
 bool enKick = false;
-
 
 //###################################################################################################
 //##                                                                                               ##
@@ -56,17 +54,18 @@ bool enKick = false;
 //##                                                                                               ##
 //###################################################################################################
 
-
 void setup()
 {
   Serial.begin(9600);
   Wire.begin();
+
   ballTouch.init();
   m.init();
-  startSound();
   Display::init();
   //us.init();
   //cmps.init();
+
+  startSound();
 }
 
 //###################################################################################################
@@ -84,10 +83,10 @@ void loop()
   Display::update();
   // us.update();
   ballTouch.update();
-  
-   if (ballTouch.hasBall())
-   {
-     kick();
+
+  if (ballTouch.hasBall())
+  {
+    kick();
     startSound();
     Serial.println("yo");
   }
