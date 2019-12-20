@@ -69,7 +69,7 @@ void setup(void) {
   pinMode(led1, OUTPUT);
 }
 
-void loop(void) {   
+void loop() {   
   /*
    * When a pop or push event occured every time,
    * the corresponding component[right page id and component id] in touch event list will be asked.
