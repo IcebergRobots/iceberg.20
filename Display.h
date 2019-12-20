@@ -1,24 +1,29 @@
-//  #ifndef Display_hpp
-//  #define Display_hpp
+#ifndef Display_h
+#define Display_h
 
-//  #include "Config.h"
+#include "Config.h"
 
-//  class Display
-//  {
-//      public:
-//          static void init();
-//          static void bOnPopCallback(void *ptr);
-//          static void bOffPopCallback(void *ptr);
-//          static void h0PopCallback(void *ptr);
+#define NUM_OBJECTS 4
 
-//      private:
-//          static NexText tState;
-//          static NexButton bOn;
-//          static NexButton bOff;
-//          static NexSlider h0;
+class Display
+{
+public:
+    static void init();
+    static void update();
+private:
+Display();
+    static void bLedOnPopCallback(void *ptr);
+    static void bLedOffPopCallback(void *ptr);
+    static void hLedSliderPopCallback(void *ptr);
 
-//          static NexTouch *nex_listen_list[];
+    //Beispiel Objects
+    static NexText _tLedState;
+    static NexButton _bLedOn;
+    static NexButton _bLedOff;
+    static NexSlider _hLedSlider;
 
-//          static const int led1 = 13;
-//  };
-//  #endif
+    static NexTouch *_nex_listen_list[NUM_OBJECTS];
+
+    static const int _led1 = 6;
+};
+#endif
