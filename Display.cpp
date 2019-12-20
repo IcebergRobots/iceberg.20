@@ -1,6 +1,7 @@
 #include "Display.h"
 
 extern BallTouch ballTouch;
+extern Chassis m;
 
 /*******************************************************************
  * Example
@@ -26,6 +27,9 @@ NexText Display::_caliStatus = NexText(8,3,"t0");
 NexText Display::_ballStatus = NexText(8,4,"t1");
 NexButton Display::_updateStatus = NexButton(8,5,"b1");
 
+//Sensor Enable Disable
+NexDSButton Display::_enKick = NexDSButton(9,3,"kicken");
+NexDSButton Display::_enMotors = NexDSButton(9,6,"motorsen");
 
 NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
   //Example
@@ -40,6 +44,11 @@ NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
 
   //Sensor BallTouch
   &_updateStatus,
+
+  //Sensor enable Disable
+  &_enKick,
+  &_enMotors,
+
   NULL
 };
 
@@ -122,6 +131,16 @@ void Display::updateBallStatus(void *ptr) {
 
 }
 
+
+//Sensor Enable/Disable
+void Display::switchEnKick(void *ptr) {
+  enKick = !enKick;
+}
+
+void Display::enMotors(void *ptr) {
+  m.setMotEn(!m.getMotEn());
+}
+
 void Display::init() {
       nexInit();  // Register the pop event callback function of the components
 
@@ -139,6 +158,11 @@ void Display::init() {
 
   //Sensor BallTouch
   _updateStatus.attachPop(updateBallStatus, &_updateStatus);
+
+  //Sensor Enable/Disable
+  _enKick.attachPop(switchEnKick, &_enKick);
+  _enMotors.attachPop(enMotors, &_enMotors);
+
 }
 
 void Display::update() {

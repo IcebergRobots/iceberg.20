@@ -153,7 +153,15 @@ int BallTouch::getNoBallThreshold() { return _thresholdNoBall; }
 
 bool BallTouch::hasBall()
 {
+    if (calibrated)
+    {
     return _value > _threshold;
+    }else
+    {
+        return false;
+    }
+    
+    
 }
 
 void BallTouch::turnOn() 

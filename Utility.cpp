@@ -2,7 +2,7 @@
 
 
 void kick() {
-    if (millis() - kickTimer > 333) {
+    if (millis() - kickTimer > 333 && enKick) {
     kickTimer = millis();
     while (millis() - kickTimer <50)
     {
@@ -12,6 +12,7 @@ void kick() {
     analogWrite(KICKER,0);
   }
 }
+
 
 void startSound() {
   //Fiepen, welches Programstart signalisiert

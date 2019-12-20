@@ -3,7 +3,7 @@
 
 #include "Config.h"
 
-#define NUM_OBJECTS 8
+#define NUM_OBJECTS 10
 
 class Display
 {
@@ -27,13 +27,15 @@ Display();
     static void updateBallStatus(void *ptr);
 
     //Sensor En/Disable
-
+    static void switchEnKick(void *ptr);
+    static void enMotors(void *ptr);
 
     //Beispiel Objects
     static NexText _tLedState;
     static NexButton _bLedOn;
     static NexButton _bLedOff;
     static NexSlider _hLedSlider;
+    static const int _led1 = 6;
 
     //Calibrate ballTouch
     static NexButton _ballTouchBall;
@@ -47,11 +49,10 @@ Display();
     static NexButton _updateStatus;
 
     //Sensor Enable/Disable
-    //static NexDSButton _enKick;
-    //static NexDSButton _enMotors;
+    static NexDSButton _enKick;
+    static NexDSButton _enMotors;
 
     static NexTouch *_nex_listen_list[NUM_OBJECTS];
 
-    static const int _led1 = 6;
 };
 #endif

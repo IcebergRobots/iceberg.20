@@ -41,7 +41,10 @@ BallTouch ballTouch;
 bool calibrated = false;
 bool caliNoBall = false;
 bool caliBall = false;
+
 unsigned long kickTimer = 0;
+bool enKick = false;
+
 
 //###################################################################################################
 //##                                                                                               ##
@@ -83,12 +86,13 @@ void loop()
   Display::update();
   // us.update();
   ballTouch.update();
-  // if (ballTouch.hasBall())
-  // {
-  //   kick();
-  //   startSound();
-  //   Serial.println("yo");
-  // }
+  
+   if (ballTouch.hasBall())
+   {
+     kick();
+    startSound();
+    Serial.println("yo");
+  }
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
   // //m.drive(0, 40);
   // // cmps.update();
