@@ -7,6 +7,7 @@
 #include "Chassis.h"
 #include "BallTouch.h"
 #include "Utility.h"
+#include "Display.h"
 
 #include "Pins.h"
 
@@ -16,5 +17,3 @@ extern int drivePower, driveRotation, driveDirection, driveOrientation;
 // Implementierung: KICK, LIGHT_BARRIER
 extern unsigned long kickTimer;
 extern bool hasBall;
-
-// 
