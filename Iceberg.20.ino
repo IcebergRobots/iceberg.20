@@ -62,9 +62,7 @@ void setup()
   Serial.begin(9600);
   Wire.begin();
   ballTouch.init();
-  // ballTouch.calibrate();
-  // m.setAngle(70);
-  // m.init();
+  m.init();
   startSound();
   Display::init();
   //us.init();
@@ -94,7 +92,7 @@ void loop()
     Serial.println("yo");
   }
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
-  // //m.drive(0, 40);
+  m.drive(0, 40);
   // // cmps.update();
   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
 }

@@ -20,3 +20,4 @@ SensBalltouch pageid 8:
 En/Disable pageid 9:
     enKick      3, kicken
     enMotors    6, motorsen
+    update      7, b1

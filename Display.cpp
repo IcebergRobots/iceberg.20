@@ -30,6 +30,7 @@ NexButton Display::_updateStatus = NexButton(8,5,"b1");
 //Sensor Enable Disable
 NexDSButton Display::_enKick = NexDSButton(9,3,"kicken");
 NexDSButton Display::_enMotors = NexDSButton(9,6,"motorsen");
+NexButton Display::_updateEnable = NexButton(9,7,"b1");
 
 NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
   //Example
@@ -48,6 +49,7 @@ NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
   //Sensor enable Disable
   &_enKick,
   &_enMotors,
+  &_updateEnable,
 
   NULL
 };
@@ -141,6 +143,24 @@ void Display::enMotors(void *ptr) {
   m.setMotEn(!m.getMotEn());
 }
 
+void Display::updateEnabled(void *ptr) {
+  if (enKick)
+  {
+    _enKick.setValue(1);
+  }else
+  {
+    _enKick.setValue(0);
+  }
+  
+  if (m.getMotEn())
+  {
+    _enMotors.setValue(1);
+  }else
+  {
+    _enMotors.setValue(0);
+  }
+}
+
 void Display::init() {
       nexInit();  // Register the pop event callback function of the components
 
@@ -162,6 +182,7 @@ void Display::init() {
   //Sensor Enable/Disable
   _enKick.attachPop(switchEnKick, &_enKick);
   _enMotors.attachPop(enMotors, &_enMotors);
+  _updateEnable.attachPop(updateEnabled, &_updateEnable);
 
 }
 

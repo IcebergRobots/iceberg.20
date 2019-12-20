@@ -3,7 +3,7 @@
 
 #include "Config.h"
 
-#define NUM_OBJECTS 10
+#define NUM_OBJECTS 11
 
 class Display
 {
@@ -29,6 +29,7 @@ Display();
     //Sensor En/Disable
     static void switchEnKick(void *ptr);
     static void enMotors(void *ptr);
+    static void updateEnabled(void *ptr);
 
     //Beispiel Objects
     static NexText _tLedState;
@@ -51,6 +52,7 @@ Display();
     //Sensor Enable/Disable
     static NexDSButton _enKick;
     static NexDSButton _enMotors;
+    static NexButton _updateEnable;
 
     static NexTouch *_nex_listen_list[NUM_OBJECTS];
 
