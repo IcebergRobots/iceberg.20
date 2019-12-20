@@ -118,12 +118,21 @@ void BallTouch::calibrateBall() {
 }
 
 void BallTouch::calculateTreshold() {
-     _threshold = (_thresholdBall + _thresholdNoBall) / 2;
+    if (_thresholdBall != 0)
+    {
+        caliBall = true;
+        if (_thresholdNoBall != 0)
+        {
+        _threshold = (_thresholdBall + _thresholdNoBall) / 2;
+        caliNoBall = true;
+        }
+    }
 }
 
 void BallTouch::update()
 {
-    if (_state == LED_ON && millis() - _onTimer > 10)
+    if(calibrated) {
+        if (_state == LED_ON && millis() - _onTimer > 10)
     {
         turnOff();
         calculate();
@@ -133,6 +142,8 @@ void BallTouch::update()
         turnOn();
         calculate();
     }
+    }
+    
 }
 
 int BallTouch::getValue() { return _value; }

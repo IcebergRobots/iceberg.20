@@ -11,9 +11,10 @@
 
 #include "Pins.h"
 
+
 // Implementierung: FAHREN
 extern int drivePower, driveRotation, driveDirection, driveOrientation;
 
 // Implementierung: KICK, LIGHT_BARRIER
 extern unsigned long kickTimer;
-extern bool hasBall;
+extern bool hasBall, caliNoBall, caliBall, calibrated;
