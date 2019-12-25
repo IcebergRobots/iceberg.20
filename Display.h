@@ -3,7 +3,7 @@
 
 #include "Config.h"
 
-#define NUM_OBJECTS 11
+#define NUM_OBJECTS 13
 
 class Display
 {
@@ -24,13 +24,24 @@ private:
     static void ballTouchNoBall(void *ptr);
     static void ballTouchThreshold(void *ptr);
 
-    //Sensor ballTouch
-    static void updateBallStatus(void *ptr);
+    //Hardware ballTouch
+    static void updateBallTimer(void *ptr);
 
-    //Sensor En/Disable
+    //Hardware En/Disable
     static void switchEnKick(void *ptr);
     static void enMotors(void *ptr);
-    static void updateEnabled(void *ptr);
+    static void updateEnTimer(void *ptr);
+
+    //Hardware Kicker
+    static void kickBall(void *ptr);
+    //static void enKick2(void *ptr); attached switchEnKick
+
+    //Cali Kicker
+    //static void kickBall(void *ptr); attached kickBall
+    static void kickSlider(void *ptr);
+
+    //Hardware Motors
+    //attach to enMotors
 
     //Beispiel Objects
     static NexText _tLedState;
@@ -45,15 +56,26 @@ private:
     static NexButton _ballTouchThreshold;
     static NexText _ballTouchStatus;
 
-    //Sensor ballTouch
+    //Hardware ballTouch
     static NexText _caliStatus;
     static NexText _ballStatus;
-    static NexButton _updateStatus;
+    static NexTimer _updateBallStatus;
 
-    //Sensor Enable/Disable
+    //Hardware Enable/Disable
     static NexDSButton _enKick;
     static NexDSButton _enMotors;
-    static NexButton _updateEnable;
+    static NexTimer _updateEnTimer;
+
+    //Hardware Kicker
+    static NexButton _kickBall;
+    static NexDSButton _enKick2;
+
+    //Cali Kicker
+    static NexButton _kickBall2;
+    static NexSlider _kickSlider;
+
+    //Harware Motors
+    static NexDSButton _enMotors2;
 
     static NexTouch *_nex_listen_list[NUM_OBJECTS];
 };

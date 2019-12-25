@@ -10,14 +10,26 @@ CaliBalltouch pageid 7:
     Ball:       3, b1
     NoBall:     4, b2
     threshold:  5, b3
-    tStatus: 6, t0
+    tStatus:    6, t0
 
-SensBalltouch pageid 8:
-    tNot Cali   3, t0
+hardBalltouch pageid 8:
+    tballCali   3, ballCali
+    tSeesBall   6, t0
     tStatus     4, t1
-    update      5, b1
+    updateTimer 5, tm0
 
 En/Disable pageid 9:
     enKick      3, kicken
     enMotors    6, motorsen
-    update      7, b1
+    updateTimer 7, tm0
+
+hardKicker pageid 10:
+    Kick        3, b1
+    enKick      4, kicken
+
+caliKicker pageid 11:
+    kick        4, b1
+    Slider      1, h0
+
+hardMotors pageid 12:
+    enMotors    4, motorsen

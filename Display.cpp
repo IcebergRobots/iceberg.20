@@ -20,15 +20,26 @@ NexButton Display::_ballTouchNoBall = NexButton(7, 4, "b2");
 NexButton Display::_ballTouchThreshold = NexButton(7, 5, "b3");
 NexText Display::_ballTouchStatus = NexText(7, 6, "t0");
 
-//Sensor BallTouch
+//Hardware BallTouch
 NexText Display::_caliStatus = NexText(8, 3, "t0");
 NexText Display::_ballStatus = NexText(8, 4, "t1");
-NexButton Display::_updateStatus = NexButton(8, 5, "b1");
+NexTimer Display::_updateBallStatus = NexTimer(8,5,"tm0");
 
-//Sensor Enable Disable
+//Hardware Enable Disable
 NexDSButton Display::_enKick = NexDSButton(9, 3, "kicken");
 NexDSButton Display::_enMotors = NexDSButton(9, 6, "motorsen");
-NexButton Display::_updateEnable = NexButton(9, 7, "b1");
+NexTimer Display::_updateEnTimer = NexTimer(9, 7, "tm0");
+
+//Hardware Kicker
+NexButton Display::_kickBall = NexButton(10, 3, "b1");
+NexDSButton Display::_enKick2 = NexDSButton(10, 4, "kicken");
+
+//Cali Kicker
+NexButton Display::_kickBall2 = NexButton(11, 4, "b1");
+NexSlider Display::_kickSlider = NexSlider(11,1,"h0");
+
+//Harware Motors
+NexDSButton Display::_enMotors2 = NexDSButton(12, 4, "motorsen");
 
 NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
     //Example
@@ -41,13 +52,22 @@ NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
     &_ballTouchNoBall,
     &_ballTouchThreshold,
 
-    //Sensor BallTouch
-    &_updateStatus,
+    //Hardware BallTouch
+    //attach _enKick
 
-    //Sensor enable Disable
+    //Hardware enable Disable
     &_enKick,
     &_enMotors,
-    &_updateEnable,
+
+    //Harware Kicker
+    &_kickBall,
+    &_enKick2,
+
+    //Cali Kicker
+    &_kickSlider,
+
+    //Hardware Motors
+    &_enMotors2,
 
     NULL};
 
@@ -104,39 +124,31 @@ void Display::ballTouchThreshold(void *ptr)
 {
   ballTouch.calculateTreshold();
   calibrated = true;
-  _ballTouchStatus.setText("Calibrated Succesfully");
   if (!caliNoBall)
   {
-    _ballTouchStatus.setText("Calibrated NoBall");
     calibrated = false;
   }
   if (!caliBall)
   {
-    _ballTouchStatus.setText("Calibrated Ball");
     calibrated = false;
   }
 }
 
-//Sensors BallTouch
-void Display::updateBallStatus(void *ptr)
-{
-  if (calibrated)
+//Hardware BallTouch
+void Display::updateBallTimer(void *ptr) {
+  if (ballTouch.hasBall())
   {
-    _caliStatus.setText("Sees Ball?");
-    if (ballTouch.hasBall())
-    {
-      _ballStatus.setText("Yes");
-    }
-    else
-    {
-      _ballStatus.setText("No");
-    }
+    _ballStatus.setText("Yes");
+  } else {
+    _ballStatus.setText("No");
   }
+  
 }
 
-//Sensor Enable/Disable
+//Hardware Enable/Disable
 void Display::switchEnKick(void *ptr)
 {
+  Serial.println("switched");
   enKick = !enKick;
 }
 
@@ -145,7 +157,7 @@ void Display::enMotors(void *ptr)
   m.setMotEn(!m.getMotEn());
 }
 
-void Display::updateEnabled(void *ptr)
+void Display::updateEnTimer(void *ptr)
 {
   if (enKick)
   {
@@ -164,7 +176,41 @@ void Display::updateEnabled(void *ptr)
   {
     _enMotors.setValue(0);
   }
+  Serial.println("yoo");
 }
+
+//Hardware Kicker
+void Display::kickBall(void *ptr) {
+  if (enKick)
+  {
+    kick();
+  }else
+  {
+    enKick = true;
+    kick();
+    enKick = false;
+  }
+
+}
+
+//Cali Kicker
+void Display::kickSlider(void *ptr) {
+    uint32_t number = 0;
+  char temp[10] = {0};
+  // change text with the current slider value
+  _kickSlider.getValue(&number);
+  utoa(number, temp, 10);
+  kickPower = map(number, 0, 100, 100, 255);
+  caliKick = true;
+}
+
+//Hardware Motors
+//attach to enMotos
+
+
+
+
+
 
 void Display::init()
 {
@@ -181,13 +227,24 @@ void Display::init()
   _ballTouchNoBall.attachPop(ballTouchNoBall, &_ballTouchNoBall);
   _ballTouchThreshold.attachPop(ballTouchThreshold, &_ballTouchThreshold);
 
-  //Sensor BallTouch
-  _updateStatus.attachPop(updateBallStatus, &_updateStatus);
+  //Hardware BallTouch
+  _updateBallStatus.attachTimer(updateBallTimer, &_updateBallStatus);
 
-  //Sensor Enable/Disable
+  //Hardware Enable/Disable
   _enKick.attachPop(switchEnKick, &_enKick);
   _enMotors.attachPop(enMotors, &_enMotors);
-  _updateEnable.attachPop(updateEnabled, &_updateEnable);
+  _updateEnTimer.attachPop(updateEnTimer, &_updateEnTimer);
+
+  //Hardware Kicker
+  _kickBall.attachPop(kickBall, &_kickBall);
+  _enKick2.attachPop(switchEnKick, &_enKick2);
+
+  //Cali Kicker
+  _kickBall2.attachPop(kickBall, &_kickBall2);
+  _kickSlider.attachPop(kickSlider, &_kickSlider);
+
+  //Hardware Motors
+  _enMotors2.attachPop(enMotors, &_enMotors2);
 }
 
 void Display::update()

@@ -42,6 +42,8 @@ bool caliNoBall = false;
 bool caliBall = false;
 
 unsigned long kickTimer = 0;
+unsigned int kickPower = 0;
+bool caliKick = false;
 bool enKick = false;
 
 //###################################################################################################
@@ -88,7 +90,7 @@ void loop()
   {
     kick();
     startSound();
-    Serial.println("yo");
+    m.setMotEn(true);
   }
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
   m.drive(0, 40);

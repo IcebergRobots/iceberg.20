@@ -2,12 +2,12 @@
 
 void kick()
 {
-  if (millis() - kickTimer > 333 && enKick)
+  if (millis() - kickTimer > 333 && enKick && caliKick)
   {
     kickTimer = millis();
     while (millis() - kickTimer < 50)
     {
-      analogWrite(KICKER, map(analogRead(POTKICK), 0, 1023, 190, 255)); // schuss bei 12, Poti bei A0
+      analogWrite(KICKER, kickPower); // schuss bei 12, Poti bei A0
     }
     kickTimer = millis();
     analogWrite(KICKER, 0);
