@@ -1,11 +1,9 @@
-#ifndef Display_h
-#define Display_h
-
+#pragma once
 #include "Config.h"
 
 #define NUM_OBJECTS 13
 
-class Display
+class Display : public Hardware
 {
 public:
     static void init();
@@ -79,4 +77,3 @@ private:
 
     static NexTouch *_nex_listen_list[NUM_OBJECTS];
 };
-#endif

@@ -4,7 +4,7 @@ BallTouch::BallTouch()
 {
 }
 
-void BallTouch::init()
+void BallTouch::init() override
 {
     pinMode(LED_PIN, OUTPUT);
     pinMode(SENSOR_PIN, INPUT_PULLUP);
@@ -12,8 +12,7 @@ void BallTouch::init()
 
 void BallTouch::calibrate()
 {
-    _counter = 0;
-    _summe = 0;
+    _counter, _summe = 0;
     //without Ball
     while (_counter < 20)
     {
@@ -26,20 +25,14 @@ void BallTouch::calibrate()
             _summe += _value;
         }
         else if (_state == LED_OFF && millis() - _offTimer > 10)
-        {
             turnOn();
-        }
     }
     _thresholdNoBall = _summe / 20;
 
     //as long no display, visual message to calibrate with ball todo
-    _counter = 0;
-    _summe = 0;
-
+    _counter, _summe = 0;
     while (millis() - _onTimer < 5000)
-    {
         digitalWrite(LED_PIN, HIGH);
-    }
     digitalWrite(LED_PIN, LOW);
     _state == LED_OFF;
     //with ball
@@ -54,9 +47,7 @@ void BallTouch::calibrate()
             _summe += _value;
         }
         else if (_state == LED_OFF && millis() - _offTimer > 10)
-        {
             turnOn();
-        }
     }
     _thresholdBall = _summe / 20;
     _threshold = (_thresholdBall + _thresholdNoBall) / 2;
@@ -71,8 +62,7 @@ void BallTouch::calibrate()
 
 void BallTouch::calibrateNoBall()
 {
-    _counter = 0;
-    _summe = 0;
+    _counter, _summe = 0;
     //without Ball
     while (_counter < 20)
     {
@@ -85,9 +75,7 @@ void BallTouch::calibrateNoBall()
             _summe += _value;
         }
         else if (_state == LED_OFF && millis() - _offTimer > 10)
-        {
             turnOn();
-        }
     }
     _thresholdNoBall = _summe / 20;
     digitalWrite(LED_PIN, LOW);
@@ -96,8 +84,7 @@ void BallTouch::calibrateNoBall()
 
 void BallTouch::calibrateBall()
 {
-    _counter = 0;
-    _summe = 0;
+    _counter, _summe = 0;
     //with ball
     while (_counter < 20)
     {
@@ -110,9 +97,7 @@ void BallTouch::calibrateBall()
             _summe += _value;
         }
         else if (_state == LED_OFF && millis() - _offTimer > 10)
-        {
             turnOn();
-        }
     }
     _thresholdBall = _summe / 20;
     digitalWrite(LED_PIN, LOW);
@@ -121,10 +106,10 @@ void BallTouch::calibrateBall()
 
 void BallTouch::calculateTreshold()
 {
-    if (_thresholdBall != 0)
+    if (_thresholdBall > -1)
     {
         caliBall = true;
-        if (_thresholdNoBall != 0)
+        if (_thresholdNoBall > -1)
         {
             _threshold = (_thresholdBall + _thresholdNoBall) / 2;
             caliNoBall = true;
@@ -132,7 +117,7 @@ void BallTouch::calculateTreshold()
     }
 }
 
-void BallTouch::update()
+void BallTouch::update() override
 {
     if (calibrated)
     {
@@ -157,13 +142,9 @@ int BallTouch::getNoBallThreshold() { return _thresholdNoBall; }
 bool BallTouch::hasBall()
 {
     if (calibrated)
-    {
         return _value > _threshold;
-    }
     else
-    {
         return false;
-    }
 }
 
 void BallTouch::turnOn()

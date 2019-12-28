@@ -1,6 +1,4 @@
-#ifndef Pins_h
-#define Pins_h
-
+#pragma once
 // Motorpins:
 #define NUM_OF_M        4
 
@@ -46,5 +44,3 @@
 #define FRONT_RIGHT 116
 #define BACK 114
 #define RIGHT 115
-
-#endif

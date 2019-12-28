@@ -123,26 +123,15 @@ void Display::ballTouchNoBall(void *ptr)
 void Display::ballTouchThreshold(void *ptr)
 {
   ballTouch.calculateTreshold();
-  calibrated = true;
-  if (!caliNoBall)
-  {
-    calibrated = false;
-  }
-  if (!caliBall)
-  {
-    calibrated = false;
-  }
+  calibrated = !caliNoBall || !caliBall ? false : true;
 }
 
 //Hardware BallTouch
 void Display::updateBallTimer(void *ptr) {
   if (ballTouch.hasBall())
-  {
     _ballStatus.setText("Yes");
-  } else {
+    else
     _ballStatus.setText("No");
-  }
-  
 }
 
 //Hardware Enable/Disable
@@ -160,31 +149,21 @@ void Display::enMotors(void *ptr)
 void Display::updateEnTimer(void *ptr)
 {
   if (enKick)
-  {
     _enKick.setValue(1);
-  }
   else
-  {
     _enKick.setValue(0);
-  }
 
   if (m.getMotEn())
-  {
     _enMotors.setValue(1);
-  }
   else
-  {
     _enMotors.setValue(0);
-  }
-  Serial.println("yoo");
 }
 
 //Hardware Kicker
 void Display::kickBall(void *ptr) {
   if (enKick)
-  {
     kick();
-  }else
+  else
   {
     enKick = true;
     kick();
@@ -212,7 +191,7 @@ void Display::kickSlider(void *ptr) {
 
 
 
-void Display::init()
+void Display::init() override
 {
   nexInit(); // Register the pop event callback function of the components
 
@@ -247,7 +226,7 @@ void Display::init()
   _enMotors2.attachPop(enMotors, &_enMotors2);
 }
 
-void Display::update()
+void Display::update() override
 {
   nexLoop(_nex_listen_list);
 }

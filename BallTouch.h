@@ -1,12 +1,10 @@
-#ifndef BallTouch_h
-#define BallTouch_h
-
+#pragma once
 #include "Config.h"
 
 #define LED_OFF false
 #define LED_ON true
 
-class BallTouch
+class BallTouch : public Hardware
 {
 
 public:
@@ -32,8 +30,8 @@ private:
     int _pinSensor;
     int _value;
 
-    int _thresholdNoBall;
-    int _thresholdBall;
+    int _thresholdNoBall = -1;
+    int _thresholdBall = -1;
     int _threshold;
 
     int _summe;
@@ -52,4 +50,3 @@ private:
     void calculate();
 };
 
-#endif

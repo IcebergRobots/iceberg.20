@@ -5,7 +5,7 @@ Ultrasonic::Ultrasonic()
     //  warum initialisiert man nicht hier direkt, sondern erst durch einen extra Methodenaufruf
 }
 
-void Ultrasonic::init()
+void Ultrasonic::init() override
 {
     for (int i = 0; i < NUM_OF_US; i++)
     {
@@ -33,7 +33,7 @@ void Ultrasonic::fetch()
     }
 }
 
-void Ultrasonic::update()
+void Ultrasonic::update() override
 {
     if (millis() - _lastMeasurement > 25 && !_fetched)
     {

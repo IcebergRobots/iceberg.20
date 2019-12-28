@@ -1,13 +1,12 @@
 //https://www.robot-electronics.co.uk/files/cmps12.pdf
 
-#ifndef Compass_h
-#define Compass_h
+#pragma once
 
 #include "Config.h"
 
 #define COMPASS_ADRESS 96
 
-class Compass
+class Compass : public Hardware
 {
 
 public:
@@ -21,10 +20,7 @@ public:
     int getRoll();
 
 private:
-
     unsigned char _high_byte, _low_byte, _angle8;
     char _pitch, _roll;
     unsigned int _angle16;
 };
-
-#endif

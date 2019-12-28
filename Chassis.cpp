@@ -12,7 +12,7 @@ Chassis::Chassis()
   _motEn = false;
 }
 
-void Chassis::init()
+void Chassis::init() override
 {
 
   this->setPins(0, FWD0, BWD0, PWM0, M0_CURR);
@@ -20,6 +20,10 @@ void Chassis::init()
   this->setPins(2, FWD2, BWD2, PWM2, M2_CURR);
   this->setPins(3, FWD3, BWD3, PWM3, M3_CURR);
   this->setMotEn(false);
+}
+
+void Chassis::update() override {
+  //todo
 }
 
 /*****************************************************

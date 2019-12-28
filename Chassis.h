@@ -1,14 +1,14 @@
-#ifndef Chassis_h
-#define Chassis_h
+#pragma once
 
 #include "Config.h"
 
-class Chassis
+class Chassis : public Hardware
 {
   public:
     Chassis();
 
     void init();
+    void update(); //todo
 
     void steerMotor(byte id, int power);
 
@@ -41,5 +41,3 @@ class Chassis
 
     void setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens);
 };
-
-#endif

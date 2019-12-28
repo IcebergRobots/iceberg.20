@@ -2,6 +2,7 @@
 #include "Wire.h"
 #include "Nextion.h"
 
+#include "Hardware.h"
 #include "Ultrasonic.h"
 #include "Compass.h"
 #include "Chassis.h"
