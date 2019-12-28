@@ -3,14 +3,14 @@
 #include "Nextion.h"
 
 #include "Hardware.h"
+#include "Pins.h"
+
 #include "Ultrasonic.h"
 #include "Compass.h"
 #include "Chassis.h"
 #include "BallTouch.h"
 #include "Utility.h"
 #include "Display.h"
-
-#include "Pins.h"
 
 // Implementierung: FAHREN
 extern int drivePower, driveRotation, driveDirection, driveOrientation;

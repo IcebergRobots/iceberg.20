@@ -28,7 +28,7 @@ NexTimer Display::_updateBallStatus = NexTimer(8,5,"tm0");
 //Hardware Enable Disable
 NexDSButton Display::_enKick = NexDSButton(9, 3, "kicken");
 NexDSButton Display::_enMotors = NexDSButton(9, 6, "motorsen");
-NexTimer Display::_updateEnTimer = NexTimer(9, 7, "tm0");
+NexPage Display::_updateEnPage = NexPage(9, 0, "endisable");
 
 //Hardware Kicker
 NexButton Display::_kickBall = NexButton(10, 3, "b1");
@@ -146,7 +146,7 @@ void Display::enMotors(void *ptr)
   m.setMotEn(!m.getMotEn());
 }
 
-void Display::updateEnTimer(void *ptr)
+void Display::updateEnPage(void *ptr)
 {
   if (enKick)
     _enKick.setValue(1);
@@ -212,7 +212,7 @@ void Display::init() override
   //Hardware Enable/Disable
   _enKick.attachPop(switchEnKick, &_enKick);
   _enMotors.attachPop(enMotors, &_enMotors);
-  _updateEnTimer.attachPop(updateEnTimer, &_updateEnTimer);
+  _updateEnPage.attachPop(updateEnPage, &_updateEnPage);
 
   //Hardware Kicker
   _kickBall.attachPop(kickBall, &_kickBall);

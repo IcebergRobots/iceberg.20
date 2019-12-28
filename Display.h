@@ -28,7 +28,7 @@ private:
     //Hardware En/Disable
     static void switchEnKick(void *ptr);
     static void enMotors(void *ptr);
-    static void updateEnTimer(void *ptr);
+    static void updateEnPage(void *ptr);
 
     //Hardware Kicker
     static void kickBall(void *ptr);
@@ -62,7 +62,7 @@ private:
     //Hardware Enable/Disable
     static NexDSButton _enKick;
     static NexDSButton _enMotors;
-    static NexTimer _updateEnTimer;
+    static NexPage _updateEnPage;
 
     //Hardware Kicker
     static NexButton _kickBall;
