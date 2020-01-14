@@ -46,6 +46,8 @@ unsigned int kickPower = 0;
 bool caliKick = false;
 bool enKick = false;
 
+//Hardware hardwares[1] = {        us        };
+
 //###################################################################################################
 //##                                                                                               ##
 //##    ####   ######  ######  ##  ##  #####                                                       ##
@@ -60,10 +62,11 @@ void setup()
 {
   Serial.begin(9600);
   Wire.begin();
-
   ballTouch.init();
   m.init();
-  Display::init();
+  // for(Hardware hardware : hardwares)
+  //   hardware.init();
+  Display::init(); //static class maybe cannt init int foreach
   //us.init();
   //cmps.init();
 
@@ -82,18 +85,17 @@ void setup()
 
 void loop()
 {
-  Display::update();
-  // us.update();
+  Display::update(); //maybe can implement it alltough its static class
+  // for(Hardware hardware : hardwares)
+  //   hardware.update();
+  m.update();
   ballTouch.update();
-
   if (ballTouch.hasBall())
   {
     kick();
     startSound();
-    m.setMotEn(true);
   }
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
-  m.drive(0, 40);
   // // cmps.update();
   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
 }

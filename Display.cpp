@@ -21,9 +21,8 @@ NexButton Display::_ballTouchThreshold = NexButton(7, 5, "b3");
 NexText Display::_ballTouchStatus = NexText(7, 6, "t0");
 
 //Hardware BallTouch
-NexText Display::_caliStatus = NexText(8, 3, "t0");
 NexText Display::_ballStatus = NexText(8, 4, "t1");
-NexTimer Display::_updateBallStatus = NexTimer(8,5,"tm0");
+NexPage Display::_updateBallStatus = NexPage(8,0,"hardBalltouch");
 
 //Hardware Enable Disable
 NexDSButton Display::_enKick = NexDSButton(9, 3, "kicken");
@@ -53,7 +52,7 @@ NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
     &_ballTouchThreshold,
 
     //Hardware BallTouch
-    //attach _enKick
+    &_updateBallStatus,
 
     //Hardware enable Disable
     &_enKick,
@@ -65,6 +64,7 @@ NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
 
     //Cali Kicker
     &_kickSlider,
+    &_kickBall2,
 
     //Hardware Motors
     &_enMotors2,
@@ -191,7 +191,7 @@ void Display::kickSlider(void *ptr) {
 
 
 
-void Display::init() override
+void Display::init()
 {
   nexInit(); // Register the pop event callback function of the components
 
@@ -207,7 +207,7 @@ void Display::init() override
   _ballTouchThreshold.attachPop(ballTouchThreshold, &_ballTouchThreshold);
 
   //Hardware BallTouch
-  _updateBallStatus.attachTimer(updateBallTimer, &_updateBallStatus);
+  _updateBallStatus.attachPop(updateBallTimer, &_updateBallStatus);
 
   //Hardware Enable/Disable
   _enKick.attachPop(switchEnKick, &_enKick);
@@ -226,7 +226,7 @@ void Display::init() override
   _enMotors2.attachPop(enMotors, &_enMotors2);
 }
 
-void Display::update() override
+void Display::update()
 {
   nexLoop(_nex_listen_list);
 }

@@ -9,7 +9,7 @@ class BallTouch : public Hardware
 
 public:
     BallTouch();
-    void init();
+    void init() override;
     void calibrate();
 
     //only call this in combination
@@ -17,7 +17,7 @@ public:
     void calibrateBall();
     void calculateTreshold();
 
-    void update();
+    void update() override;
 
     int getValue();
     int getThreshold();

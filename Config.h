@@ -3,7 +3,7 @@
 #include "Nextion.h"
 
 #include "Hardware.h"
-#include "Pins.h"
+#include "Pin.h"
 
 #include "Ultrasonic.h"
 #include "Compass.h"

@@ -11,8 +11,8 @@ class Compass : public Hardware
 
 public:
     Compass();
-    void init();
-    void update();
+    void init() override;
+    void update() override;
 
     float getAngle8();
     int getAngle16();

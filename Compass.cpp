@@ -5,14 +5,14 @@ Compass::Compass()
 {
 }
 
-void Compass::init() override
+void Compass::init()
 {
   Wire.beginTransmission(COMPASS_ADRESS);
   Wire.write(0x01); //Sends the register we wish to start reading from
   Wire.endTransmission();
 }
 
-void Compass::update() override
+void Compass::update()
 {
 
   // Request 5 bytes from the CMPS12
@@ -20,8 +20,7 @@ void Compass::update() override
   // both bytes of the 16 bit bearing, pitch and roll
   Wire.requestFrom(COMPASS_ADRESS, 5);
 
-  while (Wire.available() < 5)
-    ; // Wait for all bytes to come back
+  while (Wire.available() < 5); // Wait for all bytes to come back
 
   _angle8 = Wire.read(); // Read back the 5 bytes
   _high_byte = Wire.read();

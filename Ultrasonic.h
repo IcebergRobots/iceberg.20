@@ -7,6 +7,10 @@ class Ultrasonic : public Hardware
 {
 public:
     Ultrasonic();
+
+    void init() override; //kein return?
+    void update() override;
+
     int getRight();
     int getLeft();
     int getBack();
@@ -14,9 +18,6 @@ public:
     int getFrontRight();
 
     int getFront();
-
-    void init(); //kein return?
-    void update();
 
 private:
     void fetch();

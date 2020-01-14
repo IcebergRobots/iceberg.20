@@ -13,15 +13,13 @@ CaliBalltouch pageid 7:
     tStatus:    6, t0
 
 hardBalltouch pageid 8:
-    tballCali   3, ballCali
-    tSeesBall   6, t0
     tStatus     4, t1
-    updateTimer 5, tm0
+    updatePage  5, tm0
 
 En/Disable pageid 9:
     enKick      3, kicken
     enMotors    6, motorsen
-    updateTimer 7, tm0
+    updatePage  7, tm0
 
 hardKicker pageid 10:
     Kick        3, b1

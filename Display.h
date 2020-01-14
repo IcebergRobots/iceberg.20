@@ -1,9 +1,9 @@
 #pragma once
 #include "Config.h"
 
-#define NUM_OBJECTS 13
+#define NUM_OBJECTS 15
 
-class Display : public Hardware
+class Display
 {
 public:
     static void init();
@@ -55,9 +55,8 @@ private:
     static NexText _ballTouchStatus;
 
     //Hardware ballTouch
-    static NexText _caliStatus;
     static NexText _ballStatus;
-    static NexTimer _updateBallStatus;
+    static NexPage _updateBallStatus;
 
     //Hardware Enable/Disable
     static NexDSButton _enKick;

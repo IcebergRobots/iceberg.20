@@ -1,11 +1,10 @@
 #include "BallTouch.h"
 
-
 BallTouch::BallTouch()
 {
 }
 
-void BallTouch::init() override
+void BallTouch::init()
 {
     pinMode(LED_PIN, OUTPUT);
     pinMode(SENSOR_PIN, INPUT_PULLUP);
@@ -13,7 +12,9 @@ void BallTouch::init() override
 
 void BallTouch::calibrate()
 {
-    _counter, _summe = 0;
+
+    _summe = 0;
+    _counter = 0;
     //without Ball
     while (_counter < 20)
     {
@@ -31,9 +32,10 @@ void BallTouch::calibrate()
     _thresholdNoBall = _summe / 20;
 
     //as long no display, visual message to calibrate with ball todo
-    _counter, _summe = 0;
+    _summe = 0;
+    _counter = 0;
     while (millis() - _onTimer < 5000)
-        digitalWrite(LED_PIN, HIGH);
+    digitalWrite(LED_PIN, HIGH);
     digitalWrite(LED_PIN, LOW);
     _state == LED_OFF;
     //with ball
@@ -63,7 +65,9 @@ void BallTouch::calibrate()
 
 void BallTouch::calibrateNoBall()
 {
-    _counter, _summe = 0;
+
+    _summe = 0;
+    _counter = 0;
     //without Ball
     while (_counter < 20)
     {
@@ -85,7 +89,10 @@ void BallTouch::calibrateNoBall()
 
 void BallTouch::calibrateBall()
 {
-    _counter, _summe = 0;
+    _summe = 0;
+    _counter = 0;
+    Serial.println(_counter);
+
     //with ball
     while (_counter < 20)
     {
@@ -118,7 +125,7 @@ void BallTouch::calculateTreshold()
     }
 }
 
-void BallTouch::update() override
+void BallTouch::update()
 {
     if (calibrated)
     {

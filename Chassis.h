@@ -7,8 +7,8 @@ class Chassis : public Hardware
   public:
     Chassis();
 
-    void init();
-    void update(); //todo
+    void init() override;
+    void update() override; //todo
 
     void steerMotor(byte id, int power);
 
