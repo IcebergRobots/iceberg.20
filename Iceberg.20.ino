@@ -80,7 +80,20 @@ void setup() {
 
 void loop() {
   camera.update();
+  /*Serial.print("AREA:");
+  Serial.println(camera.getBArea());
+  Serial.println(map(camera.getBArea(),0,64000,50,100));*/
+  Serial.print("POS:");
   Serial.println(camera.getBPos());
-  //pui.update();
-  delay(50);
+  Serial.println(map(camera.getBPos(),0,320,90,-90));
+  /*if(map(camera.getBArea(),0,64000,50,100) == 50){
+    chassis.drive(0, -30, 0);
+  }else{
+    chassis.drive(0,map(camera.getBArea(),0,64000,80,30),0);
+  }*/
+  if(camera.getBPos() == 0){
+    chassis.drive(0,-30,0);
+  }else{
+    chassis.drive(map(camera.getBPos(),0,320,90,-90),30,0);
+  }
 }

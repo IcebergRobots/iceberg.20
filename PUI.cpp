@@ -1,26 +1,47 @@
 #include "PUI.h"
 
+Adafruit_MCP23017 expander;
+
 PUI::PUI(){
     
 }
 
 void PUI::init(){
-    Adafruit_MCP23017::begin(0);
+    expander.begin(0);
 
-    Adafruit_MCP23017::pinMode(S_KICKER, INPUT);
-    Adafruit_MCP23017::pinMode(S_MOTOR, INPUT);
-    Adafruit_MCP23017::pinMode(S_HEADSTART, INPUT);
+    expander.pinMode(S_KICKER, INPUT);
+    expander.pinMode(S_MOTOR, INPUT);
+    expander.pinMode(S_HEADSTART, INPUT);
 
-    Adafruit_MCP23017::pinMode(B_KICK, INPUT);
-    Adafruit_MCP23017::pullUp(B_KICK, HIGH);
-    Adafruit_MCP23017::pinMode(B_SHIFT, INPUT);
-    Adafruit_MCP23017::pullUp(B_SHIFT, HIGH);
-    Adafruit_MCP23017::pinMode(B_CAL, INPUT);
-    Adafruit_MCP23017::pullUp(B_CAL, HIGH);
+    expander.pinMode(B_KICK, INPUT);
+    expander.pullUp(B_KICK, HIGH);
+    expander.pinMode(B_SHIFT, INPUT);
+    expander.pullUp(B_SHIFT, HIGH);
+    expander.pinMode(B_CAL, INPUT);
+    expander.pullUp(B_CAL, HIGH);
 
-    Adafruit_MCP23017::pinMode(LED_DEFENDER, OUTPUT);
+    expander.pinMode(LED_DEFENDER, OUTPUT);
 }
 
 void PUI::update(){
+    SKicker = expander.digitalRead(S_KICKER);
+    SHeadstart = expander.digitalRead(S_HEADSTART);
+    SMotor = expander.digitalRead(S_MOTOR);
+    
+}
 
+bool PUI::getSKicker(){
+    return SKicker;
+}
+
+bool PUI::getSHeadstart(){
+    return SHeadstart;
+}
+
+bool PUI::getSMotor(){
+    return SMotor;
+}
+
+bool PUI::getBKick(){
+    return BKick;
 }

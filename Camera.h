@@ -27,6 +27,8 @@ private:
     int ballPos = 0;
     int goalArea = 0;
     int goalPos = 0;
+    unsigned long timer = 0;
+    
 };
 
 
