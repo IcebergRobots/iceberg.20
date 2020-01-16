@@ -43,6 +43,7 @@ Camera camera;
 Chassis chassis;
 Ultrasonic us;
 Compass cmps;
+PUI pui;
 
 int drivePower = 0;                 // [-255 bis 255] aktuelle maximale Motorstärke
 int driveRotation = 0;              // [-255 bis 255] aktuelle Rotationsstärke
@@ -58,9 +59,10 @@ void setup() {
   chassis.init();
   us.init();
   camera.init();
+  pui.init();
   //cmps.init();
 
-  ballTouch.calibrate();
+  //ballTouch.calibrate();
   
   startSound();
 
@@ -78,5 +80,7 @@ void setup() {
 
 void loop() {
   camera.update();
+  Serial.println(camera.getBPos());
+  //pui.update();
   delay(50);
 }

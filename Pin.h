@@ -36,6 +36,27 @@
 #define M2_CURR         A3 //  Pin zum messen des Motorstroms von M3
 #define M3_CURR         A4 //  Pin zum messen des Motorstroms von M4
 
+/*****************************************************
+  Expander - PUI
+*****************************************************/
+#define S_KICKER        0
+#define S_MOTOR         1
+#define S_HEADSTART     2
+
+#define B_KICK          8
+#define B_CAL           9
+#define B_SHIFT         10
+
+#define J_LEFT          3
+#define J_CENTER        4
+#define J_DOWN          5
+#define J_RIGHT         6
+#define J_UP            7
+
+#define LED_DEFENDER    11
+#define LED_STRIKER     12    //not working 
+
+
 #endif 
 
 
