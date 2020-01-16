@@ -47,6 +47,8 @@ unsigned int kickPower = 0;
 bool caliKick = false;
 bool enKick = false;
 
+  Camera camera;
+  PUI pui;
 //Hardware hardwares[1] = {        us        };
 
 //###################################################################################################
@@ -70,8 +72,6 @@ void setup()
   Display::init(); //static class maybe cannt init int foreach
   //us.init();
   //cmps.init();
-Camera camera;
-PUI pui;
 
   pui.init();
   camera.init();
@@ -91,8 +91,10 @@ PUI pui;
 void loop()
 {
   Display::update(); //maybe can implement it alltough its static class
-  // for(Hardware hardware : hardwares)
-  //   hardware.update();
+                     // for(Hardware hardware : hardwares)
+                     //   hardware.update();
+  camera.update();
+
   m.update();
   ballTouch.update();
   if (ballTouch.hasBall())
@@ -100,14 +102,15 @@ void loop()
     kick();
     startSound();
   }
-  m.drive(0,50);
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
   // // cmps.update();
   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
-  if(camera.getBPos() == 0){
-    chassis.drive(0,-30,0);
-  }else{
-    chassis.drive(map(camera.getBPos(),0,320,90,-90),30,0);
+  if (camera.getBPos() == 0)
+  {
+    m.drive(0, -30, 0);
   }
-  camera.update();
+  else
+  {
+    m.drive(map(camera.getBPos(), 0, 320, 90, -90), 30, 0);
+  }
 }

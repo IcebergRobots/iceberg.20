@@ -6,6 +6,8 @@
 #include "Chassis.h"
 #include "Utility.h"
 #include "BallTouch.h"
+#include "PUI.h"
+#include "Camera.h"
 
 #define NUM_OBJECTS 15
 

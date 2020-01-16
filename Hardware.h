@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Wire.h>
+#include <SPI.h>
 
 class Hardware {
     public:

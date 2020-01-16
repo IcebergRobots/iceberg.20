@@ -1,17 +1,18 @@
 #pragma once
 
 #include "Config.h"
+#include "Hardware.h"
 
 #include <Pixy.h>
 
 
-class Camera : private Pixy
+class Camera : private Pixy, public Hardware
 {
 public: 
     Camera();
 
-    void init();
-    void update();
+    void init() override;
+    void update() override;
 
     bool isEnabled();
 

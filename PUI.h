@@ -1,17 +1,18 @@
 #pragma once 
 
 #include "Config.h"
+#include "Hardware.h"
 #include <Adafruit_MCP23017.h>
 
 
 
-class PUI
+class PUI : public Hardware
 {
     public:
         PUI();
 
-        void init();
-        void update();
+        void init() override;
+        void update() override;
         
         bool getSKicker();
         bool getSHeadstart();
