@@ -70,7 +70,11 @@ void setup()
   Display::init(); //static class maybe cannt init int foreach
   //us.init();
   //cmps.init();
+Camera camera;
+PUI pui;
 
+  pui.init();
+  camera.init();
   startSound();
 }
 
@@ -100,4 +104,10 @@ void loop()
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
   // // cmps.update();
   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
+  if(camera.getBPos() == 0){
+    chassis.drive(0,-30,0);
+  }else{
+    chassis.drive(map(camera.getBPos(),0,320,90,-90),30,0);
+  }
+  camera.update();
 }

@@ -3,11 +3,23 @@
 #include "Arduino.h"
 #include "Pin.h"
 
-// Implementierung: FAHREN
+/*****************************************************
+  Fahren - Chassis
+*****************************************************/
 extern int drivePower, driveRotation, driveDirection, driveOrientation;
 
-// Implementierung: KICK, LIGHT_BARRIER
+/*****************************************************
+  Kick/Lightbarrier - Utility
+*****************************************************/
 extern unsigned long kickTimer;
 extern unsigned int kickPower;
 extern bool enKick, caliKick;
 extern bool hasBall, caliNoBall, caliBall, calibrated;
+
+/*****************************************************
+  Camera 
+*****************************************************/
+#define SIG_BALL 1
+#define SIG_GOAL 2
+#define CAM_EN true
+
