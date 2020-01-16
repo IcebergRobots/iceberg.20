@@ -76,6 +76,7 @@ void setup()
   pui.init();
   camera.init();
   startSound();
+  Serial.println(getFreeSRAM());
 }
 
 //###################################################################################################

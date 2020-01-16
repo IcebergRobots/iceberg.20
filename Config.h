@@ -17,6 +17,13 @@ extern bool enKick, caliKick;
 extern bool hasBall, caliNoBall, caliBall, calibrated;
 
 /*****************************************************
+  GetFreeSRAM - Utility
+*****************************************************/
+extern unsigned int __bss_end;
+extern unsigned int __heap_start;
+extern void *__brkval;
+
+/*****************************************************
   Camera 
 *****************************************************/
 #define SIG_BALL 1
