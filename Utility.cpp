@@ -6,7 +6,7 @@ void kick() {
     kickTimer = millis();
     while (millis() - kickTimer <50)
     {
-        analogWrite(12, map(analogRead(A0),0,1023,190,255));    // schuss bei 12, Poti bei A0
+        analogWrite(KICKER, map(analogRead(A0),0,1023,190,255));    // schuss bei 12, Poti bei A0
     }
            kickTimer = millis(); 
     analogWrite(12,0);

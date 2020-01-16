@@ -1,7 +1,6 @@
 //Datasheet: http://coecsl.ece.illinois.edu/ge423/DevantechSRF08UltraSonicRanger.pdf
 
-#ifndef Ultrasonic_h
-#define Ultrasonic_h 
+#pragma once
 
 #include "Config.h"
 
@@ -36,4 +35,6 @@ private:
     const byte _addresses[NUM_OF_US] = {FRONT_LEFT, LEFT, BACK, RIGHT, FRONT_RIGHT}; //vorher progmen, um im flash und nicht im sram zu speichern, braucht bestimmte funktionen um wert auszulesen, diese wurden nicht benutzt
     int _distance[NUM_OF_US] = {0, 0, 0, 0, 0};
 };
-#endif
+
+
+

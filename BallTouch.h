@@ -1,5 +1,4 @@
-#ifndef BallTouch_h
-#define BallTouch_h
+#pragma once
 
 #include "Config.h"
 
@@ -50,4 +49,4 @@ private:
     void calculate();
 };
 
-#endif
+

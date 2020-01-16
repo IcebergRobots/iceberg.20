@@ -26,10 +26,6 @@
 */
 
 #include "Config.h"
-Ultrasonic us;
-Compass cmps;
-Chassis m;
-BallTouch ballTouch;
 
 
 //###################################################################################################
@@ -42,7 +38,11 @@ BallTouch ballTouch;
 //##                                                                                               ##
 //###################################################################################################
 
-
+BallTouch ballTouch;
+Camera camera;
+Chassis chassis;
+Ultrasonic us;
+Compass cmps;
 
 int drivePower = 0;                 // [-255 bis 255] aktuelle maximale Motorstärke
 int driveRotation = 0;              // [-255 bis 255] aktuelle Rotationsstärke
@@ -51,16 +51,19 @@ int driveOrientation = 0;           // [-180 bis 180] Ziel-Orientierungswinkel
 unsigned long kickTimer = 2000;
 
 void setup() {
-    Serial.begin(9600);
-      Wire.begin();
-      ballTouch.init();
-      ballTouch.calibrate();
-     // m.setAngle(70);
-    m.init();
+  Serial.begin(9600);
+  Wire.begin();
+
+  ballTouch.init();
+  chassis.init();
+  us.init();
+  camera.init();
+  //cmps.init();
+
+  ballTouch.calibrate();
+  
   startSound();
 
-    us.init();
-    //cmps.init();
 }
 
 //###################################################################################################
@@ -74,15 +77,6 @@ void setup() {
 //###################################################################################################
 
 void loop() {
-    us.update();
-    ballTouch.update();
-    if (ballTouch.hasBall())
-    {
-      startSound();
-    }
-    //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
-m.drive(0,40);
-   // cmps.update();
-   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
-
+  camera.update();
+  delay(50);
 }
