@@ -3,84 +3,23 @@
 // array auslesen ist schneller als berechnen
 const int sinus[360] = {0, 175, 349, 523, 698, 872, 1045, 1219, 1392, 1564, 1736, 1908, 2079, 2250, 2419, 2588, 2756, 2924, 3090, 3256, 3420, 3584, 3746, 3907, 4067, 4226, 4384, 4540, 4695, 4848, 5000, 5150, 5299, 5446, 5592, 5736, 5878, 6018, 6157, 6293, 6428, 6561, 6691, 6820, 6947, 7071, 7193, 7314, 7431, 7547, 7660, 7771, 7880, 7986, 8090, 8192, 8290, 8387, 8480, 8572, 8660, 8746, 8829, 8910, 8988, 9063, 9135, 9205, 9272, 9336, 9397, 9455, 9511, 9563, 9613, 9659, 9703, 9744, 9781, 9816, 9848, 9877, 9903, 9925, 9945, 9962, 9976, 9986, 9994, 9998, 10000, 9998, 9994, 9986, 9976, 9962, 9945, 9925, 9903, 9877, 9848, 9816, 9781, 9744, 9703, 9659, 9613, 9563, 9511, 9455, 9397, 9336, 9272, 9205, 9135, 9063, 8988, 8910, 8829, 8746, 8660, 8572, 8480, 8387, 8290, 8192, 8090, 7986, 7880, 7771, 7660, 7547, 7431, 7314, 7193, 7071, 6947, 6820, 6691, 6561, 6428, 6293, 6157, 6018, 5878, 5736, 5592, 5446, 5299, 5150, 5000, 4848, 4695, 4540, 4384, 4226, 4067, 3907, 3746, 3584, 3420, 3256, 3090, 2924, 2756, 2588, 2419, 2250, 2079, 1908, 1736, 1564, 1392, 1219, 1045, 872, 698, 523, 349, 175, 0, -175, -349, -523, -698, -872, -1045, -1219, -1392, -1564, -1736, -1908, -2079, -2250, -2419, -2588, -2756, -2924, -3090, -3256, -3420, -3584, -3746, -3907, -4067, -4226, -4384, -4540, -4695, -4848, -5000, -5150, -5299, -5446, -5592, -5736, -5878, -6018, -6157, -6293, -6428, -6561, -6691, -6820, -6947, -7071, -7193, -7314, -7431, -7547, -7660, -7771, -7880, -7986, -8090, -8192, -8290, -8387, -8480, -8572, -8660, -8746, -8829, -8910, -8988, -9063, -9135, -9205, -9272, -9336, -9397, -9455, -9511, -9563, -9613, -9659, -9703, -9744, -9781, -9816, -9848, -9877, -9903, -9925, -9945, -9962, -9976, -9986, -9994, -9998, -10000, -9998, -9994, -9986, -9976, -9962, -9945, -9925, -9903, -9877, -9848, -9816, -9781, -9744, -9703, -9659, -9613, -9563, -9511, -9455, -9397, -9336, -9272, -9205, -9135, -9063, -8988, -8910, -8829, -8746, -8660, -8572, -8480, -8387, -8290, -8192, -8090, -7986, -7880, -7771, -7660, -7547, -7431, -7314, -7193, -7071, -6947, -6820, -6691, -6561, -6428, -6293, -6157, -6018, -5878, -5736, -5592, -5446, -5299, -5150, -5000, -4848, -4695, -4540, -4384, -4226, -4067, -3907, -3746, -3584, -3420, -3256, -3090, -2924, -2756, -2588, -2419, -2250, -2079, -1908, -1736, -1564, -1392, -1219, -1045, -872, -698, -523, -349, -175};
 
-/*****************************************************
-  setze Achsenwinkel auf 70°
-*****************************************************/
-Chassis::Chassis()
-{
-  _angle = 70;
-  _motEn = false;
-}
-
 void Chassis::init()
 {
 
-  this->setPins(0, FWD0, BWD0, PWM0, M0_CURR);
-  this->setPins(1, FWD1, BWD1, PWM1, M1_CURR);
-  this->setPins(2, FWD2, BWD2, PWM2, M2_CURR);
-  this->setPins(3, FWD3, BWD3, PWM3, M3_CURR);
-  this->setMotEn(false);
-}
-
-void Chassis::update() {
-  //todo
-}
-
-/*****************************************************
-  setze Motor-Ansteuerungspins
-  @param id: Motor-ID
-  @param fwd: Pin für Vorwärtsdrehung
-  @param bwd: Pin für Rückwärtsdrehung
-  @param pwm: Pin für Geschwindigkeit
-*****************************************************/
-void Chassis::setPins(byte id, byte fwd, byte bwd, byte pwm, int curSens)
-{
-  if (id < 0 || id > 3)
-  { // ungueltige Eingabe
-    return;
-  }
-
-  _fwd[id] = fwd; // speichere Pins
-  _bwd[id] = bwd;
-  _pwm[id] = pwm;
-
-  _curSens[id] = curSens;
-
-  pinMode(fwd, OUTPUT); // definiere Pins als Output
-  pinMode(bwd, OUTPUT);
-  pinMode(pwm, OUTPUT);
-}
-/*****************************************************
-  setze Ausgangssignale fuer einen Motor
-  @param id [0 bis 3]: Motor-ID
-  @param power [-255 bis 255]: Gescwindigkeit
-
-  IDs:
-     .--.
-  0 /    \ 3
-  1 \    / 2
-     '--'
-*****************************************************/
-void Chassis::steerMotor(byte id, int power)
-{
-  if (_motEn)
+  motors[0] = Motor(FWD0, BWD0, PWM0, M0_CURR);
+  motors[1] = Motor(FWD1, BWD1, PWM1, M1_CURR);
+  motors[2] = Motor(FWD2, BWD2, PWM2, M2_CURR);
+  motors[3] = Motor(FWD3, BWD3, PWM3, M3_CURR);
+  for(int i = 0; i < 4; i++)
   {
-    if (id < 0 || id > 3)
-    { //Eingabeueberpruefung
-      return;
-    }
-
-    power = min(255, power); //Eingabekorrektur
-    power = max(-255, power);
-
-    digitalWrite(_fwd[id], power > 0);  //drehe Motor vorwarts
-    digitalWrite(_bwd[id], power <= 0); //drehe Motor rueckwaerts
-    analogWrite(_pwm[id], abs(power));  //drehe Motor mit Geschwindigkeit
+    motors[i].init();
   }
-  else
-  {
-    this->brake(false); //Muss ich machen, sonst fahren die weiter auch wenn disabled
-  }
+  this->setMotEn(true);
+}
+
+void Chassis::update()
+{
+  //TODO
 }
 
 /*****************************************************
@@ -100,22 +39,16 @@ void Chassis::drive(int angle, int power, int rotation)
   calculate(angle, power, rotation);
   drive();
 }
-
-void Chassis::drive()
-{
-  drive(_values);
-}
-
 /*****************************************************
   steuere die Motoren an, um zu fahren
-  @param values: Zwischenspeicher
+  @param _value: Zwischenspeicher
   - nutze Berechnungen des Zwischenspeichers
 *****************************************************/
-void Chassis::drive(int values[])
+void Chassis::drive()
 {
   for (int i = 0; i < 4; i++)
   {
-    steerMotor(i, values[i]);
+    motors[i].steerMotor();
   }
 }
 
@@ -151,16 +84,16 @@ void Chassis::calculate(int angle, int power, int rotation)
   }
 
   //                                                      IDs:  .--.
-  int sinA02 = sinus[(((_angle / 2) - angle) + 360) % 360]; //berechne Zwischenwert für Achse der Motoren 1 und 3      3 /    \ 0
-  int sinA13 = sinus[(((_angle / 2) + angle) + 360) % 360]; //berechne Zwischenwert für Achse der Motoren 2 und 4      2 \    / 1
+  int sinA02 = sinus[(((ANGLE / 2) - angle) + 360) % 360]; //berechne Zwischenwert für Achse der Motoren 1 und 3      3 /    \ 0
+  int sinA13 = sinus[(((ANGLE / 2) + angle) + 360) % 360]; //berechne Zwischenwert für Achse der Motoren 2 und 4      2 \    / 1
   //                                                            '--'
   int axis02 = power * (double)sinA02 / 10000; //berechne Motorstärken für Achse 1&3
   int axis13 = power * (double)sinA13 / 10000; //berechne Motorstärken für Achse 2&4
 
-  _values[0] = axis02 - rotation; //erstelle Zwischenspeicher für alle Motorstärken
-  _values[1] = axis13 - rotation;
-  _values[2] = axis02 + rotation;
-  _values[3] = axis13 + rotation;
+  motors[0].setPower(axis02 - rotation); //erstelle Zwischenspeicher für alle Motorstärken
+  motors[1].setPower(axis13 - rotation); 
+  motors[2].setPower(axis02 + rotation);
+  motors[3].setPower(axis13 + rotation);
 }
 
 /*****************************************************
@@ -169,23 +102,22 @@ void Chassis::calculate(int angle, int power, int rotation)
 *****************************************************/
 void Chassis::brake(bool activ)
 {
-  drivePower = 0;    // setze die Displaywerte
-  driveRotation = 0; // setze die Displaywerte
-
   for (byte i = 0; i < 4; i++)
   {
-    digitalWrite(_fwd[i], activ);
-    digitalWrite(_bwd[i], activ);
-    analogWrite(_pwm[i], 255);
+    motors[i].brake(activ);
   }
 }
 
 void Chassis::setMotEn(bool motEn)
 {
-  _motEn = motEn;
+  for(int i = 0; i < 4; i++)
+  {
+   motors[i].setMotEn(motEn);
+  }
+  this->_motEn = _motEn;
 }
 
 bool Chassis::getMotEn()
 {
-  return _motEn;
+  return this->_motEn;
 }

@@ -1,5 +1,11 @@
 #pragma once
 #include "Config.h"
+#include "Nextion.h"
+#include "Ultrasonic.h"
+#include "Compass.h"
+#include "Chassis.h"
+#include "Utility.h"
+#include "BallTouch.h"
 
 #define NUM_OBJECTS 15
 

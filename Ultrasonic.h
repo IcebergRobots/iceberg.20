@@ -2,6 +2,7 @@
 
 #pragma once
 #include "Config.h"
+#include "Hardware.h"
 
 class Ultrasonic : public Hardware
 {

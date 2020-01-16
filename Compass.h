@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Config.h"
+#include "Hardware.h"
 
 #define COMPASS_ADRESS 96
 

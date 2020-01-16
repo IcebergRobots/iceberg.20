@@ -25,7 +25,8 @@
 
 */
 
-#include "Config.h"
+#include "Display.h"
+
 Ultrasonic us;
 
 Compass cmps;
@@ -95,6 +96,7 @@ void loop()
     kick();
     startSound();
   }
+  m.drive(0,50);
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
   // // cmps.update();
   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());

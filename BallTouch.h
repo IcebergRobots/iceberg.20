@@ -1,5 +1,6 @@
 #pragma once
 #include "Config.h"
+#include "Hardware.h"
 
 #define LED_OFF false
 #define LED_ON true
