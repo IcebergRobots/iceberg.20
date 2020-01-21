@@ -43,13 +43,14 @@ bool caliNoBall = false;
 bool caliBall = false;
 
 unsigned long kickTimer = 0;
-unsigned int kickPower = 0;
-bool caliKick = false;
-bool enKick = false;
+unsigned int kickPower = 190;
+bool caliKick = true;
+bool enKick = true;
 
-  Camera camera;
-  PUI pui;
-//Hardware hardwares[1] = {        us        };
+Camera camera;
+PUI pui;
+
+Hardware* hardwares[4] = {&m, &ballTouch, &camera, &pui}; //CMPS noch hinzufügen
 
 //###################################################################################################
 //##                                                                                               ##
@@ -65,16 +66,13 @@ void setup()
 {
   Serial.begin(9600);
   Wire.begin();
-  ballTouch.init();
-  m.init();
-  // for(Hardware hardware : hardwares)
-  //   hardware.init();
-  Display::init(); //static class maybe cannt init int foreach
-  //us.init();
-  //cmps.init();
 
-  pui.init();
-  camera.init();
+  for(Hardware* hardware : hardwares)
+    hardware->init();
+
+  Display::init(); //static class maybe cant init int foreach
+  ballTouch.calibrate();
+
   startSound();
   Serial.println(getFreeSRAM());
 }
@@ -101,7 +99,6 @@ void loop()
   if (ballTouch.hasBall())
   {
     kick();
-    startSound();
   }
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
   // // cmps.update();

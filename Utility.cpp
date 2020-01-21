@@ -5,14 +5,11 @@ void kick()
   if (millis() - kickTimer > 333 && enKick && caliKick)
   {
     kickTimer = millis();
-    while (millis() - kickTimer < 50)
-    {
-      analogWrite(KICKER, kickPower); // schuss bei 12, Poti bei A0
-    }
-    kickTimer = millis();
-    analogWrite(KICKER, 0);
+    analogWrite(KICKER, kickPower); // schuss bei 12, Poti bei A0
   }
 }
+
+
 
 void startSound()
 {

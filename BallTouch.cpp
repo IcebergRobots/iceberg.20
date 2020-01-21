@@ -12,55 +12,14 @@ void BallTouch::init()
 
 void BallTouch::calibrate()
 {
-
-    _summe = 0;
-    _counter = 0;
-    //without Ball
-    while (_counter < 20)
-    {
-
-        if (_state == LED_ON && millis() - _onTimer > 10)
-        {
-            turnOff();
-            _counter++;
-            calculate();
-            _summe += _value;
-        }
-        else if (_state == LED_OFF && millis() - _offTimer > 10)
-            turnOn();
-    }
-    _thresholdNoBall = _summe / 20;
-
-    //as long no display, visual message to calibrate with ball todo
-    _summe = 0;
-    _counter = 0;
-    while (millis() - _onTimer < 5000)
-    digitalWrite(LED_PIN, HIGH);
-    digitalWrite(LED_PIN, LOW);
-    _state == LED_OFF;
-    //with ball
-    while (_counter < 20)
-    {
-
-        if (_state == LED_ON && millis() - _onTimer > 10)
-        {
-            turnOff();
-            _counter++;
-            calculate();
-            _summe += _value;
-        }
-        else if (_state == LED_OFF && millis() - _offTimer > 10)
-            turnOn();
-    }
-    _thresholdBall = _summe / 20;
-    _threshold = (_thresholdBall + _thresholdNoBall) / 2;
+    calibrateNoBall();
 
     while (millis() - _onTimer < 2000)
-    {
         digitalWrite(LED_PIN, HIGH);
-    }
     digitalWrite(LED_PIN, LOW);
-    _state == LED_OFF;
+
+    calibrateBall();
+    calculateTreshold();
 }
 
 void BallTouch::calibrateNoBall()
@@ -123,6 +82,7 @@ void BallTouch::calculateTreshold()
             caliNoBall = true;
         }
     }
+    calibrated = !caliNoBall || !caliBall ? false : true;
 }
 
 void BallTouch::update()

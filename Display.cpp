@@ -123,7 +123,6 @@ void Display::ballTouchNoBall(void *ptr)
 void Display::ballTouchThreshold(void *ptr)
 {
   ballTouch.calculateTreshold();
-  calibrated = !caliNoBall || !caliBall ? false : true;
 }
 
 //Hardware BallTouch

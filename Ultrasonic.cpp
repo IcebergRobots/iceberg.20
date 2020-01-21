@@ -2,7 +2,6 @@
 
 Ultrasonic::Ultrasonic()
 {
-    //  warum initialisiert man nicht hier direkt, sondern erst durch einen extra Methodenaufruf
 }
 
 void Ultrasonic::init()

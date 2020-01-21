@@ -5,6 +5,6 @@
 
 class Hardware {
     public:
-        virtual void init() = 0;
-        virtual void update() = 0;
+        virtual void init();
+        virtual void update();
 };
