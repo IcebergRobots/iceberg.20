@@ -42,15 +42,15 @@ bool calibrated = false;
 bool caliNoBall = false;
 bool caliBall = false;
 
-unsigned long kickTimer = 0;
-unsigned int kickPower = 190;
 bool caliKick = true;
 bool enKick = true;
 
 Camera camera;
 PUI pui;
 
-Hardware* hardwares[4] = {&m, &ballTouch, &camera, &pui}; //CMPS noch hinzufügen
+Kick kick(190);
+
+Hardware* hardwares[] = {&m, &ballTouch, &camera, &pui, &kick}; //CMPS noch hinzufügen
 
 //###################################################################################################
 //##                                                                                               ##
@@ -89,16 +89,13 @@ void setup()
 
 void loop()
 {
+  for(Hardware* hardware : hardwares)
+  hardware->update();
   Display::update(); //maybe can implement it alltough its static class
-                     // for(Hardware hardware : hardwares)
-                     //   hardware.update();
-  camera.update();
 
-  m.update();
-  ballTouch.update();
   if (ballTouch.hasBall())
   {
-    kick();
+    kick.kick();
   }
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
   // // cmps.update();

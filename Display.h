@@ -8,6 +8,7 @@
 #include "BallTouch.h"
 #include "PUI.h"
 #include "Camera.h"
+#include "Kick.h"
 
 #define NUM_OBJECTS 15
 

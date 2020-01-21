@@ -1,16 +1,5 @@
 #include "Utility.h"
 
-void kick()
-{
-  if (millis() - kickTimer > 333 && enKick && caliKick)
-  {
-    kickTimer = millis();
-    analogWrite(KICKER, kickPower); // schuss bei 12, Poti bei A0
-  }
-}
-
-
-
 void startSound()
 {
   //Fiepen, welches Programstart signalisiert

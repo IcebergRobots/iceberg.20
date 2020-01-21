@@ -14,7 +14,7 @@ void Chassis::init()
   {
     motors[i].init();
   }
-  this->setMotEn(true);
+  setMotEn(true);
 }
 
 void Chassis::update()
@@ -114,10 +114,10 @@ void Chassis::setMotEn(bool motEn)
   {
    motors[i].setMotEn(motEn);
   }
-  this->_motEn = _motEn;
+  _motEn = _motEn;
 }
 
 bool Chassis::getMotEn()
 {
-  return this->_motEn;
+  return _motEn;
 }

@@ -2,6 +2,7 @@
 
 extern BallTouch ballTouch;
 extern Chassis m;
+extern Kick kick;
 
 /*******************************************************************
  * Example
@@ -161,11 +162,11 @@ void Display::updateEnPage(void *ptr)
 //Hardware Kicker
 void Display::kickBall(void *ptr) {
   if (enKick)
-    kick();
+    kick.kick();
   else
   {
     enKick = true;
-    kick();
+    kick.kick();
     enKick = false;
   }
 
@@ -178,7 +179,8 @@ void Display::kickSlider(void *ptr) {
   // change text with the current slider value
   _kickSlider.getValue(&number);
   utoa(number, temp, 10);
-  kickPower = map(number, 0, 100, 100, 255);
+  kick.setKickPower(map(number, 0, 100, 100, 255));
+  
   caliKick = true;
 }
 
