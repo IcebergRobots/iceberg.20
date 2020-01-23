@@ -11,7 +11,10 @@ class Compass : public Hardware
 {
 
 public:
-    Compass();
+    Compass(const bool& enabled = false)
+        {
+            _enabled = enabled;
+        };
     void init() override;
     void update() override;
 

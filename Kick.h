@@ -6,16 +6,23 @@
 class Kick : public Hardware
 {
     public:
-        Kick(int kickPower)
-            : _kickPower(kickPower) {};
+        Kick(const bool& enabled = false, const int& power = 0)
+            {
+                _enabled = enabled;
+                setPower(power);            //setCali = true
+            };
         void init() override;
         void update() override;
-        
+
+        void setCali(const bool& calibrated);
+        const bool getCali();
+
         void kick();
 
-        void setKickPower(const unsigned int& kickPower);
-        const int getKickPower();
+        void setPower(const unsigned int& kickPower);
+        const int getPower();
     private:
-        unsigned long _kickTimer;
-        unsigned int _kickPower;
+        bool _calibrated;
+        unsigned long _timer;
+        unsigned int _power;
 };

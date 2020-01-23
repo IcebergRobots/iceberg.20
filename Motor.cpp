@@ -7,19 +7,27 @@ Motor::Motor()
 
 void Motor::init() 
 {
+  if (getEn())
+  {
     pinMode(_fwd, OUTPUT); // definiere Pins als Output
     pinMode(_bwd, OUTPUT);
     pinMode(_pwm, OUTPUT);
+  }
 }
 
 void Motor::update()
 {
+  if (getEn())
+  {
+    /* code */
+  }
+  
     //TODO  reading EncoderSignals
 }
 
 void Motor::steerMotor()
 {
-    if (_motEn)
+    if (getEn())
   {
     _power = min(255, _power); //Eingabekorrektur
     _power = max(-255, _power);
@@ -43,16 +51,6 @@ void Motor::brake(bool activ)
     digitalWrite(_fwd, activ);
     digitalWrite(_bwd, activ);
     analogWrite(_pwm, 255);
-}
-
-void Motor::setMotEn(bool _motEn)
-{
-    _motEn = _motEn;
-}
-
-bool Motor::getMotEn()
-{
-    return _motEn;
 }
 
 void Motor::setPower(int power)

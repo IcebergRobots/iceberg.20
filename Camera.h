@@ -9,26 +9,27 @@
 class Camera : private Pixy, public Hardware
 {
 public: 
-    Camera();
+    Camera(const bool& enabled = false)
+        {
+            _enabled = enabled;
+        };
 
     void init() override;
     void update() override;
-
-    bool isEnabled();
 
     int getBArea();
     int getBPos();
 
 private:
-    int blockCount = 0;
-    int ballCount = 0;
-    int goalCount = 0;
+    int _blockCount;
+    int _ballCount;
+    int _goalCount;
 
-    int ballArea = 0;
-    int ballPos = 0;
-    int goalArea = 0;
-    int goalPos = 0;
-    unsigned long timer = 0;
+    int _ballArea;
+    int _ballPos;
+    int _goalArea;
+    int _goalPos;
+    unsigned long _timer;
     
 };
 

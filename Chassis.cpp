@@ -5,20 +5,25 @@ const int sinus[360] = {0, 175, 349, 523, 698, 872, 1045, 1219, 1392, 1564, 1736
 
 void Chassis::init()
 {
-
-  motors[0] = Motor(FWD0, BWD0, PWM0, M0_CURR);
-  motors[1] = Motor(FWD1, BWD1, PWM1, M1_CURR);
-  motors[2] = Motor(FWD2, BWD2, PWM2, M2_CURR);
-  motors[3] = Motor(FWD3, BWD3, PWM3, M3_CURR);
-  for(int i = 0; i < 4; i++)
+  if (getMotEn())
   {
-    motors[i].init();
+    motors[0] = Motor(FWD0, BWD0, PWM0, M0_CURR);
+    motors[1] = Motor(FWD1, BWD1, PWM1, M1_CURR);
+    motors[2] = Motor(FWD2, BWD2, PWM2, M2_CURR);
+    motors[3] = Motor(FWD3, BWD3, PWM3, M3_CURR);
+    for (int i = 0; i < 4; i++)
+    {
+      motors[i].init();
+    }
   }
-  setMotEn(true);
 }
 
 void Chassis::update()
 {
+  if (getMotEn())
+  {
+    /* code */
+  }
   //TODO
 }
 
@@ -60,9 +65,6 @@ void Chassis::drive()
 *****************************************************/
 void Chassis::calculate(int angle, int power, int rotation)
 {
-  driveDirection = angle;   // setze die Displaywerte
-  drivePower = power;       // setze die Displaywerte
-  driveRotation = rotation; // setze die Displaywerte
 
   if (power < 0)
   {                 //bei negativen Geschwindigkeiten,
@@ -91,7 +93,7 @@ void Chassis::calculate(int angle, int power, int rotation)
   int axis13 = power * (double)sinA13 / 10000; //berechne Motorstärken für Achse 2&4
 
   motors[0].setPower(axis02 - rotation); //erstelle Zwischenspeicher für alle Motorstärken
-  motors[1].setPower(axis13 - rotation); 
+  motors[1].setPower(axis13 - rotation);
   motors[2].setPower(axis02 + rotation);
   motors[3].setPower(axis13 + rotation);
 }
@@ -100,7 +102,7 @@ void Chassis::calculate(int angle, int power, int rotation)
   bremse aktiv oder passiv alle Motoren
   @param activ: aktives Bremsen?
 *****************************************************/
-void Chassis::brake(bool activ)
+void Chassis::brake(const bool &activ)
 {
   for (byte i = 0; i < 4; i++)
   {
@@ -108,16 +110,16 @@ void Chassis::brake(bool activ)
   }
 }
 
-void Chassis::setMotEn(bool motEn)
+void Chassis::setMotEn(const bool &motEn)
 {
-  for(int i = 0; i < 4; i++)
+  for (int i = 0; i < 4; i++)
   {
-   motors[i].setMotEn(motEn);
+    motors[i].setEn(motEn);
   }
   _motEn = _motEn;
 }
 
-bool Chassis::getMotEn()
+const bool Chassis::getMotEn()
 {
   return _motEn;
 }

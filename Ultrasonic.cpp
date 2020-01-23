@@ -1,17 +1,38 @@
 #include "Ultrasonic.h"
 
-Ultrasonic::Ultrasonic()
-{
-}
-
 void Ultrasonic::init()
 {
+    if (getEn())
+    {
     for (int i = 0; i < NUM_OF_US; i++)
     {
         Wire.beginTransmission(_addresses[i]);
         Wire.write(byte(0x02));
         Wire.write(byte(70)); //warum 70? sehe im datenblatt nichts
         Wire.endTransmission();
+    }
+    }
+}
+
+void Ultrasonic::update()
+{
+    if (getEn())
+    {
+        if (millis() - _lastMeasurement > 25 && !_fetched)
+        {
+            fetch();
+            _fetched = true;
+        }
+        if (millis() - _lastMeasurement > 65)
+        {
+            Wire.beginTransmission(0); // auf Adresse 0 hören alle Ultraschallsensor zu. Alternativ können die Befehle an alle Sonsoren einzeln gesendet werden.
+            Wire.write(byte(0x00));
+            Wire.write(byte(0x51));
+            Wire.endTransmission();
+
+            _lastMeasurement = millis();
+            _fetched = false;
+        }
     }
 }
 
@@ -29,25 +50,6 @@ void Ultrasonic::fetch()
             _distance[i] = Wire.read() << 8;
             _distance[i] |= Wire.read();
         }
-    }
-}
-
-void Ultrasonic::update()
-{
-    if (millis() - _lastMeasurement > 25 && !_fetched)
-    {
-        fetch();
-        _fetched = true;
-    }
-    if (millis() - _lastMeasurement > 65)
-    {
-        Wire.beginTransmission(0); // auf Adresse 0 hören alle Ultraschallsensor zu. Alternativ können die Befehle an alle Sonsoren einzeln gesendet werden.
-        Wire.write(byte(0x00));
-        Wire.write(byte(0x51));
-        Wire.endTransmission();
-
-        _lastMeasurement = millis();
-        _fetched = false;
     }
 }
 

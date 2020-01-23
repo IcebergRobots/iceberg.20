@@ -1,22 +1,20 @@
 #pragma once
 
 #include "Config.h"
+#include "Hardware.h"
 
-class Motor
+class Motor : public Hardware
 {
     public:
         Motor(byte fwd, byte bwd, byte pwm, int curSens)
            : _fwd(fwd), _bwd(bwd), _pwm(pwm), _curSens(curSens) {}
         Motor();
-        void init();
-        void update(); //TODO Encodersignals
+        void init() override;
+        void update() override; //TODO Encodersignals
 
         void steerMotor();
 
         void brake(bool active);
-
-        void setMotEn(bool motEn);
-        bool getMotEn();
 
         void setPower(int power);
 
@@ -26,8 +24,6 @@ class Motor
         byte _pwm;
         int _curSens;
         
-        bool _motEn;
-
         int _power; //zwischenspeicher
     
 };

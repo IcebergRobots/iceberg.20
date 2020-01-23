@@ -9,11 +9,14 @@
 class PUI : public Hardware
 {
     public:
-        PUI();
+        PUI(const bool& enabled = false)
+        {
+            _enabled = enabled;
+        };
 
         void init() override;
         void update() override;
-        
+
         bool getSKicker();
         bool getSHeadstart();
         bool getSMotor();
@@ -22,11 +25,11 @@ class PUI : public Hardware
 
         
     private:
-        bool SKicker = false;
-        bool SHeadstart = false;
-        bool SMotor = false;
-        bool BKick = false;
-        unsigned long timer = 0;
+        bool _SKicker;
+        bool _SHeadstart;
+        bool _SMotor;
+        bool _BKick;
+        unsigned long _timer;
 
     
 

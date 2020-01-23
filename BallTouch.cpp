@@ -1,13 +1,12 @@
 #include "BallTouch.h"
 
-BallTouch::BallTouch()
-{
-}
-
 void BallTouch::init()
 {
+    if(getEn())
+    {
     pinMode(LED_PIN, OUTPUT);
     pinMode(SENSOR_PIN, INPUT_PULLUP);
+    }
 }
 
 void BallTouch::calibrate()
@@ -75,19 +74,19 @@ void BallTouch::calculateTreshold()
 {
     if (_thresholdBall > -1)
     {
-        caliBall = true;
+        _caliBall = true;
         if (_thresholdNoBall > -1)
         {
             _threshold = (_thresholdBall + _thresholdNoBall) / 2;
-            caliNoBall = true;
+            _caliNoBall = true;
         }
     }
-    calibrated = !caliNoBall || !caliBall ? false : true;
+    _calibrated = !_caliNoBall || !_caliBall ? false : true;
 }
 
 void BallTouch::update()
 {
-    if (calibrated)
+    if (_calibrated && getEn())
     {
         if (_state == LED_ON && millis() - _onTimer > 10)
         {
@@ -109,7 +108,7 @@ int BallTouch::getNoBallThreshold() { return _thresholdNoBall; }
 
 bool BallTouch::hasBall()
 {
-    if (calibrated)
+    if (_calibrated)
         return _value > _threshold;
     else
         return false;

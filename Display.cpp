@@ -138,7 +138,7 @@ void Display::updateBallTimer(void *ptr) {
 void Display::switchEnKick(void *ptr)
 {
   Serial.println("switched");
-  enKick = !enKick;
+  kick.setEn(!kick.getEn());
 }
 
 void Display::enMotors(void *ptr)
@@ -148,7 +148,7 @@ void Display::enMotors(void *ptr)
 
 void Display::updateEnPage(void *ptr)
 {
-  if (enKick)
+  if (kick.getEn())
     _enKick.setValue(1);
   else
     _enKick.setValue(0);
@@ -161,13 +161,13 @@ void Display::updateEnPage(void *ptr)
 
 //Hardware Kicker
 void Display::kickBall(void *ptr) {
-  if (enKick)
+  if (kick.getEn())
     kick.kick();
   else
   {
-    enKick = true;
+    kick.setEn(true);
     kick.kick();
-    enKick = false;
+    kick.setEn(false);
   }
 
 }
@@ -179,9 +179,7 @@ void Display::kickSlider(void *ptr) {
   // change text with the current slider value
   _kickSlider.getValue(&number);
   utoa(number, temp, 10);
-  kick.setKickPower(map(number, 0, 100, 100, 255));
-  
-  caliKick = true;
+  kick.setPower(map(number, 0, 100, 100, 255));
 }
 
 //Hardware Motors

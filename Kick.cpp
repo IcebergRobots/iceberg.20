@@ -2,30 +2,44 @@
 
 void Kick::init()
 {
+    if (getEn())
+    {
     pinMode(KICKER, OUTPUT);
+    }
 }
 
 void Kick::update()
 {
-    if (millis() - _kickTimer > 200)
+    if (millis() - _timer > 200 && getEn())
         analogWrite(KICKER, 0);
 }
 
 void Kick::kick()
 {
-    if (enKick && caliKick)
+    if (getEn() && _calibrated)
     {
-        _kickTimer = millis();
-        analogWrite(KICKER, _kickPower); // schuss bei 12, Poti bei A0
+        _timer = millis();
+        analogWrite(KICKER, _power); // schuss bei 12, Poti bei A0
     }
  }
-
- void Kick::setKickPower(const unsigned int& kickPower)
+ 
+ void Kick::setCali(const bool& caliKick)
  {
-     _kickPower = kickPower;
+     _calibrated = caliKick;
  }
 
- const int Kick::getKickPower()
+ const bool Kick::getCali()
  {
-     return _kickPower;
+     return _calibrated;
+ }
+
+ void Kick::setPower(const unsigned int& power)
+ {
+     _power = power;
+     setCali(true); 
+ }
+
+ const int Kick::getPower()
+ {
+     return _power;
  }

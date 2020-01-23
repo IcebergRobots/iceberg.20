@@ -1,6 +1,5 @@
 #pragma once
 // Motorpins:
-#define NUM_OF_M        4
 
 #define FWD0            23
 #define BWD0            25

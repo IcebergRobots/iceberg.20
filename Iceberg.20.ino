@@ -27,28 +27,13 @@
 
 #include "Display.h"
 
-Ultrasonic us;
-
-Compass cmps;
-
-Chassis m;
-int drivePower = 0;       // [-255 bis 255] aktuelle maximale Motorstärke
-int driveRotation = 0;    // [-255 bis 255] aktuelle Rotationsstärke
-int driveDirection = 0;   // [-180 bis 180] Ziel-Fahrrichtung
-int driveOrientation = 0; // [-180 bis 180] Ziel-Orientierungswinkel
-
-BallTouch ballTouch;
-bool calibrated = false;
-bool caliNoBall = false;
-bool caliBall = false;
-
-bool caliKick = true;
-bool enKick = true;
-
-Camera camera;
-PUI pui;
-
-Kick kick(190);
+Compass cmps(false);
+Ultrasonic us(true);
+PUI pui(true);
+BallTouch ballTouch(true);
+Chassis m(true);
+Camera camera(true);
+Kick kick(true, 190);
 
 Hardware* hardwares[] = {&m, &ballTouch, &camera, &pui, &kick}; //CMPS noch hinzufügen
 
@@ -98,7 +83,6 @@ void loop()
     kick.kick();
   }
   // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
-  // // cmps.update();
   // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
   if (camera.getBPos() == 0)
   {

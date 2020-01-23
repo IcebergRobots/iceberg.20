@@ -9,16 +9,23 @@ class BallTouch : public Hardware
 {
 
 public:
-    BallTouch();
+    BallTouch(const bool& enabled = false)
+        {
+            _enabled = enabled;
+        };
     void init() override;
+    void update() override;
+
     void calibrate();
 
     //only call this in combination
     void calibrateNoBall();
     void calibrateBall();
     void calculateTreshold();
-
-    void update() override;
+    
+    const bool getCaliNoBall();
+    const bool getCaliBall();
+    const bool getCali();
 
     int getValue();
     int getThreshold();
@@ -27,22 +34,23 @@ public:
     bool hasBall();
 
 private:
-    int _pinLed;
-    int _pinSensor;
-    int _value;
-
     int _thresholdNoBall = -1;
     int _thresholdBall = -1;
     int _threshold;
 
+    bool _caliNoBall;
+    bool _caliBall;
+    bool _calibrated;
+
     int _summe;
     int _counter;
 
+    int _value;
     int _darkValue;
     int _lightValue;
 
-    unsigned long _offTimer = 0;
-    unsigned long _onTimer = 0;
+    unsigned long _offTimer;
+    unsigned long _onTimer;
 
     bool _state = LED_OFF;
 
