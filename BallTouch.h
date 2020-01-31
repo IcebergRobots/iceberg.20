@@ -9,9 +9,14 @@ class BallTouch : public Hardware
 {
 
 public:
-    BallTouch(const bool& enabled = false)
+    BallTouch(const bool& enabled = false, const int& treshhold = 0)
         {
             _enabled = enabled;
+            if(treshhold != 0)
+            {
+                _threshold = treshhold;
+                _calibrated = true;
+            }
         };
     void init() override;
     void update() override;

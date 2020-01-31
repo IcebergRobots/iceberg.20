@@ -25,7 +25,7 @@
 
 */
 
-#include "Display.h"
+#include "Player.h"
 
 Compass cmps(false);
 Ultrasonic us(true);
@@ -35,7 +35,9 @@ Chassis m(true);
 Camera camera(true);
 Kick kick(true, 190);
 
-Hardware* hardwares[] = {&m, &ballTouch, &camera, &pui, &kick}; //CMPS noch hinzufügen
+Hardware* hardwares[] = {&m, &ballTouch, &camera, &pui, &kick, &cmps};
+
+Player p1;
 
 //###################################################################################################
 //##                                                                                               ##
@@ -54,8 +56,10 @@ void setup()
 
   for(Hardware* hardware : hardwares)
     hardware->init();
-
   Display::init(); //static class maybe cant init int foreach
+
+  p1.init();
+
   ballTouch.calibrate();
 
   startSound();
@@ -74,9 +78,11 @@ void setup()
 
 void loop()
 {
-  for(Hardware* hardware : hardwares)
-  hardware->update();
-  Display::update(); //maybe can implement it alltough its static class
+  for (Hardware *hardware : hardwares)
+        hardware->update();
+    Display::update(); //maybe can implement it alltough its static class
+
+  //p1.update();
 
   if (ballTouch.hasBall())
   {
