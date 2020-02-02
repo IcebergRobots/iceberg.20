@@ -8,6 +8,8 @@ extern Chassis m;
 extern Camera camera;
 extern Kick kick;
 
+extern Defense defense;
+
 void Offense::search()
 {
     m.drive(0, -30, 0);
@@ -32,11 +34,10 @@ void Offense::play()
 
 Player *Offense::update()
 {
-    if (millis() - _lastTime > 5000)
+    if (camera.getBPos() == 0 && us.getFrontLeft() < 10)
     {
-        _lastTime = millis();
-        delete this;
-        return new Defense;
+        Serial.println("Defense");
+        return &defense;
     }
     else
     {

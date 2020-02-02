@@ -36,9 +36,12 @@ Chassis m(true);
 Camera camera(true);
 Kick kick(true, 200);
 
-Hardware *hardwares[] = {&m, &ballTouch, &camera, &pui, &kick, &cmps};
+Hardware *hardwares[] = {&m, &ballTouch, &camera, &pui, &kick, &cmps, &us};
 
 Player *player;
+
+Offense offense;
+Defense defense;
 
 //###################################################################################################
 //##                                                                                               ##
@@ -60,7 +63,8 @@ void setup()
     hardware->init();
   Display::init(); //static class maybe cant init int foreach
 
-  player = new Offense;
+  player = &offense;
+  
   ballTouch.calibrate();
 
   Serial.println(getFreeSRAM());
@@ -84,5 +88,4 @@ void loop()
 
   player = player->update();
   player->play();
-  
 }

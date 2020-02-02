@@ -14,7 +14,7 @@ class Motor : public Hardware
 
         void steerMotor();
 
-        void brake(bool active);
+        void brake(const bool& active);
 
         void setPower(int power);
 

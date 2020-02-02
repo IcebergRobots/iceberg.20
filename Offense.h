@@ -6,9 +6,6 @@
 class Offense : public Player
 {
 public:
-    Offense()
-        : _lastTime(millis()) {};
-
     Player *update() override;
     void play() override;
 
@@ -16,5 +13,4 @@ public:
     void search();
 
 private:
-    unsigned long _lastTime;
 };

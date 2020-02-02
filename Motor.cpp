@@ -2,12 +2,11 @@
 
 Motor::Motor()
 {
-
 }
 
-void Motor::init() 
-{
-  if (getEn())
+void Motor::init()
+{  
+  if (true)               //getEn() geht nicht wegen Gründen
   {
     pinMode(_fwd, OUTPUT); // definiere Pins als Output
     pinMode(_bwd, OUTPUT);
@@ -21,13 +20,13 @@ void Motor::update()
   {
     /* code */
   }
-  
-    //TODO  reading EncoderSignals
+
+  //TODO  reading EncoderSignals
 }
 
 void Motor::steerMotor()
-{
-    if (getEn())
+{   
+  if (true)                     //getEn() geht nicht wegen Gründen
   {
     _power = min(255, _power); //Eingabekorrektur
     _power = max(-255, _power);
@@ -46,11 +45,11 @@ void Motor::steerMotor()
   bremse aktiv oder passiv alle Motoren
   @param activ: aktives Bremsen?
 *****************************************************/
-void Motor::brake(bool activ)
+void Motor::brake(const bool& activ)
 {
-    digitalWrite(_fwd, activ);
-    digitalWrite(_bwd, activ);
-    analogWrite(_pwm, 255);
+  digitalWrite(_fwd, activ);
+  digitalWrite(_bwd, activ);
+  analogWrite(_pwm, 255);
 }
 
 void Motor::setPower(int power)

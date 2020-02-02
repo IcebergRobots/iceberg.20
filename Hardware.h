@@ -8,8 +8,8 @@ class Hardware {
         virtual void init() = 0;
         virtual void update() = 0;
 
-        void setEn(const bool& enabled);
-        const bool getEn();
+        virtual void setEn(const bool& enabled);
+        virtual const bool getEn();
     protected:
         bool _enabled;
 };
