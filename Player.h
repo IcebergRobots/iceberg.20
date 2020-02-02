@@ -12,12 +12,11 @@ class Player
 {
 public:
     Player();
-    void init();
-    void update();
+
+    virtual ~Player(){};
+
+    virtual Player *update() = 0;
+    virtual void play() = 0;
 
 private:
-    bool offens;
-    bool defense;
-    bool rdyToSwitch;
-
 };

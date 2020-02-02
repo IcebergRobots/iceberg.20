@@ -49,7 +49,6 @@ void BallTouch::calibrateBall()
 {
     _summe = 0;
     _counter = 0;
-    Serial.println(_counter);
 
     //with ball
     while (_counter < 20)

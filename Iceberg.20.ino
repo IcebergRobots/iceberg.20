@@ -25,7 +25,8 @@
 
 */
 
-#include "Player.h"
+#include "Offense.h"
+#include "Defense.h"
 
 Compass cmps(false);
 Ultrasonic us(true);
@@ -33,11 +34,11 @@ PUI pui(true);
 BallTouch ballTouch(true);
 Chassis m(true);
 Camera camera(true);
-Kick kick(true, 190);
+Kick kick(true, 200);
 
-Hardware* hardwares[] = {&m, &ballTouch, &camera, &pui, &kick, &cmps};
+Hardware *hardwares[] = {&m, &ballTouch, &camera, &pui, &kick, &cmps};
 
-Player p1;
+Player *player;
 
 //###################################################################################################
 //##                                                                                               ##
@@ -53,16 +54,15 @@ void setup()
 {
   Serial.begin(9600);
   Wire.begin();
+  startSound();
 
-  for(Hardware* hardware : hardwares)
+  for (Hardware *hardware : hardwares)
     hardware->init();
   Display::init(); //static class maybe cant init int foreach
 
-  p1.init();
-
+  player = new Offense;
   ballTouch.calibrate();
 
-  startSound();
   Serial.println(getFreeSRAM());
 }
 
@@ -79,23 +79,10 @@ void setup()
 void loop()
 {
   for (Hardware *hardware : hardwares)
-        hardware->update();
-    Display::update(); //maybe can implement it alltough its static class
+    hardware->update();
+  Display::update(); //maybe can implement it alltough its static class
 
-  //p1.update();
-
-  if (ballTouch.hasBall())
-  {
-    kick.kick();
-  }
-  // //Serial.println((String) ballTouch.getThreshold() + "  |  " + ballTouch.getBallThreshold() + "  |  " + ballTouch.getNoBallThreshold());
-  // Serial.println((String)us.getFrontLeft() + " | " + us.getLeft() + " | " + us.getBack() + " | " + us.getRight() + " | " + us.getFrontRight());
-  if (camera.getBPos() == 0)
-  {
-    m.drive(0, -30, 0);
-  }
-  else
-  {
-    m.drive(map(camera.getBPos(), 0, 320, 90, -90), 30, 0);
-  }
+  player = player->update();
+  player->play();
+  
 }

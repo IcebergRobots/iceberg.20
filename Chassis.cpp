@@ -114,9 +114,10 @@ void Chassis::setMotEn(const bool &motEn)
 {
   for (int i = 0; i < 4; i++)
   {
+    Serial.println("EN");
     motors[i].setEn(motEn);
   }
-  _motEn = _motEn;
+  _motEn = motEn;
 }
 
 const bool Chassis::getMotEn()

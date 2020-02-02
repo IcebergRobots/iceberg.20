@@ -5,8 +5,8 @@
 
 class Hardware {
     public:
-        virtual void init();
-        virtual void update();
+        virtual void init() = 0;
+        virtual void update() = 0;
 
         void setEn(const bool& enabled);
         const bool getEn();
