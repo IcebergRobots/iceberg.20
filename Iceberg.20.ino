@@ -35,7 +35,7 @@ Pui pui(true);
 BallTouch ballTouch(true);
 Chassis m(true);
 Camera camera(true);
-Kick kick(true, 200);
+Kick kick(true, 230);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick};
 
@@ -67,8 +67,6 @@ void setup()
 
   player = &offense;
   
-  ballTouch.calibrate();
-
   Serial.println(getFreeSRAM());
 }
 

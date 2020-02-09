@@ -9,13 +9,12 @@ class BallTouch : public Hardware
 {
 
 public:
-    BallTouch(const bool& enabled = false, const int& treshhold = 0)
+    BallTouch(const bool& enabled = false, const int& threshold = 0)
         {
             _enabled = enabled;
-            if(treshhold != 0)
+            if(threshold != 0)
             {
-                _threshold = treshhold;
-                _calibrated = true;
+                EEPROM.write(BALLTOUCH_THRESHOLD, threshold);
             }
         };
     void init() override;
@@ -42,10 +41,6 @@ private:
     int _thresholdNoBall = -1;
     int _thresholdBall = -1;
     int _threshold;
-
-    bool _caliNoBall;
-    bool _caliBall;
-    bool _calibrated;
 
     int _summe;
     int _counter;
