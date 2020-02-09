@@ -2,13 +2,14 @@
 
 extern Compass cmps;
 extern Ultrasonic us;
-extern PUI pui;
+extern Pui pui;
 extern BallTouch ballTouch;
 extern Chassis m;
 extern Camera camera;
 extern Kick kick;
 
 extern Defense defense;
+extern Standby standby;
 
 void Offense::search()
 {
@@ -43,4 +44,14 @@ Player *Offense::update()
     {
         return this;
     }
+}
+
+void Offense::rate()
+{
+
+}
+
+void Offense::communication()
+{
+    
 }

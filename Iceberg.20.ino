@@ -27,21 +27,23 @@
 
 #include "Offense.h"
 #include "Defense.h"
+#include "Standby.h"
 
 Compass cmps(false);
 Ultrasonic us(true);
-PUI pui(true);
+Pui pui(true);
 BallTouch ballTouch(true);
 Chassis m(true);
 Camera camera(true);
 Kick kick(true, 200);
 
-Hardware *hardwares[] = {&m, &ballTouch, &camera, &pui, &kick, &cmps, &us};
-
-Player *player;
+Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick};
 
 Offense offense;
 Defense defense;
+Standby standby;
+
+Player *player;
 
 //###################################################################################################
 //##                                                                                               ##
@@ -61,7 +63,7 @@ void setup()
 
   for (Hardware *hardware : hardwares)
     hardware->init();
-  Display::init(); //static class maybe cant init int foreach
+ Display::init(); //static class maybe cant init int foreach
 
   player = &offense;
   
@@ -85,7 +87,6 @@ void loop()
   for (Hardware *hardware : hardwares)
     hardware->update();
   Display::update(); //maybe can implement it alltough its static class
-
   player = player->update();
   player->play();
 }

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player()
+void Player::updPos()
 {
+    //Kompass ausrichten PIDs
 }
-

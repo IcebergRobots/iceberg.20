@@ -1,11 +1,8 @@
 #pragma once
-#include "Config.h"
+#include "Player.h"
 #include "Nextion.h"
-#include "Chassis.h"
-#include "BallTouch.h"
-#include "Kick.h"
 
-#define NUM_OBJECTS 15
+#define NUM_OBJECTS 13
 
 class Display
 {
@@ -16,10 +13,8 @@ public:
 private:
     Display();
 
-    //Example
-    static void bLedOnPopCallback(void *ptr);
-    static void bLedOffPopCallback(void *ptr);
-    static void hLedSliderPopCallback(void *ptr);
+    //Overview
+    static void goRAM(void *ptr);
 
     //Cali ballTouch
     static void ballTouchBall(void *ptr);
@@ -45,12 +40,11 @@ private:
     //Hardware Motors
     //attach to enMotors
 
-    //Beispiel Objects
-    static NexText _tLedState;
-    static NexButton _bLedOn;
-    static NexButton _bLedOff;
-    static NexSlider _hLedSlider;
-    static const int _led1 = 6;
+    //Overview
+    static NexButton _goRAM;
+
+    //Overview FreeRAM
+    static NexText _freeRAM;
 
     //Calibrate ballTouch
     static NexButton _ballTouchBall;

@@ -1,8 +1,8 @@
-#include "PUI.h"
+#include "Pui.h"
 
 Adafruit_MCP23017 expander;
 
-void PUI::init()
+void Pui::init()
 {
     if (getEn())
     {
@@ -23,7 +23,7 @@ void PUI::init()
     }
 }
 
-void PUI::update()
+void Pui::update()
 {
     if (getEn())
     {
@@ -33,22 +33,22 @@ void PUI::update()
     }
 }
 
-bool PUI::getSKicker()
+bool Pui::getSKicker()
 {
     return _SKicker;
 }
 
-bool PUI::getSHeadstart()
+bool Pui::getSHeadstart()
 {
     return _SHeadstart;
 }
 
-bool PUI::getSMotor()
+bool Pui::getSMotor()
 {
     return _SMotor;
 }
 
-bool PUI::getBKick()
+bool Pui::getBKick()
 {
     return _BKick;
 }

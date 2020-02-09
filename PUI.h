@@ -6,10 +6,10 @@
 
 
 
-class PUI : public Hardware
+class Pui : public Hardware
 {
     public:
-        PUI(const bool& enabled = false)
+        Pui(const bool& enabled = false)
         {
             _enabled = enabled;
         };
