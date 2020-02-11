@@ -13,7 +13,7 @@ extern Standby standby;
 
 void Offense::search()
 {
-    m.drive(0, -30, 0);
+    m.drive(180, 30);
 }
 
 void Offense::follow()

@@ -14,7 +14,7 @@ public:
             _enabled = enabled;
             if(threshold != 0)
             {
-                EEPROM.write(BALLTOUCH_THRESHOLD, threshold);
+                EEPROM.write(EEPROM_BALLTOUCH_THRESHOLD, threshold);
             }
         };
     void init() override;

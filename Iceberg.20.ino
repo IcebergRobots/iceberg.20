@@ -35,9 +35,10 @@ Pui pui(true);
 BallTouch ballTouch(true);
 Chassis m(true);
 Camera camera(true);
-Kick kick(true, 230);
+Kick kick(true, 220);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick};
+
 
 Offense offense;
 Defense defense;
@@ -65,7 +66,7 @@ void setup()
     hardware->init();
  Display::init(); //static class maybe cant init int foreach
 
-  player = &offense;
+  player = &defense;
   
   Serial.println(getFreeSRAM());
 }
@@ -85,6 +86,7 @@ void loop()
   for (Hardware *hardware : hardwares)
     hardware->update();
   Display::update(); //maybe can implement it alltough its static class
+
   player = player->update();
   player->play();
 }

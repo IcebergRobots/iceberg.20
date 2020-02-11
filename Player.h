@@ -22,4 +22,12 @@ public:
 
     virtual void rate() = 0;          //Position bewerten (individuell bestimmen)
     virtual void communication() = 0; // Daten zwischen Robotern austauschen (individuell welche daten)
+
+    enum StateP2 {
+        Offense, Defense, Standby
+    };
+protected:
+    int _camRating;
+    int _ballRating;
+    int _rating;
 };

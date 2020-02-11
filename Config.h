@@ -4,11 +4,14 @@
 #include "Pin.h"
 #include "EEPROM.h"
 
-/*****************************************************
-  Camera 
-*****************************************************/
-#define SIG_BALL 1
-#define SIG_GOAL 2
+
+
+//Bluetooth
+#define BLUETOOTH true            // soll eine Bluetooth-Kommunikation bestehen?
 
 //EEPROM
-#define BALLTOUCH_THRESHOLD 0
+#define EEPROM_BALLTOUCH_THRESHOLD 0
+
+//Camera 
+#define SIG_BALL 1
+#define SIG_GOAL 2

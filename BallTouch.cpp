@@ -7,7 +7,7 @@ void BallTouch::init()
     pinMode(LED_PIN, OUTPUT);
     pinMode(SENSOR_PIN, INPUT_PULLUP);
     }
-    _threshold = EEPROM.read(BALLTOUCH_THRESHOLD);
+    _threshold = EEPROM.read(EEPROM_BALLTOUCH_THRESHOLD);
 }
 
 void BallTouch::calibrate()
@@ -77,7 +77,7 @@ void BallTouch::calculateTreshold()
         if (_thresholdNoBall > -1)
         {
             _threshold = (_thresholdBall + _thresholdNoBall) / 2;
-            EEPROM.write(BALLTOUCH_THRESHOLD, _threshold);
+            EEPROM.write(EEPROM_BALLTOUCH_THRESHOLD, _threshold);
         }
     }
 }

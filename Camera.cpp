@@ -23,24 +23,24 @@ void Camera::update()
             for (int i = 0; i < _blockCount; i++)
             {
                 int signature = blocks[i].signature;
-                int position = blocks[i].x;
-                int height = blocks[i].height;
-                int width = blocks[i].width;
-                int area = height * width;
                 switch (signature)
                 {
                 case SIG_BALL:
-                    if (area > _ballArea)
+                    if (blocks[i].height * blocks[i].width > _ballArea)
                     {
-                        _ballArea = area;
-                        _ballPos = position;
+                        _ballHeight = blocks[i].height;
+                        _ballPos = blocks[i].x;
+                        _ballWidth = blocks[i].width;
+                        _ballArea = _ballHeight * _ballWidth;
                         _ballCount++;
                     }
                 case SIG_GOAL:
-                    if (area > _goalArea)
+                    if (blocks[i].height * blocks[i].width > _goalArea)
                     {
-                        _goalArea = area;
-                        _goalPos = position;
+                        _goalHeight = blocks[i].height;
+                        _goalPos = blocks[i].x;
+                        _goalWidth = blocks[i].width;
+                        _goalArea = _goalHeight * _goalWidth;
                         _goalCount++;
                     }
                 }
@@ -58,4 +58,14 @@ int Camera::getBArea()
 int Camera::getBPos()
 {
     return _ballPos;
+}
+
+int Camera::getGArea()
+{
+    return _goalArea;
+}
+
+int Camera::getGWidth()
+{
+    return _goalWidth;
 }
