@@ -19,15 +19,18 @@ public:
     virtual void play() = 0;
 
     virtual void updPos(); //Kompass ausrichten
-
+    
+    virtual void rateGoal();
+    virtual void rateBall();
     virtual void rate() = 0;          //Position bewerten (individuell bestimmen)
+
     virtual void communication() = 0; // Daten zwischen Robotern austauschen (individuell welche daten)
 
     enum StateP2 {
         Offense, Defense, Standby
     };
 protected:
-    int _camRating;
+    int _goalRating;
     int _ballRating;
     int _rating;
 };

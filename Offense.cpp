@@ -40,10 +40,7 @@ Player *Offense::update()
         Serial.println("Defense");
         return &defense;
     }
-    else
-    {
-        return this;
-    }
+    return this;
 }
 
 void Offense::rate()

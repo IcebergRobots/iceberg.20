@@ -18,22 +18,17 @@ void Defense::play()
 
 Player *Defense::update()
 {
-    if (camera.getBPos() != 0 && false)
+    if (camera.getBPos() != 0);
     {
         Serial.println("Offense");
         return &offense;
-    }
-    else
-    {
-        return this;
     }
     return this;
 }
 
 void Defense::defGoal()
 {
-    rate();
-    //m.drive(180,70);
+    m.drive(180,70, 1);
     // if(us.getBack() < 15)
     // {
     //     m.drive(0,40);
@@ -55,9 +50,7 @@ void Defense::defGoal()
 
 void Defense::rate()
 {
-    _camRating = (camera.getGWidth()*255 / 30);
-    _ballRating = abs((150 - abs(150 - camera.getBPos())) * 255 / 150);
-    Serial.println(_camRating);
+    
 }
 
 void Defense::communication()

@@ -66,8 +66,9 @@ void setup()
     hardware->init();
  Display::init(); //static class maybe cant init int foreach
 
-  player = &defense;
+  player = &offense;
   
+  cmps.checkCalibration();
   Serial.println(getFreeSRAM());
 }
 

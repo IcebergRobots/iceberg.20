@@ -72,7 +72,7 @@ NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
 //Overview
 void Display::goRAM(void *ptr)
 {
-  _goRAM.setText((const char*)getFreeSRAM());
+  _freeRAM.setText((const char*)getFreeSRAM());
 }
 
 //Calibrate BallTouch

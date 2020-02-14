@@ -18,13 +18,18 @@ public:
     void init() override;
     void update() override;
 
-    float getAngle8();
+    unsigned char getAngle8();
     int getAngle16();
     int getPitch();
     int getRoll();
 
+    bool checkCalibration();
+    int getTemperature();
 private:
-    unsigned char _high_byte, _low_byte, _angle8;
-    char _pitch, _roll;
+    unsigned char _high_byte, _low_byte, _angle8, _high_byteTemp, _low_byteTemp;
+    int _pitch, _roll;
     unsigned int _angle16;
+    int _temperature;
+
+    byte _checkCalibration;
 };
