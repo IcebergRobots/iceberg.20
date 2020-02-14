@@ -23,6 +23,9 @@ public:
     int getPitch();
     int getRoll();
 
+    void storeCalibration(); //notworking in the moment
+    void eraseCalibration(); //notworking in the moment
+
     bool checkCalibration();
     int getTemperature();
 private:

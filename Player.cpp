@@ -13,6 +13,7 @@ void Player::rateBall()
     _ballRating = abs((150 - abs(150 - camera.getBPos())) * 255 / 150);
 }
 
+
 void Player::rateGoal()
 {
     _goalRating = (camera.getGWidth()*255 / 30);
@@ -20,5 +21,12 @@ void Player::rateGoal()
 
 void Player::updPos()
 {
-    //Kompass ausrichten PIDs
+    
+}
+
+bool Player::getsLifted()
+{
+    if(cmps.getPitch() < 255 && cmps.getPitch() > 200)
+        return true;
+    return false;
 }

@@ -96,7 +96,9 @@ void BallTouch::update()
             turnOn();
             calculate();
         }
-    }
+    }else
+        digitalWrite(LED_PIN, LOW);
+    
 }
 
 int BallTouch::getValue() { return _value; }

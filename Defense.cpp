@@ -22,6 +22,9 @@ Player *Defense::update()
     {
         Serial.println("Offense");
         return &offense;
+    } if(getsLifted()){
+        Serial.println("Standby");
+        return &standby;
     }
     return this;
 }

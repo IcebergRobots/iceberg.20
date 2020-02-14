@@ -19,6 +19,7 @@ public:
     virtual void play() = 0;
 
     virtual void updPos(); //Kompass ausrichten
+    virtual bool getsLifted();
     
     virtual void rateGoal();
     virtual void rateBall();

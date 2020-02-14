@@ -29,7 +29,7 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(false);
+Compass cmps(true);
 Ultrasonic us(true);
 Pui pui(true);
 BallTouch ballTouch(true);
@@ -90,4 +90,5 @@ void loop()
 
   player = player->update();
   player->play();
+
 }
