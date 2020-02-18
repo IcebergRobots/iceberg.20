@@ -9,6 +9,7 @@
 #include "Chassis.h"
 #include "BallTouch.h"
 #include "Kick.h"
+#include "Bluetooth.h"
 
 class Player
 {

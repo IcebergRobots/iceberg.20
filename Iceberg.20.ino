@@ -36,8 +36,9 @@ BallTouch ballTouch(true);
 Chassis m(true);
 Camera camera(true);
 Kick kick(true, 220);
+Bluetooth bt(true);
 
-Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick};
+Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt};
 
 
 Offense offense;
@@ -66,7 +67,7 @@ void setup()
     hardware->init();
  Display::init(); //static class maybe cant init int foreach
 
-  player = &offense;
+  player = &standby;
   
   cmps.checkCalibration();
   Serial.println(getFreeSRAM());
