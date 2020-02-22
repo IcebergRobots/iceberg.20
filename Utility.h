@@ -4,6 +4,9 @@
 
 void startSound();
 
+void reset();
+
+void heartbeat();
 
 extern unsigned int __bss_end;
 extern unsigned int __heap_start;

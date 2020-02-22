@@ -25,3 +25,12 @@ uint16_t getFreeSRAM() {
   else
     return (((uint16_t)&newVariable) - ((uint16_t)__brkval));
 }
+
+void reset() {
+  asm ("jmp 0");   // starte den Arduino neu
+}
+
+void heartbeat(){
+  byte i = map(millis() % HEARTBEAT_LOOPTIME*2,0,HEARTBEAT_LOOPTIME,0,255);
+  analogWrite(HEARTBEAT_LED, i>255 ? i : 255-i);
+}

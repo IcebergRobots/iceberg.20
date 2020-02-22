@@ -17,7 +17,7 @@ Player* Standby::update()
         m.setMotEn(true);
         ballTouch.setEn(true);
         us.setEn(true);
-        Serial.println("Standby");
+        Serial.println("Offense");
         return &offense;
     }
     return this;

@@ -18,11 +18,11 @@ void Defense::play()
 
 Player *Defense::update()
 {
-    if (camera.getBPos() != 0);
+    if (camera.getBPos() != 0 && rateBall() > 170)
     {
         Serial.println("Offense");
         return &offense;
-    } if(getsLifted()){
+    }else if(getsLifted()){
         Serial.println("Standby");
         return &standby;
     }
@@ -31,7 +31,7 @@ Player *Defense::update()
 
 void Defense::defGoal()
 {
-    m.drive(180,70, 1);
+    m.drive(180,20, 20);
     // if(us.getBack() < 15)
     // {
     //     m.drive(0,40);
@@ -51,9 +51,8 @@ void Defense::defGoal()
 
 }
 
-void Defense::rate()
-{
-    
+void Defense::rate() {
+
 }
 
 void Defense::communication()

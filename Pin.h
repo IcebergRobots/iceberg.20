@@ -34,6 +34,9 @@
 //Tones
 #define BUZZER          13
 
+//HEARTBEAT_LED
+#define HEARTBEAT_LED   7
+
 //Ultraadresses
 //addresses of the Ultrasonicsensors named by their position
 #define NUM_OF_US       5

@@ -8,25 +8,42 @@ extern Chassis m;
 extern Camera camera;
 extern Kick kick;
 
-void Player::rateBall()
+int Player::rateBall()
 {
     _ballRating = abs((150 - abs(150 - camera.getBPos())) * 255 / 150);
+    return _ballRating;
 }
 
 
-void Player::rateGoal()
+int Player::rateGoal()
 {
     _goalRating = (camera.getGWidth()*255 / 30);
+    return _goalRating;
 }
 
-void Player::updPos()
+void Player::initPID()
 {
-    
+    _myPID.SetMode(AUTOMATIC);
+    // konfiguriere PID-Regler
+    _myPID.SetTunings(PID_FILTER_P, PID_FILTER_I, PID_FILTER_D);
+    _myPID.SetOutputLimits(-180, 180);
+}
+
+int Player::updatePID()
+{
+    _input = cmps.getAngle16() - 180;
+    _myPID.Compute();
+    return _output;
+}
+
+void Player::updatePos()
+{
+    m.drive(0, 30, _output);
 }
 
 bool Player::getsLifted()
 {
-    if(cmps.getPitch() < 255 && cmps.getPitch() > 200)
+    if(cmps.getPitch() < 252 && cmps.getPitch() > 200)
         return true;
     return false;
 }

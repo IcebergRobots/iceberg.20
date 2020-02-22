@@ -16,5 +16,5 @@ public:
     void defGoal();
 
 private:
-    byte _defDir = 0;
+    //byte _defDir = 0;
 };

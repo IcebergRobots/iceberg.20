@@ -18,7 +18,7 @@ void Offense::search()
 
 void Offense::follow()
 {
-    m.drive(map(camera.getBPos(), 0, 320, 90, -90), 30, 0);
+    m.drive(map(camera.getBPos(), 0, 320, 90, -90), 30, 0); 
     if (ballTouch.hasBall())
     {
         kick.kick();
@@ -27,10 +27,10 @@ void Offense::follow()
 
 void Offense::play()
 {
-    if (camera.getBPos() == 0)
-        search();
-    else
+    if (camera.getBPos() != 0)
         follow();
+    else
+        search();
 }
 
 Player *Offense::update()

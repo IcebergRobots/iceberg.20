@@ -39,7 +39,6 @@ Kick kick(true, 220);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick};
 
-
 Offense offense;
 Defense defense;
 Standby standby;
@@ -67,6 +66,7 @@ void setup()
  Display::init(); //static class maybe cant init int foreach
 
   player = &offense;
+  player->initPID();
   
   cmps.checkCalibration();
   Serial.println(getFreeSRAM());
@@ -90,5 +90,8 @@ void loop()
 
   player = player->update();
   player->play();
+  // Serial.println(player->updatePID());
+  // player->updatePos();
 
+  heartbeat();
 }
