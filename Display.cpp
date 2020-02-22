@@ -185,6 +185,7 @@ void Display::init()
 
   //Hardware Motors
   _enMotors2.attachPop(enMotors, &_enMotors2);
+  LogDisplay("Initilized");
 }
 
 void Display::update()

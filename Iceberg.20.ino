@@ -29,7 +29,7 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(true);
+Compass cmps(false);
 Ultrasonic us(true);
 Pui pui(true);
 BallTouch ballTouch(true);
@@ -67,10 +67,10 @@ void setup()
     hardware->init();
  Display::init(); //static class maybe cant init int foreach
 
-  player = &standby;
+  player = &offense;
   
-  cmps.checkCalibration();
-  Serial.println(getFreeSRAM());
+  LogCmps(cmps.checkCalibration());
+  LogUtility("free SRAM: " + getFreeSRAM());
 }
 
 //###################################################################################################
@@ -83,6 +83,7 @@ void setup()
 //##...............................................................................................##
 //###################################################################################################
 
+byte sendBytes[] = { 10 , 20, 30};
 void loop()
 {
   for (Hardware *hardware : hardwares)

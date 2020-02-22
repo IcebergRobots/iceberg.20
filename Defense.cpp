@@ -19,11 +19,11 @@ void Defense::play()
 
 Player *Defense::update()
 {
-    if (camera.getBPos() != 0 && bt.b == 'o');
+    if (camera.getBPos() != 0);
     {
         Serial.println("Offense");
         return &offense;
-    } if(getsLifted() || bt.b == 's'){
+    } if(getsLifted()){
         Serial.println("Standby");
         return &standby;
     }

@@ -12,6 +12,7 @@ void Chassis::init()
 {
   if (getMotEn())
   {
+    LogChassis("enabled");
     motors[0] = Motor(FWD0, BWD0, PWM0, M0_CURR);
     motors[1] = Motor(FWD1, BWD1, PWM1, M1_CURR);
     motors[2] = Motor(FWD2, BWD2, PWM2, M2_CURR);
@@ -20,7 +21,9 @@ void Chassis::init()
     {
       motors[i].init();
     }
-  }
+  } else  
+    LogChassis("disabled");
+  LogChassis("Initilized");
 }
 
 void Chassis::update()

@@ -6,6 +6,7 @@ void Pui::init()
 {
     if (getEn())
     {
+        LogPui("enabled");
         expander.begin(0);
 
         expander.pinMode(S_KICKER, INPUT);
@@ -20,7 +21,9 @@ void Pui::init()
         expander.pullUp(B_CAL, HIGH);
 
         expander.pinMode(LED_DEFENDER, OUTPUT);
-    }
+        LogPui("Initilized");
+    }else
+        LogPui("disabled");
 }
 
 void Pui::update()

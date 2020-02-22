@@ -5,8 +5,10 @@ void Compass::init()
 {
   if (getEn())
   {
-    
-  }
+    LogCmps("enabled");
+    LogCmps("Calibrated");
+  }else
+    LogCmps("disabled");
 }
 
 void Compass::update()

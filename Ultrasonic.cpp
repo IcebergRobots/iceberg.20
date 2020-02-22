@@ -4,14 +4,17 @@ void Ultrasonic::init()
 {
     if (getEn())
     {
-    for (int i = 0; i < NUM_OF_US; i++)
-    {
-        Wire.beginTransmission(_addresses[i]);
-        Wire.write(byte(0x02));
-        Wire.write(byte(70)); //warum 70? sehe im datenblatt nichts
-        Wire.endTransmission();
-    }
-    }
+        LogUs("enabled");
+        for (int i = 0; i < NUM_OF_US; i++)
+        {
+            Wire.beginTransmission(_addresses[i]);
+            Wire.write(byte(0x02));
+            Wire.write(byte(70)); //warum 70? sehe im datenblatt nichts
+            Wire.endTransmission();
+        }
+        LogUs("Initlized");
+    }else
+        LogUs("disabled");
 }
 
 void Ultrasonic::update()

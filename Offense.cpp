@@ -36,11 +36,11 @@ void Offense::play()
 
 Player *Offense::update()
 {
-    if (camera.getBPos() == 0 && us.getFrontLeft() < 10 || bt.b == 'd')
+    if (camera.getBPos() == 0 && us.getFrontLeft() < 10)
     {
         Serial.println("Defense");
         return &defense;
-    }else if(getsLifted() || bt.b == 's'){
+    }else if(getsLifted()){
         Serial.println("Standby");
         return &standby;
     }

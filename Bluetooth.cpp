@@ -4,26 +4,51 @@ void Bluetooth::init()
 {
     if (getEn())
     {
-        if (!Serial2)
-            Serial.println("Serial2 couldnt Open");
-        Serial2.begin(115200);
-    }
+        LogBluetooth("enabled");
+        if (!BT_SERIAL)
+            Serial.println("BT_SERIAL couldnt Open");
+        BT_SERIAL.begin(115200);
+    } else
+        LogBluetooth("disabled");
 }
 
 void Bluetooth::update()
 {
     if(getEn())
     {
-        if(Serial2.available())
-            b = Serial2.read();        
+        send();
+        receive();
     }
+}
+
+void Bluetooth::setMessage(byte *sendMsg)
+{
+    for(int i = 0; i < MSG_SIZE; i++)
+    {
+        _sendMsg[i] = sendMsg[i];
+    }
+}
+
+// byte[MSG_SIZE] Bluetooth::getMessage()
+// {
+//     return _received;
+// }
+
+byte Bluetooth::getRating()
+{
+    return _receivedMsg[0];
 }
 
 void Bluetooth::send()
 {
     if(getEn())
     {
-        
+        BT_SERIAL.write(START_MARKER);
+        for(int i = 0; i < MSG_SIZE; i++)
+        {
+          BT_SERIAL.write(_sendMsg[i]);
+        }
+        BT_SERIAL.write(END_MARKER);
     }
 }
 
@@ -31,6 +56,32 @@ void Bluetooth::receive()
 {
     if(getEn())
     {
-        
+        if(BT_SERIAL.available() && _waitingForMsg)
+    {
+        _received = BT_SERIAL.read();
+        if(_received == START_MARKER)
+        {
+            _waitingForMsg = false;
+        }
+    }
+    if(BT_SERIAL.available() >= MSG_SIZE + 1 && !_waitingForMsg)
+    {
+            for(int i = 0; i < MSG_SIZE; i++)
+            {
+                _tmp[i] = BT_SERIAL.read();
+            }
+            _received = BT_SERIAL.read();
+            if(_received == END_MARKER)
+            {
+                LogBluetooth("Received Succesfully");
+                for(int i = 0; i < MSG_SIZE; i++)
+                {
+                _receivedMsg[i] = _tmp[i];
+                }
+            }else {
+                LogBluetooth("Message could be uncomnplete");
+            }
+            _waitingForMsg = true;
+    }
     }
 }
