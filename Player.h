@@ -10,6 +10,7 @@
 #include "BallTouch.h"
 #include "Kick.h"
 #include "PID_v1.h"
+#include "Bluetooth.h"
 
 class Player
 {

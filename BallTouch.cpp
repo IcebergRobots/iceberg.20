@@ -2,16 +2,22 @@
 
 void BallTouch::init()
 {
+    _threshold = EEPROM.read(EEPROM_BALLTOUCH_THRESHOLD);
     if(getEn())
     {
-    pinMode(LED_PIN, OUTPUT);
-    pinMode(SENSOR_PIN, INPUT_PULLUP);
-    }
-    _threshold = EEPROM.read(EEPROM_BALLTOUCH_THRESHOLD);
+        LogBalltouch("enabled");
+        pinMode(LED_PIN, OUTPUT);
+        pinMode(SENSOR_PIN, INPUT_PULLUP);
+        LogBalltouch("Gets Threshold: " + _threshold);
+        LogBalltouch("Intialized");
+    } else 
+        LogBalltouch("disabled");
 }
 
 void BallTouch::calibrate()
 {
+    if(getEn())
+    {
     calibrateNoBall();
 
     while (millis() - _onTimer < 2000)
@@ -20,6 +26,7 @@ void BallTouch::calibrate()
 
     calibrateBall();
     calculateTreshold();
+    }
 }
 
 void BallTouch::calibrateNoBall()
@@ -78,6 +85,8 @@ void BallTouch::calculateTreshold()
         {
             _threshold = (_thresholdBall + _thresholdNoBall) / 2;
             EEPROM.write(EEPROM_BALLTOUCH_THRESHOLD, _threshold);
+            LogBalltouch("Sets threshold to: " + _threshold);
+            LogBalltouch("Calibrated");
         }
     }
 }
@@ -108,7 +117,12 @@ int BallTouch::getNoBallThreshold() { return _thresholdNoBall; }
 
 bool BallTouch::hasBall()
 {
-        return _value > _threshold;
+    if(getEn())
+    {
+    LogBalltouch("Sees Ball: " + (_value > _threshold));    
+    return _value > _threshold;
+    }
+    return 0;
 }
 
 void BallTouch::turnOn()

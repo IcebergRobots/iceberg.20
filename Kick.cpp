@@ -4,8 +4,11 @@ void Kick::init()
 {
     if (getEn())
     {
-    pinMode(KICKER, OUTPUT);
-    }
+        LogKick("enabled");
+        pinMode(KICKER, OUTPUT);
+        LogKick("Initilized");
+    }else   
+        LogKick("disabled");
 }
 
 void Kick::update()

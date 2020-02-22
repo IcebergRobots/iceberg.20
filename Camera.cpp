@@ -4,9 +4,12 @@ void Camera::init()
 {
     if (getEn())
     {
+        LogCam("enabled");
         SPI.begin();
         Pixy::init();
-    }
+        LogCam("Calibrated");
+    } else
+        LogCam("disabled");
 }
 
 void Camera::update()

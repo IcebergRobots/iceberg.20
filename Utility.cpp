@@ -3,7 +3,7 @@
 void startSound()
 {
   //Fiepen, welches Programstart signalisiert
-
+  LogUtility("Robot started");
   for (int i = 10; i < 2000; i += 10)
   {
     // if(isTypeA)

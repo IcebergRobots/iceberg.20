@@ -7,6 +7,7 @@ extern BallTouch ballTouch;
 extern Chassis m;
 extern Camera camera;
 extern Kick kick;
+extern Bluetooth bt;
 
 int Player::rateBall()
 {

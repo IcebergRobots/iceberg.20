@@ -7,6 +7,7 @@ extern BallTouch ballTouch;
 extern Chassis m;
 extern Camera camera;
 extern Kick kick;
+extern Bluetooth bt;
 
 extern Offense offense;
 extern Standby standby;
@@ -20,10 +21,10 @@ Player *Defense::update()
 {
     if (camera.getBPos() != 0 && rateBall() > 170)
     {
-        Serial.println("Offense");
+        LogPlayer("Offense");
         return &offense;
-    }else if(getsLifted()){
-        Serial.println("Standby");
+    } if(getsLifted()){
+        LogPlayer("Standby");
         return &standby;
     }
     return this;
@@ -31,7 +32,7 @@ Player *Defense::update()
 
 void Defense::defGoal()
 {
-    m.drive(180,20, 20);
+    m.drive(180,30, 30);
     // if(us.getBack() < 15)
     // {
     //     m.drive(0,40);

@@ -5,8 +5,10 @@ void Compass::init()
 {
   if (getEn())
   {
-    
-  }
+    LogCmps("enabled");
+    LogCmps("Calibrated");
+  }else
+    LogCmps("disabled");
 }
 
 void Compass::update()
@@ -38,6 +40,8 @@ void Compass::update()
 
 void Compass::storeCalibration()
 {
+  if(getEn())
+  {
   Wire.beginTransmission(COMPASS_ADRESS);
   Wire.write(0x00); //Sends the register we wish to start reading from
   Wire.write(0xF0);
@@ -53,10 +57,13 @@ void Compass::storeCalibration()
   Wire.write(0xF6);
   Wire.endTransmission();
   delay(20);
+  }
 }
 
 void Compass::eraseCalibration()
 {
+  if(getEn())
+  {
   Wire.beginTransmission(COMPASS_ADRESS);
   Wire.write(0x00); //Sends the register we wish to start reading from
   Wire.write(0xE0);
@@ -72,11 +79,14 @@ void Compass::eraseCalibration()
   Wire.write(0xE2);
   Wire.endTransmission();
   delay(20);
+  }
 }
 
 bool Compass::checkCalibration()
 {
-  Wire.beginTransmission(COMPASS_ADRESS);
+  if(getEn())
+  {
+    Wire.beginTransmission(COMPASS_ADRESS);
   Wire.write(0x1E); //Sends the register we wish to start reading from
   Wire.endTransmission();
   Wire.requestFrom(COMPASS_ADRESS, 1);
@@ -96,10 +106,14 @@ bool Compass::checkCalibration()
   Serial.println();
 
   return _checkCalibration;
+  }
+  return false;
 }
 
 int Compass::getTemperature()
 {
+  if(getEn())
+  {
   Wire.beginTransmission(COMPASS_ADRESS);
   Wire.write(0x18); //Sends the register we wish to start reading from
   Wire.endTransmission();
@@ -114,6 +128,8 @@ int Compass::getTemperature()
   }
 
   return _temperature - 10; //-10 wegen eigentemperatur des sensors, ist ungefähr
+  }
+  return -1;
 }
 
 unsigned char Compass::getAngle8() { return _angle8; }

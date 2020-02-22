@@ -29,15 +29,16 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(true);
+Compass cmps(false);
 Ultrasonic us(true);
 Pui pui(true);
 BallTouch ballTouch(true);
 Chassis m(true);
 Camera camera(true);
 Kick kick(true, 220);
+Bluetooth bt(true);
 
-Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick};
+Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt};
 
 Offense offense;
 Defense defense;
@@ -61,15 +62,15 @@ void setup()
   Wire.begin();
   startSound();
 
+  Display::init(); //static class maybe cant init int foreach
   for (Hardware *hardware : hardwares)
     hardware->init();
- Display::init(); //static class maybe cant init int foreach
 
   player = &offense;
   player->initPID();
-  
-  cmps.checkCalibration();
-  Serial.println(getFreeSRAM());
+
+  LogCmps(cmps.checkCalibration());
+  LogUtility("free SRAM: " + getFreeSRAM());
 }
 
 //###################################################################################################
@@ -84,14 +85,11 @@ void setup()
 
 void loop()
 {
+  Display::update(); //maybe can implement it alltough its static class
   for (Hardware *hardware : hardwares)
     hardware->update();
-  Display::update(); //maybe can implement it alltough its static class
 
   player = player->update();
   player->play();
-  // Serial.println(player->updatePID());
-  // player->updatePos();
-
   heartbeat();
 }
