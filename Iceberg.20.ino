@@ -63,12 +63,12 @@ void setup()
   Wire.begin();
   startSound();
 
+  Display::init(); //static class maybe cant init int foreach
   for (Hardware *hardware : hardwares)
     hardware->init();
- Display::init(); //static class maybe cant init int foreach
 
   player = &offense;
-  
+
   LogCmps(cmps.checkCalibration());
   LogUtility("free SRAM: " + getFreeSRAM());
 }
@@ -83,14 +83,12 @@ void setup()
 //##...............................................................................................##
 //###################################################################################################
 
-byte sendBytes[] = { 10 , 20, 30};
 void loop()
 {
+  Display::update(); //maybe can implement it alltough its static class
   for (Hardware *hardware : hardwares)
     hardware->update();
-  Display::update(); //maybe can implement it alltough its static class
 
   player = player->update();
   player->play();
-
 }

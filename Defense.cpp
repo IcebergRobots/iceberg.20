@@ -21,10 +21,10 @@ Player *Defense::update()
 {
     if (camera.getBPos() != 0);
     {
-        Serial.println("Offense");
+        LogPlayer("Offense");
         return &offense;
     } if(getsLifted()){
-        Serial.println("Standby");
+        LogPlayer("Standby");
         return &standby;
     }
     return this;

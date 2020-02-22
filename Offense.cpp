@@ -38,10 +38,10 @@ Player *Offense::update()
 {
     if (camera.getBPos() == 0 && us.getFrontLeft() < 10)
     {
-        Serial.println("Defense");
+        LogPlayer("Defense");
         return &defense;
     }else if(getsLifted()){
-        Serial.println("Standby");
+        LogPlayer("Standby");
         return &standby;
     }
     return this;
