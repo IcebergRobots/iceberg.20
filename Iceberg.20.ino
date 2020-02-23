@@ -91,6 +91,5 @@ void loop()
 
   player = player->update();
   player->play();
-
   Display::update(); //maybe can implement it alltough its static class
 }

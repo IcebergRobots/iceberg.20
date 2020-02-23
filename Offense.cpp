@@ -14,12 +14,12 @@ extern Standby standby;
 
 void Offense::search()
 {
-    m.drive(180, 30);
+    m.drive(180, 30, updatePID());
 }
 
 void Offense::follow()
 {
-    m.drive(map(camera.getBPos(), 0, 320, 90, -90), 30, 0); 
+    m.drive(map(camera.getBPos(), 0, 320, 90, -90), 30, updatePID()); 
     if (ballTouch.hasBall())
     {
         kick.kick();
@@ -37,7 +37,7 @@ void Offense::play()
 Player *Offense::update()
 {
     currentState = State::offense;
-    if (camera.getBPos() == 0 && us.getFrontLeft() < 10)
+    if (camera.getBPos() == 0 && us.getFrontLeft() < 10 && false)
     {
         LogPlayer("Defense");
         return &defense;

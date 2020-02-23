@@ -33,7 +33,7 @@ Player *Defense::update()
 
 void Defense::defGoal()
 {
-    m.drive(180,30, 30);
+    m.drive(180,30, updatePID());
     // if(us.getBack() < 15)
     // {
     //     m.drive(0,40);

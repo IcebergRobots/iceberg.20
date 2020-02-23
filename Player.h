@@ -22,7 +22,6 @@ public:
 
     virtual void initPID();
     virtual int updatePID(); 
-    virtual void updatePos();//Kompass ausrichten
 
     bool getsLifted();
     

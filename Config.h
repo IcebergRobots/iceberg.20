@@ -21,6 +21,22 @@
 #define DEBUG_UTILITY       1
 
 
+
+//Bluetooth
+#define MSG_SIZE 3
+
+//EEPROM
+#define EEPROM_BALLTOUCH_THRESHOLD 0
+
+#define HEARTBEAT_LOOPTIME 500
+
+// PID-Regler
+#define PID_FILTER_P 0.23   // [0 bis *]~.27 p:proportional
+#define PID_FILTER_I 0.1 // [0 bis *]~.02 i:vorausschauend 
+#define PID_FILTER_D 0.026  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
+
+
+
 #if DEBUG == 1 && DEBUG_PLAYER == 1
 #   define LogPlayer(msg)   Serial.println("Player: " + (String)msg)
 #else
@@ -86,22 +102,3 @@
 #else
 #   define LogUtility(msg)
 #endif
-
-
-
-//Bluetooth
-#define MSG_SIZE 3
-
-//EEPROM
-#define EEPROM_BALLTOUCH_THRESHOLD 0
-
-#define HEARTBEAT_LOOPTIME 500
-
-// PID-Regler
-#define PID_FILTER_P 0.2   // [0 bis *]~.27 p:proportional
-#define PID_FILTER_I 0  // [0 bis *]~0   i:vorausschauend
-#define PID_FILTER_D 1  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
-
-//Camera 
-#define SIG_BALL 1
-#define SIG_GOAL 2

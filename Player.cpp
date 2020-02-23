@@ -27,19 +27,14 @@ void Player::initPID()
     _myPID.SetMode(AUTOMATIC);
     // konfiguriere PID-Regler
     _myPID.SetTunings(PID_FILTER_P, PID_FILTER_I, PID_FILTER_D);
-    _myPID.SetOutputLimits(-180, 180);
+    _myPID.SetOutputLimits(-255, 255);
 }
 
 int Player::updatePID()
 {
-    _input = cmps.getAngle16() - 180;
+    _input = -((cmps.getAngle16() + 180) % 360 - 180);
     _myPID.Compute();
     return _output;
-}
-
-void Player::updatePos()
-{
-    m.drive(0, 30, _output);
 }
 
 bool Player::getsLifted()

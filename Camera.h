@@ -5,6 +5,8 @@
 
 #include <Pixy.h>
 
+#define SIG_BALL 1
+#define SIG_GOAL 2
 
 class Camera : private Pixy, public Hardware
 {
