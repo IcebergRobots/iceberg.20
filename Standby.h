@@ -12,4 +12,6 @@ public:
 
     void rate() override;
     void communication() override;
+private:
+    bool _disOnce = true;
 };

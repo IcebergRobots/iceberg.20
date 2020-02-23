@@ -32,6 +32,10 @@ public:
 
     virtual void communication() = 0; // Daten zwischen Robotern austauschen (individuell welche daten)
 
+    enum class State {
+        standby = 0, offense = 1, defense = 2 
+    };
+    State currentState;
 private:
     double _setpoint = 0;    //PID Zielwert
     double _input, _output;          //CMPS Input, rotationsstärke

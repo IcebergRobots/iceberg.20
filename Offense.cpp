@@ -36,6 +36,7 @@ void Offense::play()
 
 Player *Offense::update()
 {
+    currentState = State::offense;
     if (camera.getBPos() == 0 && us.getFrontLeft() < 10)
     {
         LogPlayer("Defense");

@@ -123,6 +123,8 @@ void Chassis::brake(const bool& activ)
 
 void Chassis::setMotEn(const bool& motEn)
 {
+  if(!motEn)
+    brake(false);
   for (int i = 0; i < 4; i++)
   {
     motors[i].setEn(motEn);

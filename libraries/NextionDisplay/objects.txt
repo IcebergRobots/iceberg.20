@@ -3,7 +3,19 @@ Beispiele:
     
 Overview pageid 2:
     RAM         3, b1
-    
+    State       4, b2
+
+Hardware pageid 3:
+    ballt       3, b1
+    Kicker      4, b2
+    chassis      5, b3
+
+Config pageid 4:
+    EnDisable   4, b2
+
+Config Calibrate pageid 6:
+    Kicker      4, b2 
+
 CaliBalltouch pageid 7:
     Ball:       3, b1
     NoBall:     4, b2
@@ -11,13 +23,19 @@ CaliBalltouch pageid 7:
     tStatus:    6, t0
 
 hardBalltouch pageid 8:
+    tballCali   3, ballCali
     tStatus     4, t1
-    updatePage  5, tm0
+    text        5, t0
 
 En/Disable pageid 9:
     enKick      3, kicken
-    enMotors    6, motorsen
-    updatePage  7, tm0
+    enchassis    6, chassisen
+    cmpsen      7, cmpsen
+    camen       10,camen
+    usen        11,usen
+    ballten     14,ballten
+    bten        15,bten
+    puien       18,puien
 
 hardKicker pageid 10:
     Kick        3, b1
@@ -26,9 +44,13 @@ hardKicker pageid 10:
 caliKicker pageid 11:
     kick        4, b1
     Slider      1, h0
+    kickPower   3, n0
 
-hardMotors pageid 12:
-    enMotors    4, motorsen
+hardchassis pageid 12:
+    enchassis    4, chassisen
 
 Overview FreeRAM pageid 13:
     freeram     3, freeram
+
+Overview State pageid 14:
+    tstate      2, tstate

@@ -12,18 +12,22 @@ extern Bluetooth bt;
 extern Defense defense;
 extern Offense offense;
 
-
 void Standby::play()
 {
-    m.brake(false);
-    m.setMotEn(false);
-    ballTouch.setEn(false);
-    us.setEn(false);
+    if(_disOnce)
+    {
+        _disOnce = false;
+        m.setMotEn(false);
+        ballTouch.setEn(false);
+        us.setEn(false);
+    }
 }
 
 Player* Standby::update()
 {
-    if(!getsLifted() && false){
+    currentState = State::standby;
+    if(!getsLifted()){
+        _disOnce = true;
         m.setMotEn(true);
         ballTouch.setEn(true);
         us.setEn(true);

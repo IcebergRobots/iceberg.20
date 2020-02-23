@@ -3,6 +3,9 @@
 void BallTouch::init()
 {
     _threshold = EEPROM.read(EEPROM_BALLTOUCH_THRESHOLD);
+    setCali(true);
+    if(_threshold <= 0)
+        setCali(false);
     if(getEn())
     {
         LogBalltouch("enabled");
@@ -12,6 +15,16 @@ void BallTouch::init()
         LogBalltouch("Intialized");
     } else 
         LogBalltouch("disabled");
+}
+
+void BallTouch::setCali(const bool& setCali)
+{
+    _calibrated = setCali;
+}
+
+const bool BallTouch::getCali()
+{
+    return _calibrated;
 }
 
 void BallTouch::calibrate()
@@ -84,6 +97,9 @@ void BallTouch::calculateTreshold()
         if (_thresholdNoBall > -1)
         {
             _threshold = (_thresholdBall + _thresholdNoBall) / 2;
+            setCali(true);
+            if(_threshold <= 0)
+                setCali(false);
             EEPROM.write(EEPROM_BALLTOUCH_THRESHOLD, _threshold);
             LogBalltouch("Sets threshold to: " + _threshold);
             LogBalltouch("Calibrated");

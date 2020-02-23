@@ -29,7 +29,7 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(false);
+Compass cmps(true);
 Ultrasonic us(true);
 Pui pui(true);
 BallTouch ballTouch(true);
@@ -66,7 +66,7 @@ void setup()
   for (Hardware *hardware : hardwares)
     hardware->init();
 
-  player = &standby;
+  player = &offense;
   player->initPID();
 
   LogCmps(cmps.checkCalibration());
@@ -86,10 +86,11 @@ void setup()
 void loop()
 {
   heartbeat();
-  Display::update(); //maybe can implement it alltough its static class
   for (Hardware *hardware : hardwares)
     hardware->update();
 
   player = player->update();
   player->play();
+
+  Display::update(); //maybe can implement it alltough its static class
 }

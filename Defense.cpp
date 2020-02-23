@@ -19,6 +19,7 @@ void Defense::play()
 
 Player *Defense::update()
 {
+    currentState = State::defense;
     if (camera.getBPos() != 0 && rateBall() > 170)
     {
         LogPlayer("Offense");

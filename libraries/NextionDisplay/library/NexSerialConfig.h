@@ -16,7 +16,7 @@
  */
 
 #define RX 66
-#define TX 43
+#define TX 41
 class StaticSoftwareSerial {
     public:
         // Klassenvariable (statisch): Referenz auf ein Objekt der Klasse SoftwareSerial

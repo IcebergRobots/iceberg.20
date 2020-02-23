@@ -27,8 +27,9 @@ public:
     void calibrateBall();
     void calculateTreshold();
     
-    const bool getCaliNoBall();
-    const bool getCaliBall();
+    // const bool getCaliNoBall();
+    // const bool getCaliBall();
+    void setCali(const bool& setCali);
     const bool getCali();
 
     int getValue();
@@ -42,6 +43,8 @@ private:
     int _thresholdBall = -1;
     int _threshold;
 
+    bool _calibrated;
+    
     int _summe;
     int _counter;
 
