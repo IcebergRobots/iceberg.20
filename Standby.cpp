@@ -23,7 +23,7 @@ void Standby::play()
 
 Player* Standby::update()
 {
-    if(!getsLifted()){
+    if(!getsLifted() && false){
         m.setMotEn(true);
         ballTouch.setEn(true);
         us.setEn(true);

@@ -11,7 +11,7 @@ extern Kick kick;
 NexButton Display::_goRAM = NexButton(2, 3, "b1");
 
 //Overview FreeRAM
-NexText Display::_freeRAM = NexText(13, 3, "freeram");
+NexNumber Display::_freeRAM = NexNumber(13, 3, "freeram");
 
 
 //Calibrate BallTouch
@@ -72,7 +72,7 @@ NexTouch *Display::_nex_listen_list[NUM_OBJECTS] = {
 //Overview
 void Display::goRAM(void *ptr)
 {
-  _freeRAM.setText((const char*)getFreeSRAM());
+  _freeRAM.setValue(getFreeSRAM());
 }
 
 //Calibrate BallTouch
@@ -102,7 +102,6 @@ void Display::updateBallTimer(void *ptr) {
 //Hardware Enable/Disable
 void Display::switchEnKick(void *ptr)
 {
-  Serial.println("switched");
   kick.setEn(!kick.getEn());
 }
 

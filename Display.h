@@ -44,7 +44,7 @@ private:
     static NexButton _goRAM;
 
     //Overview FreeRAM
-    static NexText _freeRAM;
+    static NexNumber _freeRAM;
 
     //Calibrate ballTouch
     static NexButton _ballTouchBall;

@@ -18,7 +18,7 @@
 #define DEBUG_BALLTOUCH     0
 #define DEBUG_DISPLAY       0
 #define DEBUG_PUI           0
-#define DEBUG_UTILITY       0
+#define DEBUG_UTILITY       1
 
 
 #if DEBUG == 1 && DEBUG_PLAYER == 1

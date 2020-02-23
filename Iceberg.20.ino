@@ -66,7 +66,7 @@ void setup()
   for (Hardware *hardware : hardwares)
     hardware->init();
 
-  player = &offense;
+  player = &standby;
   player->initPID();
 
   LogCmps(cmps.checkCalibration());
@@ -85,11 +85,11 @@ void setup()
 
 void loop()
 {
+  heartbeat();
   Display::update(); //maybe can implement it alltough its static class
   for (Hardware *hardware : hardwares)
     hardware->update();
 
   player = player->update();
   player->play();
-  heartbeat();
 }
