@@ -28,13 +28,13 @@ Player *Offense::update()
 
 void Offense::play()
 {
-    // rateBall();
-    // rateGoal();
+    rateBall();
+    rateGoal();
 
-    // if (camera.getBPos() != 0)
-    //     follow();
-    // else
-    //     search();
+    if (camera.getBPos() != 0)
+        follow();
+    else
+        search();
     
     rate();
     communicate();

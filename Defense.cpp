@@ -14,9 +14,9 @@ extern Standby standby;
 
 void Defense::play()
 {
-    // rateBall();
-    // rateGoal();
-    // defGoal();
+    rateBall();
+    rateGoal();
+    defGoal();
     rate();
     communicate();
 }
