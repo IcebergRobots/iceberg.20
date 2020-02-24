@@ -35,11 +35,6 @@ byte Bluetooth::getMessage(byte index)
     return _receivedMsg[index];
 }
 
-// bool Bluetooth::getSwitch()
-// {
-//     return _receivedMsg[BT_INDEX_SWITCH];
-// }
-
 void Bluetooth::send()
 {
     if(getEn())

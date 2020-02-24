@@ -21,7 +21,6 @@ class Bluetooth : public Hardware
     void setMessage(byte *sendMsg);
 
     byte getMessage(byte index);
-    // bool getSwitch();
 
   private:
     bool _waitingForMsg = true;
