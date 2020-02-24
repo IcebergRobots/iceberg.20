@@ -20,10 +20,13 @@
 #define DEBUG_PUI           0
 #define DEBUG_UTILITY       1
 
-
+//Rateing   weights in % sum should equal 100%
+#define RATE_BALL_WEIGHT    60
+#define RATE_GOAL_WEIGHT    40
 
 //Bluetooth
-#define MSG_SIZE 3
+#define BT_MSG_SIZE         1
+#define BT_INDEX_SWITCH     0
 
 //EEPROM
 #define EEPROM_BALLTOUCH_THRESHOLD 0

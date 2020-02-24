@@ -35,7 +35,7 @@ Pui pui(true);
 BallTouch ballTouch(true);
 Chassis m(true);
 Camera camera(true);
-Kick kick(true, 220);
+Kick kick(true, 240);
 Bluetooth bt(true);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt};
@@ -66,7 +66,7 @@ void setup()
   for (Hardware *hardware : hardwares)
     hardware->init();
 
-  player = &offense;
+  player = &defense;
   player->initPID();
 
   LogCmps(cmps.checkCalibration());

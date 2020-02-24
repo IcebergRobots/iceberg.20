@@ -8,6 +8,7 @@ void Bluetooth::init()
         if (!BT_SERIAL)
             Serial.println("BT_SERIAL couldnt Open");
         BT_SERIAL.begin(115200);
+        LogBluetooth("Initialized");
     } else
         LogBluetooth("disabled");
 }
@@ -23,28 +24,28 @@ void Bluetooth::update()
 
 void Bluetooth::setMessage(byte *sendMsg)
 {
-    for(int i = 0; i < MSG_SIZE; i++)
+    for(int i = 0; i < BT_MSG_SIZE; i++)
     {
         _sendMsg[i] = sendMsg[i];
     }
 }
 
-// byte[MSG_SIZE] Bluetooth::getMessage()
-// {
-//     return _received;
-// }
-
-byte Bluetooth::getRating()
+byte Bluetooth::getMessage(byte index)
 {
-    return _receivedMsg[0];
+    return _receivedMsg[index];
 }
+
+// bool Bluetooth::getSwitch()
+// {
+//     return _receivedMsg[BT_INDEX_SWITCH];
+// }
 
 void Bluetooth::send()
 {
     if(getEn())
     {
         BT_SERIAL.write(START_MARKER);
-        for(int i = 0; i < MSG_SIZE; i++)
+        for(int i = 0; i < BT_MSG_SIZE; i++)
         {
           BT_SERIAL.write(_sendMsg[i]);
         }
@@ -64,9 +65,9 @@ void Bluetooth::receive()
             _waitingForMsg = false;
         }
     }
-    if(BT_SERIAL.available() >= MSG_SIZE + 1 && !_waitingForMsg)
+    if(BT_SERIAL.available() >= BT_MSG_SIZE + 1 && !_waitingForMsg)
     {
-            for(int i = 0; i < MSG_SIZE; i++)
+            for(int i = 0; i < BT_MSG_SIZE; i++)
             {
                 _tmp[i] = BT_SERIAL.read();
             }
@@ -74,7 +75,7 @@ void Bluetooth::receive()
             if(_received == END_MARKER)
             {
                 LogBluetooth("Received Succesfully");
-                for(int i = 0; i < MSG_SIZE; i++)
+                for(int i = 0; i < BT_MSG_SIZE; i++)
                 {
                 _receivedMsg[i] = _tmp[i];
                 }

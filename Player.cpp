@@ -11,14 +11,14 @@ extern Bluetooth bt;
 
 int Player::rateBall()
 {
-    _ballRating = abs((150 - abs(150 - camera.getBPos())) * 255 / 150);
+    _ballRating = abs((150 - abs(150 - camera.getBPos())) / 150 * 255);
     return _ballRating;
 }
 
 
 int Player::rateGoal()
 {
-    _goalRating = (camera.getGWidth()*255 / 30);
+    _goalRating = camera.getGWidth()/ 30 *255;
     return _goalRating;
 }
 

@@ -29,7 +29,7 @@ public:
     virtual int rateBall();
     virtual void rate() = 0;          //Position bewerten (individuell bestimmen)
 
-    virtual void communication() = 0; // Daten zwischen Robotern austauschen (individuell welche daten)
+    virtual void communicate() = 0; // Daten zwischen Robotern austauschen (individuell welche daten)
 
     enum class State {
         standby = 0, offense = 1, defense = 2 
@@ -43,6 +43,7 @@ private:
 protected:
     int _goalRating;
     int _ballRating;
-    int _rating;
+    byte _rating;
 
+    byte _setMsg[BT_MSG_SIZE];
 };

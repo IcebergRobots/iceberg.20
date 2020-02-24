@@ -20,16 +20,16 @@ class Bluetooth : public Hardware
 
     void setMessage(byte *sendMsg);
 
-    // byte[MSG_SIZE] getMessage();
-    byte getRating();
+    byte getMessage(byte index);
+    // bool getSwitch();
 
   private:
     bool _waitingForMsg = true;
     byte _received;
-    byte _tmp[MSG_SIZE];
-    byte _receivedMsg[MSG_SIZE];
+    byte _tmp[BT_MSG_SIZE];
+    byte _receivedMsg[BT_MSG_SIZE];
 
-    byte _sendMsg[MSG_SIZE];
+    byte _sendMsg[BT_MSG_SIZE];
 
     void send();
     void receive();

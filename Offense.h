@@ -11,10 +11,17 @@ public:
     void play() override;
 
     void rate() override;
-    void communication() override;
+    void communicate() override;
 
     void follow();
     void search();
 
 private:
+    //Searchlogic
+    int _lastBallPos;
+    float _curveSearch;
+    float _curveFlw;
+
+    //rating
+    bool _switchToDef;
 };

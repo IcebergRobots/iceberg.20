@@ -14,13 +14,17 @@ extern Standby standby;
 
 void Defense::play()
 {
-    defGoal();
+    // rateBall();
+    // rateGoal();
+    // defGoal();
+    rate();
+    communicate();
 }
 
 Player *Defense::update()
 {
     currentState = State::defense;
-    if (camera.getBPos() != 0 && rateBall() > 170)
+    if (_switchToOff)
     {
         LogPlayer("Offense");
         return &offense;
@@ -54,10 +58,23 @@ void Defense::defGoal()
 }
 
 void Defense::rate() {
+    if(_maybeSwitchToOff)
+    {
+        LogBluetooth("Offense");
+        _switchToOff = bt.getMessage(BT_INDEX_SWITCH);
+    }else
+        _switchToOff = false;
 
+    #if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
+        _rating = _ballRating * RATE_BALL_WEIGHT/100 + _goalRating * RATE_GOAL_WEIGHT/100;
+        _maybeSwitchToOff = _rating > 170;
+    #elif
+        LogPlayer("Sum of weights doesnt equal 100%");
+    #endif
 }
 
-void Defense::communication()
+void Defense::communicate()
 {
-    
+    _setMsg[BT_INDEX_SWITCH] = _maybeSwitchToOff;
+    bt.setMessage(_setMsg);
 }

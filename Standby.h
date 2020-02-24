@@ -11,7 +11,7 @@ public:
     void play() override;
 
     void rate() override;
-    void communication() override;
+    void communicate() override;
 private:
     bool _disOnce = true;
 };

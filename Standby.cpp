@@ -42,7 +42,7 @@ void Standby::rate()
 
 }
 
-void Standby::communication()
+void Standby::communicate()
 {
 
 }
