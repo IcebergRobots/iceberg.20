@@ -16,7 +16,8 @@ public:
     void defGoal();
 
 private:
-    //byte _defDir = 0;
+    int _defTimer;
+    bool _defDir;
     bool _maybeSwitchToOff;
     bool _switchToOff;
 };

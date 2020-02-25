@@ -9,7 +9,7 @@ void Ultrasonic::init()
         {
             Wire.beginTransmission(_addresses[i]);
             Wire.write(byte(0x02));
-            Wire.write(byte(70)); //warum 70? sehe im datenblatt nichts
+            // Wire.write(byte(70)); //warum 70? sehe im datenblatt nichts
             Wire.endTransmission();
         }
         LogUs("Initlized");

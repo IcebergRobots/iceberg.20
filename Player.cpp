@@ -11,14 +11,14 @@ extern Bluetooth bt;
 
 int Player::rateBall()
 {
-    _ballRating = abs((150 - abs(150 - camera.getBPos())) / 150 * 255);
+    _ballRating = abs((150 - abs(150 - camera.getBPos())) * 255 / 150);
     return _ballRating;
 }
 
 
 int Player::rateGoal()
 {
-    _goalRating = camera.getGWidth()/ 30 *255;
+    _goalRating = camera.getGWidth()/ 30 *255 / 10;
     return _goalRating;
 }
 
@@ -30,10 +30,14 @@ void Player::initPID()
     _myPID.SetOutputLimits(-255, 255);
 }
 
-int Player::updatePID()
+void Player::updatePID()
 {
     _input = -((cmps.getAngle16() + 180) % 360 - 180);
     _myPID.Compute();
+}
+
+int Player::getPIDOutput()
+{
     return _output;
 }
 

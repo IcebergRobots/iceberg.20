@@ -6,23 +6,32 @@
 
 
 //Debugging
-#define DEBUG               1
+#define DEBUG               0
 
 #define DEBUG_PLAYER        0    
 #define DEBUG_COMPASS       0
 #define DEBUG_CAMERA        0
 #define DEBUG_CHASSIS       0
 #define DEBUG_BLUETOOTH     0
-#define DEBUG_ULTRASONIC    0
+#define DEBUG_ULTRASONIC    1
 #define DEBUG_KICK          0
 #define DEBUG_BALLTOUCH     0
 #define DEBUG_DISPLAY       0
 #define DEBUG_PUI           0
 #define DEBUG_UTILITY       1
 
+
+#define SPIELGESCHWINDIGKEIT 50
+
 //Rateing   weights in % sum should equal 100%
-#define RATE_BALL_WEIGHT    60
-#define RATE_GOAL_WEIGHT    40
+#define RATE_BALL_WEIGHT    40
+#define RATE_GOAL_WEIGHT    60
+
+// PID-Regler
+#define PID_FILTER_P 0.23   // [0 bis *]~.27 p:proportional
+#define PID_FILTER_I 0.1 // [0 bis *]~.02 i:vorausschauend 
+#define PID_FILTER_D 0.026  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
+
 
 //Bluetooth
 #define BT_MSG_SIZE         1
@@ -33,10 +42,6 @@
 
 #define HEARTBEAT_LOOPTIME 500
 
-// PID-Regler
-#define PID_FILTER_P 0.23   // [0 bis *]~.27 p:proportional
-#define PID_FILTER_I 0.1 // [0 bis *]~.02 i:vorausschauend 
-#define PID_FILTER_D 0.026  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
 
 
 

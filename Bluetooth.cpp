@@ -42,7 +42,7 @@ void Bluetooth::send()
         BT_SERIAL.write(START_MARKER);
         for(int i = 0; i < BT_MSG_SIZE; i++)
         {
-          BT_SERIAL.write(_sendMsg[i]);
+          BT_SERIAL.write(constrain(_sendMsg[i], 0, 253));
         }
         BT_SERIAL.write(END_MARKER);
     }

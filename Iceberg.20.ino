@@ -66,7 +66,7 @@ void setup()
   for (Hardware *hardware : hardwares)
     hardware->init();
 
-  player = &defense;
+  player = &offense;
   player->initPID();
 
   LogCmps(cmps.checkCalibration());
@@ -89,7 +89,13 @@ void loop()
   for (Hardware *hardware : hardwares)
     hardware->update();
 
+  player->updatePID();
   player = player->update();
   player->play();
+  // Serial.println(player->rateGoal());
+  // Serial.println("Hallo");
+
+  LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft());
+  
   Display::update(); //maybe can implement it alltough its static class
 }

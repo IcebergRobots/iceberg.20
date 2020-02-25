@@ -21,7 +21,8 @@ public:
     virtual void play() = 0;
 
     virtual void initPID();
-    virtual int updatePID(); 
+    virtual void updatePID(); 
+    virtual int getPIDOutput();
 
     bool getsLifted();
     

@@ -31,41 +31,45 @@ void Offense::play()
     rateBall();
     rateGoal();
 
-    if (camera.getBPos() != 0)
+    if (camera.getBPos() != 0 && _goalRating < 230)
         follow();
+    else if(_goalRating > 230)
+        m.drive(180,SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
     else
         search();
-    
-    rate();
+    // m.drive(0,100);
+     rate();
     communicate();
 }
 
 void Offense::search()
 {
-    _curveSearch = _lastBallPos < 160 ? _curveSearch - 0.4 : _curveSearch + 0.4;
-    m.drive(180 + _curveSearch, 60, updatePID());
-
+    _curveSearch = _lastBallPos < 160 ? _curveSearch - 0.3 : _curveSearch + 0.3;
+    if(abs(_curveSearch) <= 70)
+        m.drive(180 + _curveSearch, SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
+    else
+        m.drive(180, SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
     _curveFlw = 0;
 }
 
 void Offense::follow()
 {
-    if(rateBall() > 170)
+    if(_ballRating > 180)
     {
-        m.drive(map(camera.getBPos(), 0, 320, 90, -90), 60, updatePID()); 
+        m.drive(map(camera.getBPos(), 0, 320, 90, -90), SPIELGESCHWINDIGKEIT + 10 - abs(getPIDOutput()), getPIDOutput()); 
         _curveFlw = 0;
     }
     else
     {
-        if(camera.getBPos() < 160 && camera.getBPos() > 80)
-            _curveFlw += 0.6;
+        if(camera.getBPos() < 160 && camera.getBPos() > 60)
+            _curveFlw += 1;
         else if(camera.getBPos() > 160 && camera.getBPos() < 240)
-            _curveFlw -= 0.6;
-        else if(camera.getBPos() < 80)
-            _curveFlw += 0.3;
+            _curveFlw -= 1;
+        else if(camera.getBPos() < 60)
+            _curveFlw += 0.5;
         else
-            _curveFlw -= 0.3;
-        m.drive(_curveFlw, 60, updatePID());
+            _curveFlw -= 0.5;
+        m.drive(_curveFlw, SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
     }
 
     if (ballTouch.hasBall())
@@ -83,8 +87,9 @@ void Offense::rate()
     {
         LogBluetooth("Switch to defense");
         #if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
-            _rating = _ballRating * RATE_BALL_WEIGHT + _goalRating * RATE_GOAL_WEIGHT;
-            _switchToDef = _rating < 50;
+            _rating = _ballRating * RATE_BALL_WEIGHT / 100 + _goalRating * RATE_GOAL_WEIGHT / 100;
+            // Serial.println(_rating);
+            _switchToDef = _rating < 100;
         #else
             LogPlayer("Sum of weights doesnt equal 1");
         #endif
