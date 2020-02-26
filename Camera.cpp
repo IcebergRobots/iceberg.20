@@ -18,8 +18,12 @@ void Camera::update()
     {
         _ballArea = 0;
         _ballPos = 0;
+        _ballHeight = 0;
+        _ballWidth = 0;
         _goalArea = 0;
         _goalPos = 0;
+        _goalWidth = 0;
+        _goalHeight = 0;
         _blockCount = getBlocks();
         if (_blockCount != 0)
         {

@@ -11,6 +11,7 @@
 #include "Kick.h"
 #include "PID_v1.h"
 #include "Bluetooth.h"
+#include "Bottom.h"
 
 class Player
 {
@@ -44,7 +45,7 @@ private:
 protected:
     int _goalRating;
     int _ballRating;
-    byte _rating;
+    float _rating;
 
     byte _setMsg[BT_MSG_SIZE];
 };

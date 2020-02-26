@@ -15,7 +15,7 @@ extern Standby standby;
 Player *Offense::update()
 {
     currentState = State::offense;
-    if (_switchToDef)
+    if (_switchToDef && false)
     {
         LogPlayer("Defense");
         return &defense;
@@ -87,9 +87,10 @@ void Offense::rate()
     {
         LogBluetooth("Switch to defense");
         #if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
-            _rating = _ballRating * RATE_BALL_WEIGHT / 100 + _goalRating * RATE_GOAL_WEIGHT / 100;
+            // _rating = _ballRating * RATE_BALL_WEIGHT / 100 + _goalRating * RATE_GOAL_WEIGHT / 100; would be correct
+            _rating = _ballRating;
             // Serial.println(_rating);
-            _switchToDef = _rating < 100;
+            _switchToDef = _rating < 20;
         #else
             LogPlayer("Sum of weights doesnt equal 1");
         #endif

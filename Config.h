@@ -6,14 +6,14 @@
 
 
 //Debugging
-#define DEBUG               0
+#define DEBUG               1
 
 #define DEBUG_PLAYER        0    
-#define DEBUG_COMPASS       0
+#define DEBUG_COMPASS       1
 #define DEBUG_CAMERA        0
 #define DEBUG_CHASSIS       0
 #define DEBUG_BLUETOOTH     0
-#define DEBUG_ULTRASONIC    1
+#define DEBUG_ULTRASONIC    0
 #define DEBUG_KICK          0
 #define DEBUG_BALLTOUCH     0
 #define DEBUG_DISPLAY       0
@@ -24,8 +24,8 @@
 #define SPIELGESCHWINDIGKEIT 50
 
 //Rateing   weights in % sum should equal 100%
-#define RATE_BALL_WEIGHT    40
-#define RATE_GOAL_WEIGHT    60
+#define RATE_BALL_WEIGHT    20
+#define RATE_GOAL_WEIGHT    80
 
 // PID-Regler
 #define PID_FILTER_P 0.23   // [0 bis *]~.27 p:proportional
@@ -41,6 +41,8 @@
 #define EEPROM_BALLTOUCH_THRESHOLD 0
 
 #define HEARTBEAT_LOOPTIME 500
+
+#define BOTTOM_LENGTH 40        // [0 bis *] Anzahl der Boden-Leds
 
 
 

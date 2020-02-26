@@ -14,8 +14,8 @@ extern Standby standby;
 
 void Defense::play()
 {
-    rateBall();
     rateGoal();
+    rateBall();
     // defGoal();
     rate();
     communicate();
@@ -66,8 +66,9 @@ void Defense::rate()
         _switchToOff = false;
 
 #if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
-    _rating = _ballRating * RATE_BALL_WEIGHT / 100 + _goalRating * RATE_GOAL_WEIGHT / 100;
-    _maybeSwitchToOff = _rating > 110;
+    // _rating = (_ballRating * RATE_BALL_WEIGHT / 100) + (_goalRating * RATE_GOAL_WEIGHT / 100); this would be correct but getGoalWidth doesnt work properly
+    _rating = _ballRating;
+    _maybeSwitchToOff = _rating > 180;
 #elif
     LogPlayer("Sum of weights doesnt equal 100%");
 #endif

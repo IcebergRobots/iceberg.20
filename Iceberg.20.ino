@@ -29,16 +29,17 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(true);
-Ultrasonic us(true);
-Pui pui(true);
-BallTouch ballTouch(true);
-Chassis m(true);
-Camera camera(true);
-Kick kick(true, 240);
-Bluetooth bt(true);
+Compass cmps(false);
+Ultrasonic us(false);
+Pui pui(false);
+BallTouch ballTouch(false);
+Chassis m(false);
+Camera camera(false);
+Kick kick(false, 240);
+Bluetooth bt(false);
+Bottom bottom(true);
 
-Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt};
+Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt, &bottom};
 
 Offense offense;
 Defense defense;
@@ -68,6 +69,7 @@ void setup()
 
   player = &offense;
   player->initPID();
+   
 
   LogCmps(cmps.checkCalibration());
   LogUtility("free SRAM: " + getFreeSRAM());
@@ -88,10 +90,10 @@ void loop()
   heartbeat();
   for (Hardware *hardware : hardwares)
     hardware->update();
-
-  player->updatePID();
-  player = player->update();
-  player->play();
+Serial.println(cmps.getAngle8());
+  // player->updatePID();
+  // player = player->update();
+  // player->play();
   // Serial.println(player->rateGoal());
   // Serial.println("Hallo");
 
