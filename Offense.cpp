@@ -34,12 +34,12 @@ void Offense::play()
 
     if (camera.getBPos() != 0 && _goalRating < 230)
         follow();
-    else if(_goalRating > 230)
-        m.drive(180,SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
+    // else if(_goalRating > 230)
+    //     m.drive(180,SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
+    // else
     else
         search();
-    // m.drive(0,100);
-     rate();
+    rate();
     communicate();
 }
 
@@ -55,7 +55,7 @@ void Offense::search()
 
 void Offense::follow()
 {
-    if(_ballRating > 180)
+    if(_ballRating > 160)
     {
         m.drive(map(camera.getBPos(), 0, 320, 90, -90), SPIELGESCHWINDIGKEIT + 10 - abs(getPIDOutput()), getPIDOutput()); 
         _curveFlw = 0;
@@ -101,7 +101,6 @@ void Offense::rate()
 
 void Offense::communicate()
 {
-    Serial.println(_switchToDef);
     _setMsg[BT_INDEX_SWITCH] = _switchToDef;
 
     bt.setMessage(_setMsg);

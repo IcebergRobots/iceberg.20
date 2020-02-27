@@ -53,7 +53,7 @@ void Pui::update()
         // _SMotor = expander.digitalRead(S_MOTOR);
 
         //old PUI
-        if (millis() > inputTimer + 20)
+        if (millis() > inputTimer + 30)
         {
 
         button_start       = last_button_start && !digitalRead(BUTTON_START);

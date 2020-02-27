@@ -21,6 +21,12 @@ void Standby::play()
         ballTouch.setEn(false);
         us.setEn(false);
     }
+
+    if(pui.button_compass)
+        cmps.cali();
+
+    if(!cmps.calibrated)
+        cmps.checkCalibration();
 }
 
 Player* Standby::update()

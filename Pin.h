@@ -60,6 +60,9 @@
 #define J_UP            7
 #define J_RIGHT         6
 
+#define LED_BACK_LEFT   6
+#define LED_BACK_RIGHT  38
+#define LED_FRONT       49
 
 #define LED_DEFENDER    11
 #define LED_STRIKER     12    //not working 

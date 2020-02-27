@@ -28,7 +28,9 @@ public:
     void storeCalibration(); //notworking in the moment
     void eraseCalibration(); //notworking in the moment
 
-    bool checkCalibration();
+    bool calibrated;
+    void checkCalibration();
+
     int getTemperature();
 private:
     void firstCali();
