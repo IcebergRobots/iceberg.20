@@ -5,6 +5,8 @@ void Compass::init()
 {
   if (getEn())
   {
+    update();
+    firstCali();
     LogCmps("enabled");
     LogCmps("Calibrated");
   }else
@@ -34,8 +36,21 @@ void Compass::update()
       _angle16 = _high_byte; // Calculate 16 bit angle
       _angle16 <<= 8;
       _angle16 += _low_byte;
+      
     }
   }
+}
+
+void Compass::firstCali()
+{
+  LogCmps("calibrated");
+  _firstOffset = 360 - getAngle();
+}
+
+void Compass::cali()
+{
+  LogCmps("recalibrated");
+  _offset = 360 - getAngle();
 }
 
 void Compass::storeCalibration()
@@ -132,7 +147,12 @@ int Compass::getTemperature()
   return -1;
 }
 
+int Compass::getAngle()
+{
+  return (((_angle16 / 10 + _firstOffset) % 360) + _offset) % 360;
+}
+
 unsigned char Compass::getAngle8() { return _angle8; }
-int Compass::getAngle16() { return _angle16 / 10; }
+int Compass::getAngle16() { return _angle16; }
 int Compass::getPitch() { return _pitch; }
 int Compass::getRoll() { return _roll; }

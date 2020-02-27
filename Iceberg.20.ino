@@ -29,13 +29,13 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(false);
-Ultrasonic us(false);
-Pui pui(false);
-BallTouch ballTouch(false);
-Chassis m(false);
-Camera camera(false);
-Kick kick(false, 240);
+Compass cmps(true);
+Ultrasonic us(true);
+Pui pui(true);
+BallTouch ballTouch(true);
+Chassis m(true);
+Camera camera(true);
+Kick kick(true, 240);
 Bluetooth bt(false);
 Bottom bottom(true);
 
@@ -63,13 +63,12 @@ void setup()
   Wire.begin();
   startSound();
 
-  Display::init(); //static class maybe cant init int foreach
+  // Display::init(); //static class maybe cant init int foreach
   for (Hardware *hardware : hardwares)
     hardware->init();
 
-  player = &offense;
+  player = &standby;
   player->initPID();
-   
 
   LogCmps(cmps.checkCalibration());
   LogUtility("free SRAM: " + getFreeSRAM());
@@ -85,19 +84,28 @@ void setup()
 //##...............................................................................................##
 //###################################################################################################
 
+unsigned long testtime;
 void loop()
 {
   heartbeat();
+
   for (Hardware *hardware : hardwares)
     hardware->update();
-Serial.println(cmps.getAngle8());
-  // player->updatePID();
-  // player = player->update();
-  // player->play();
-  // Serial.println(player->rateGoal());
-  // Serial.println("Hallo");
 
-  LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft());
+  // if(pui.button_compass)
+  // {
+  //   cmps.cali();
+  // }
+  // Serial.println(cmps.getAngle());
+    // if(pui.button_kick)
+    //   kick.kick();
+  // Serial.println(cmps.checkCalibration());
+  Serial.println(cmps.getAngle());
+  player = player->update();
+  player->play();
+  // player->updatePID();
+  // m.drive(0,0, player->getPIDOutput());
+  // LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft() + "  FL: " + us.getFrontLeft() + "  FR: " + us.getFrontRight());
   
-  Display::update(); //maybe can implement it alltough its static class
+  // Display::update(); //maybe can implement it alltough its static class
 }

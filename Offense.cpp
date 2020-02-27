@@ -19,7 +19,7 @@ Player *Offense::update()
     {
         LogPlayer("Defense");
         return &defense;
-    }else if(getsLifted()){
+    }else if(getsLifted() || pui.button_stop){
         LogPlayer("Standby");
         return &standby;
     }
@@ -28,6 +28,7 @@ Player *Offense::update()
 
 void Offense::play()
 {
+    updatePID();
     rateBall();
     rateGoal();
 
@@ -85,12 +86,12 @@ void Offense::rate()
 {
     if(bt.getMessage(BT_INDEX_SWITCH))
     {
-        LogBluetooth("Switch to defense");
         #if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
             // _rating = _ballRating * RATE_BALL_WEIGHT / 100 + _goalRating * RATE_GOAL_WEIGHT / 100; would be correct
             _rating = _ballRating;
             // Serial.println(_rating);
             _switchToDef = _rating < 20;
+            LogBluetooth("Switch to defense");  
         #else
             LogPlayer("Sum of weights doesnt equal 1");
         #endif
@@ -100,6 +101,7 @@ void Offense::rate()
 
 void Offense::communicate()
 {
+    Serial.println(_switchToDef);
     _setMsg[BT_INDEX_SWITCH] = _switchToDef;
 
     bt.setMessage(_setMsg);

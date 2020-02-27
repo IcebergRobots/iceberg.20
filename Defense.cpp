@@ -14,9 +14,11 @@ extern Standby standby;
 
 void Defense::play()
 {
+    updatePID();
     rateGoal();
     rateBall();
     // defGoal();
+    m.brake(false);
     rate();
     communicate();
 }
@@ -30,7 +32,7 @@ Player *Defense::update()
         LogPlayer("Offense");
         return &offense;
     }
-    if (getsLifted())
+    if (getsLifted() || pui.button_stop)
     {
         LogPlayer("Standby");
         return &standby;
@@ -61,6 +63,7 @@ void Defense::rate()
     {
         LogBluetooth("Offense");
         _switchToOff = bt.getMessage(BT_INDEX_SWITCH);
+        // Serial.println(_switchToOff);
     }
     else
         _switchToOff = false;
@@ -76,6 +79,7 @@ void Defense::rate()
 
 void Defense::communicate()
 {
+    Serial.println(_maybeSwitchToOff);
     _setMsg[BT_INDEX_SWITCH] = _maybeSwitchToOff;
     bt.setMessage(_setMsg);
 }

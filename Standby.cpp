@@ -26,7 +26,7 @@ void Standby::play()
 Player* Standby::update()
 {
     currentState = State::standby;
-    if(!getsLifted()){
+    if(!getsLifted() && pui.button_start){
         _disOnce = true;
         m.setMotEn(true);
         ballTouch.setEn(true);

@@ -8,7 +8,7 @@
 //Debugging
 #define DEBUG               1
 
-#define DEBUG_PLAYER        0    
+#define DEBUG_PLAYER        1   
 #define DEBUG_COMPASS       1
 #define DEBUG_CAMERA        0
 #define DEBUG_CHASSIS       0
@@ -17,7 +17,7 @@
 #define DEBUG_KICK          0
 #define DEBUG_BALLTOUCH     0
 #define DEBUG_DISPLAY       0
-#define DEBUG_PUI           0
+#define DEBUG_PUI           1
 #define DEBUG_UTILITY       1
 
 

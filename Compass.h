@@ -18,6 +18,8 @@ public:
     void init() override;
     void update() override;
 
+    void cali();
+    int getAngle();
     unsigned char getAngle8();
     int getAngle16();
     int getPitch();
@@ -29,10 +31,14 @@ public:
     bool checkCalibration();
     int getTemperature();
 private:
+    void firstCali();
     unsigned char _high_byte, _low_byte, _angle8, _high_byteTemp, _low_byteTemp;
     int _pitch, _roll;
     unsigned int _angle16;
     int _temperature;
+
+    unsigned int _firstOffset; //need this because calibration doesnt work properly
+    unsigned int _offset; //need this because calibration doesnt work properly
 
     byte _checkCalibration;
 };

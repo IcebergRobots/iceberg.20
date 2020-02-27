@@ -32,7 +32,7 @@ void Player::initPID()
 
 void Player::updatePID()
 {
-    _input = -((cmps.getAngle16() + 180) % 360 - 180);
+    _input = -((cmps.getAngle() + 180) % 360 - 180);
     _myPID.Compute();
 }
 
