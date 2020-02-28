@@ -14,7 +14,6 @@ extern Standby standby;
 
 void Defense::play()
 {
-    updatePID();
     rateGoal();
     rateBall();
     // defGoal();
@@ -42,16 +41,16 @@ Player *Defense::update()
 
 void Defense::defGoal()
 {
-    // m.drive(180,30 - getPIDOutput(), getPIDOutput());
+    // m.drive(180,30 - cmps.getPIDOutput(), cmps.getPIDOutput());
     if (!_defDir)
     {
-        m.drive(270, 40 - getPIDOutput(), getPIDOutput());
+        m.drive(270, 40 - cmps.getPIDOutput(), cmps.getPIDOutput());
         if (us.getRight() < 40)
             _defDir = true;
     }
     else
     {
-        m.drive(90, 40 - getPIDOutput(), getPIDOutput());
+        m.drive(90, 40 - cmps.getPIDOutput(), cmps.getPIDOutput());
         if (us.getLeft() < 40)
             _defDir = false;
     }
@@ -79,7 +78,6 @@ void Defense::rate()
 
 void Defense::communicate()
 {
-    Serial.println(_maybeSwitchToOff);
     _setMsg[BT_INDEX_SWITCH] = _maybeSwitchToOff;
     bt.setMessage(_setMsg);
 }

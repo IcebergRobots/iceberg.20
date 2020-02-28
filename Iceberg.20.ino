@@ -29,12 +29,12 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(true);
+Compass cmps(false);
 Ultrasonic us(false);
 Pui pui(true);
 BallTouch ballTouch(false);
-Chassis m(true);
-Camera camera(true);
+Chassis m(false);
+Camera camera(false);
 Kick kick(false, 240);
 Bluetooth bt(false);
 Bottom bottom(false);
@@ -68,7 +68,6 @@ void setup()
     hardware->init();
 
   player = &standby;
-  player->initPID();
 
   LogUtility("free SRAM: " + getFreeSRAM());
 }
@@ -93,11 +92,11 @@ void loop()
 
     // if(pui.button_kick)
     //   kick.kick();
-  player = player->update();
-  player->play();
+    // Serial.println("Angle" + (String)cmps.getAngle());
+  // player = player->update();
+  // player->play();
   // player->updatePID();
   // m.drive(0,50, player->getPIDOutput());
   // LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft() + "  FL: " + us.getFrontLeft() + "  FR: " + us.getFrontRight());
-  
   // Display::update(); //maybe can implement it alltough its static class
 }

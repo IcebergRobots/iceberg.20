@@ -9,7 +9,6 @@
 #include "Chassis.h"
 #include "BallTouch.h"
 #include "Kick.h"
-#include "PID_v1.h"
 #include "Bluetooth.h"
 #include "Bottom.h"
 
@@ -20,10 +19,6 @@ public:
 
     virtual Player *update() = 0;
     virtual void play() = 0;
-
-    virtual void initPID();
-    virtual void updatePID(); 
-    virtual int getPIDOutput();
 
     bool getsLifted();
     
@@ -38,9 +33,6 @@ public:
     };
     State currentState;
 private:
-    double _setpoint = 0;    //PID Zielwert
-    double _input, _output;          //CMPS Input, rotationsstärke
-    PID _myPID = PID(&_input, &_output, &_setpoint, PID_FILTER_P, PID_FILTER_I, PID_FILTER_D, DIRECT);
 
 protected:
     int _goalRating;

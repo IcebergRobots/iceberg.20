@@ -28,17 +28,15 @@ Player *Offense::update()
 
 void Offense::play()
 {
-    updatePID();
     rateBall();
     rateGoal();
 
-    if (camera.getBPos() != 0 && _goalRating < 230)
-        follow();
-    // else if(_goalRating > 230)
-    //     m.drive(180,SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
+    // if (camera.getBPos() != 0 && _goalRating < 230)
+    //     follow();
+    // // else if(_goalRating > 230)
+    // //     m.drive(180,SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
     // else
-    else
-        search();
+    //     search();
     rate();
     communicate();
 }
@@ -47,9 +45,9 @@ void Offense::search()
 {
     _curveSearch = _lastBallPos < 160 ? _curveSearch - 0.3 : _curveSearch + 0.3;
     if(abs(_curveSearch) <= 70)
-        m.drive(180 + _curveSearch, SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
+        m.drive(180 + _curveSearch, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
     else
-        m.drive(180, SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
+        m.drive(180, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
     _curveFlw = 0;
 }
 
@@ -57,7 +55,7 @@ void Offense::follow()
 {
     if(_ballRating > 160)
     {
-        m.drive(map(camera.getBPos(), 0, 320, 90, -90), SPIELGESCHWINDIGKEIT + 10 - abs(getPIDOutput()), getPIDOutput()); 
+        m.drive(map(camera.getBPos(), 0, 320, 90, -90), SPIELGESCHWINDIGKEIT + 10 - abs(cmps.getPIDOutput()), cmps.getPIDOutput()); 
         _curveFlw = 0;
     }
     else
@@ -70,7 +68,7 @@ void Offense::follow()
             _curveFlw += 0.5;
         else
             _curveFlw -= 0.5;
-        m.drive(_curveFlw, SPIELGESCHWINDIGKEIT - abs(getPIDOutput()), getPIDOutput());
+        m.drive(_curveFlw, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
     }
 
     if (ballTouch.hasBall())

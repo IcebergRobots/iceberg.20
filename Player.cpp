@@ -22,25 +22,6 @@ int Player::rateGoal()
     return _goalRating;
 }
 
-void Player::initPID()
-{
-    _myPID.SetMode(AUTOMATIC);
-    // konfiguriere PID-Regler
-    _myPID.SetTunings(PID_FILTER_P, PID_FILTER_I, PID_FILTER_D);
-    _myPID.SetOutputLimits(-255, 255);
-}
-
-void Player::updatePID()
-{
-    _input = -((cmps.getAngle() + 180) % 360 - 180);
-    _myPID.Compute();
-}
-
-int Player::getPIDOutput()
-{
-    return _output;
-}
-
 bool Player::getsLifted()
 {
     if(cmps.getPitch() < 252 && cmps.getPitch() > 200)

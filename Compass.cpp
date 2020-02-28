@@ -7,6 +7,10 @@ void Compass::init()
   {
     update();
     firstCali();
+    _myPID.SetMode(AUTOMATIC);
+    // konfiguriere PID-Regler
+    _myPID.SetTunings(PID_FILTER_P, PID_FILTER_I, PID_FILTER_D);
+    _myPID.SetOutputLimits(-255, 255);
     LogCmps("enabled");
     LogCmps("Calibrated");
   }
@@ -38,7 +42,14 @@ void Compass::update()
       _angle16 <<= 8;
       _angle16 += _low_byte;
     }
+    _input = -((getAngle() + 180) % 360 - 180);
+    _myPID.Compute();
   }
+}
+
+int Compass::getPIDOutput()
+{
+    return _output;
 }
 
 void Compass::firstCali()

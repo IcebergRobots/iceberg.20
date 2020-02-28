@@ -17,7 +17,7 @@ void Standby::play()
     if(_disOnce)
     {
         _disOnce = false;
-        m.setMotEn(false);
+        m.setMotEn(true);
         ballTouch.setEn(false);
         us.setEn(false);
     }
@@ -35,8 +35,8 @@ Player* Standby::update()
     if(!getsLifted() && pui.button_start){
         _disOnce = true;
         m.setMotEn(true);
-        ballTouch.setEn(true);
-        us.setEn(true);
+        // ballTouch.setEn(true);
+        // us.setEn(true);
         LogPlayer("Offense");
         return &offense;
     }

@@ -32,7 +32,6 @@
 #define PID_FILTER_I 0.1 // [0 bis *]~.02 i:vorausschauend 
 #define PID_FILTER_D 0.026  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
 
-
 //Bluetooth
 #define BT_MSG_SIZE         1
 #define BT_INDEX_SWITCH     0

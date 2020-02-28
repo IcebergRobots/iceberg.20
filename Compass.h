@@ -4,6 +4,7 @@
 
 #include "Config.h"
 #include "Hardware.h"
+#include "PID_v1.h"
 
 #define COMPASS_ADRESS 96
 
@@ -31,8 +32,14 @@ public:
     bool calibrated;
     void checkCalibration();
 
+    int getPIDOutput();
+
     int getTemperature();
 private:
+    double _setpoint = 0;    //PID Zielwert
+    double _input, _output;          //CMPS Input, rotationsstärke
+    PID _myPID = PID(&_input, &_output, &_setpoint, PID_FILTER_P, PID_FILTER_I, PID_FILTER_D, DIRECT);
+
     void firstCali();
     unsigned char _high_byte, _low_byte, _angle8, _high_byteTemp, _low_byteTemp;
     int _pitch, _roll;
