@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Wire.h>
+#include <I2C.h>
 #include <SPI.h>
 
 class Hardware {

@@ -5,7 +5,7 @@ void Camera::init()
     if (getEn())
     {
         LogCam("enabled");
-        SPI.begin();
+        // SPI.begin(); wird automatisch in pixy init gemacht
         Pixy::init();
         LogCam("Calibrated");
     } else

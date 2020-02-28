@@ -13,7 +13,7 @@
 #define DEBUG_CAMERA        0
 #define DEBUG_CHASSIS       0
 #define DEBUG_BLUETOOTH     0
-#define DEBUG_ULTRASONIC    0
+#define DEBUG_ULTRASONIC    1
 #define DEBUG_KICK          0
 #define DEBUG_BALLTOUCH     0
 #define DEBUG_DISPLAY       0

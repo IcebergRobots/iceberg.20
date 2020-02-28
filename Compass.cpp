@@ -22,21 +22,20 @@ void Compass::update()
 {
   if (getEn())
   {
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x01); //Sends the register we wish to start reading from
-    Wire.endTransmission();
+    I2c.write(COMPASS_ADRESS, 0x01); //Sends the register we wish to start reading from
+    
     // Request 5 bytes from the CMPS12
     // this will give us the 8 bit bearing,
     // both bytes of the 16 bit bearing, pitch and roll
-    Wire.requestFrom(COMPASS_ADRESS, 5);
+    I2c.read(COMPASS_ADRESS, 5);
 
-    if (Wire.available() >= 5)
+    if (I2c.available() >= 5)
     {
-      _angle8 = Wire.read(); // Read back the 5 bytes
-      _high_byte = Wire.read();
-      _low_byte = Wire.read();
-      _pitch = Wire.read();
-      _roll = Wire.read();
+      _angle8 = I2c.receive(); // Read back the 5 bytes
+      _high_byte = I2c.receive();
+      _low_byte = I2c.receive();
+      _pitch = I2c.receive();
+      _roll = I2c.receive();
 
       _angle16 = _high_byte; // Calculate 16 bit angle
       _angle16 <<= 8;
@@ -70,20 +69,14 @@ void Compass::storeCalibration()
 {
   if (getEn())
   {
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x00); //Sends the register we wish to start reading from
-    Wire.write(0xF0);
-    Wire.endTransmission();
+    
+    I2c.write(COMPASS_ADRESS, 0x00, 0xF0); //Sends the register we wish to start reading from
     delay(20);
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x00); //Sends the register we wish to start reading from
-    Wire.write(0xF5);
-    Wire.endTransmission();
+
+    I2c.write(COMPASS_ADRESS, 0x00, 0xF5); //Sends the register we wish to start reading from
     delay(20);
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x00); //Sends the register we wish to start reading from
-    Wire.write(0xF6);
-    Wire.endTransmission();
+
+    I2c.write(COMPASS_ADRESS, 0x00, 0xF6); //Sends the register we wish to start reading from
     delay(20);
   }
 }
@@ -92,20 +85,14 @@ void Compass::eraseCalibration()
 {
   if (getEn())
   {
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x00); //Sends the register we wish to start reading from
-    Wire.write(0xE0);
-    Wire.endTransmission();
+    
+    I2c.write(COMPASS_ADRESS, 0x00, 0xE0); //Sends the register we wish to start reading from
     delay(20);
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x00); //Sends the register we wish to start reading from
-    Wire.write(0xE5);
-    Wire.endTransmission();
+
+    I2c.write(COMPASS_ADRESS, 0x00, 0xE5); //Sends the register we wish to start reading from
     delay(20);
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x00); //Sends the register we wish to start reading from
-    Wire.write(0xE2);
-    Wire.endTransmission();
+
+    I2c.write(COMPASS_ADRESS, 0x00, 0xE2); //Sends the register we wish to start reading from
     delay(20);
   }
 }
@@ -114,13 +101,12 @@ void Compass::checkCalibration()
 {
   if (getEn())
   {
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x1E); //Sends the register we wish to start reading from
-    Wire.endTransmission();
-    Wire.requestFrom(COMPASS_ADRESS, 1);
-    if (Wire.available() >= 1)
+    I2c.write(COMPASS_ADRESS, 0x1E); //Sends the register we wish to start reading from
+    
+    I2c.read(COMPASS_ADRESS, 1);
+    if (I2c.available() >= 1)
     {
-      _checkCalibration = Wire.read();
+      _checkCalibration = I2c.receive();
     }
     //Read byte and prints bits
     byte bits = 0;
@@ -146,14 +132,13 @@ int Compass::getTemperature()
 {
   if (getEn())
   {
-    Wire.beginTransmission(COMPASS_ADRESS);
-    Wire.write(0x18); //Sends the register we wish to start reading from
-    Wire.endTransmission();
-    Wire.requestFrom(COMPASS_ADRESS, 2);
-    if (Wire.available() >= 2)
+    I2c.write(COMPASS_ADRESS, 0x18); //Sends the register we wish to start reading from
+    
+    I2c.read(COMPASS_ADRESS, 2);
+    if (I2c.available() >= 2)
     {
-      _high_byteTemp = Wire.read();
-      _low_byteTemp = Wire.read();
+      _high_byteTemp = I2c.receive();
+      _low_byteTemp = I2c.receive();
       _temperature = _high_byteTemp;
       _temperature <<= 8;
       _temperature += _low_byteTemp;

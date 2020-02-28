@@ -5,13 +5,12 @@ void Ultrasonic::init()
     if (getEn())
     {
         LogUs("enabled");
-        for (int i = 0; i < NUM_OF_US; i++)
-        {
-            Wire.beginTransmission(_addresses[i]);
-            Wire.write(byte(0x02));
-            // Wire.write(byte(70)); //warum 70? sehe im datenblatt nichts
-            Wire.endTransmission();
-        }
+        // for (int i = 0; i < NUM_OF_US; i++)
+        // {
+        //     I2c.write(_addresses[i], byte(0x02));
+        //     // I2c.write(byte(70)); //warum 70? sehe im datenblatt nichts
+        //     I2c.endTransmission();
+        // }
         LogUs("Initlized");
     }else
         LogUs("disabled");
@@ -28,11 +27,7 @@ void Ultrasonic::update()
         }
         if (millis() - _lastMeasurement > 65)
         {
-            Wire.beginTransmission(0); // auf Adresse 0 hören alle Ultraschallsensor zu. Alternativ können die Befehle an alle Sonsoren einzeln gesendet werden.
-            Wire.write(byte(0x00));
-            Wire.write(byte(0x51));
-            Wire.endTransmission();
-
+            I2c.write(0, byte(0x00), byte(0x51));
             _lastMeasurement = millis();
             _fetched = false;
         }
@@ -43,15 +38,13 @@ void Ultrasonic::fetch()
 {
     for (int i = 0; i < NUM_OF_US; i++)
     {
-        Wire.beginTransmission(_addresses[i]);
-        Wire.write(byte(0x02));
-        Wire.endTransmission();
-        Wire.requestFrom((int)_addresses[i], (int)2);
+        I2c.write(_addresses[i], byte(0x02));
+        I2c.read((int)_addresses[i], (int)2);
 
-        if (2 <= Wire.available())
+        if (2 <= I2c.available())
         {
-            _distance[i] = Wire.read() << 8;
-            _distance[i] |= Wire.read();
+            _distance[i] = I2c.receive() << 8;
+            _distance[i] |= I2c.receive();
         }
     }
 }
