@@ -33,10 +33,19 @@ void Compass::update()
   if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
   {
     /* 'orientation' should have valid .heading data now */
-    _angle = orientation.heading;
+    _tmpAngle = orientation.heading;
+
+    _median[0] = _median[1];
+    _median[1] = _median[2];
+    _median[2] = _tmpAngle;
+    
+    if(_median[0] > _median[1] && _median[0] < _median[2])
+      _angle = _median[0];
+    else if(_median[1] > _median[0] && _median[1] < _median[2])
+      _angle = _median[1];
+    else
+      _angle = _median[2];
   }
-
-
 
     //old
     // I2c.write(COMPASS_ADRESS, 0x01); //Sends the register we wish to start reading from
@@ -58,19 +67,19 @@ void Compass::update()
     //   _angle16 <<= 8;
     //   _angle16 += _low_byte;
     // }
-    _input = -((getAngle() + 180) % 360 - 180);
-    _myPID.Compute();
+    // _input = -((getAngle() + 180) % 360 - 180);
+    // _myPID.Compute();
   }
 }
 
 int Compass::getAngle()
 {
-   return (_angle - _offset) % 360;
+   return (_angle - _offset + 180) % 360 -180;
 }
 
 int Compass::getPIDOutput()
 {
-    return _output;
+    return constrain(getAngle() * PID_FILTER_P, -90, 90);
 }
 
 //old
@@ -83,6 +92,8 @@ int Compass::getPIDOutput()
 
 void Compass::cali()
 {
+  // _input = 0;
+  update();
   LogCmps("recalibrated");
   _offset = _angle;
   

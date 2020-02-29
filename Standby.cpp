@@ -12,6 +12,8 @@ extern Bluetooth bt;
 extern Defense defense;
 extern Offense offense;
 
+extern int robot;
+
 void Standby::play()
 {
     if(_disOnce)
@@ -45,8 +47,11 @@ Player* Standby::update()
         ballTouch.setEn(true);
         us.setEn(true);
         LogPlayer("Offense");
+        // if(robot == 1)
+        //     return &defense;
+        // else
+        //     return &offense;
         return &offense;
-
         // switch(lastState)
         // {
         //     case State::offense:

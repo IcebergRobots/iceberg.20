@@ -22,12 +22,6 @@ public:
         };
     void init() override;
     void update() override;
-    Adafruit_9DOF dof = Adafruit_9DOF();
-    Adafruit_LSM303_Mag_Unified   mag   = Adafruit_LSM303_Mag_Unified(30302);
-
-    sensors_event_t accel_event;
-  sensors_event_t mag_event;
-  sensors_vec_t   orientation;
     void cali();
     int getAngle();
     // unsigned char getAngle8();
@@ -45,9 +39,20 @@ public:
 
     // int getTemperature();
 private:
+    Adafruit_9DOF dof = Adafruit_9DOF();
+    Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(30302);
+
+    sensors_event_t accel_event;
+    sensors_event_t mag_event;
+    sensors_vec_t   orientation;
+
     double _setpoint = 0;    //PID Zielwert
     double _input, _output;          //CMPS Input, rotationsstärke
     PID _myPID = PID(&_input, &_output, &_setpoint, PID_FILTER_P, PID_FILTER_I, PID_FILTER_D, DIRECT);
+    int _median[3] = {0,0,0};
+    int _count;
+
+    int _tmpAngle;
 
     int _angle;
     // void firstCali();

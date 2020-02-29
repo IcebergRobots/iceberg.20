@@ -33,7 +33,8 @@ Player *Defense::update()
         LogPlayer("Offense");
         return &offense;
     }
-    if (getsLifted() || pui.button_stop)
+    // if (getsLifted() || pui.button_stop)
+    else if (pui.button_stop)
     {
         LogPlayer("Standby");
         return &standby;
@@ -43,34 +44,35 @@ Player *Defense::update()
 
 void Defense::defGoal()
 {
-    if (!_defDir)
-    {
-            if(us.getBack() < 10)
-                m.drive(0,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-            else if(us.getBack() > 40)
-                m.drive(180,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-            else
-                m.drive(270, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-        if (us.getRight() < 60 && millis() - _defTimer >= 1000 || millis() - _defTimer >= 2000)
-        {
-            _defTimer = millis();
-            _defDir = true;
-        }
-    }
-    else
-    {
-            if(us.getBack() < 10)
-                m.drive(0,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-            else if(us.getBack() > 55)
-                m.drive(180,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-            else
-                m.drive(90, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-        if (us.getLeft() < 60 && millis() - _defTimer >= 1000 || millis() - _defTimer >= 2000)
-        {
-            _defTimer = millis();
-            _defDir = false;
-        }
-    }
+    m.drive(0,0,cmps.getPIDOutput());
+    // if (!_defDir)
+    // {
+    //         if(us.getBack() < 10)
+    //             m.drive(0,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+    //         else if(us.getBack() > 40)
+    //             m.drive(180,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+    //         else
+    //             m.drive(270, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+    //     if (us.getRight() < 60 && millis() - _defTimer >= 1000 || millis() - _defTimer >= 2000)
+    //     {
+    //         _defTimer = millis();
+    //         _defDir = true;
+    //     }
+    // }
+    // else
+    // {
+    //         if(us.getBack() < 10)
+    //             m.drive(0,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+    //         else if(us.getBack() > 50)
+    //             m.drive(180,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+    //         else
+    //             m.drive(90, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+    //     if (us.getLeft() < 60 && millis() - _defTimer >= 1000 || millis() - _defTimer >= 2000)
+    //     {
+    //         _defTimer = millis();
+    //         _defDir = false;
+    //     }
+    // }
 }
 
 void Defense::rate()

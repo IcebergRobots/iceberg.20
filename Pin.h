@@ -37,6 +37,9 @@
 //HEARTBEAT_LED
 #define HEARTBEAT_LED   7
 
+//HARDWARE difference robots
+#define HARDWARE_DIFFERENCE A14
+
 //Ultraadresses
 //addresses of the Ultrasonicsensors named by their position
 #define NUM_OF_US       5

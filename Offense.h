@@ -22,6 +22,8 @@ private:
     float _curveSearch;
     float _curveFlw;
 
+    unsigned long _offTimer;
+
     //rating
     bool _switchToDef;
 };

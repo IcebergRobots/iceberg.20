@@ -24,8 +24,8 @@ public:
 
     virtual bool getsLifted();
     
-    virtual void avoidLine();
-    virtual bool checkBounds();
+    // virtual void avoidLine();
+    // virtual bool checkBounds();
 
     virtual int rateGoal();
     virtual int rateBall();

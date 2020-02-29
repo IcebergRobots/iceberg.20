@@ -21,14 +21,14 @@
 #define DEBUG_UTILITY       1
 
 
-#define SPIELGESCHWINDIGKEIT 50
+#define SPIELGESCHWINDIGKEIT 40
 
 //Rateing   weights in % sum should equal 100%
 #define RATE_BALL_WEIGHT    20
 #define RATE_GOAL_WEIGHT    80
 
 // PID-Regler
-#define PID_FILTER_P 0.23   // [0 bis *]~.27 p:proportional
+#define PID_FILTER_P 0.25   // [0 bis *]~.27 p:proportional
 #define PID_FILTER_I 0.1 // [0 bis *]~.02 i:vorausschauend 
 #define PID_FILTER_D 0.026  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
 
