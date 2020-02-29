@@ -43,9 +43,6 @@
 
 #define BOTTOM_LENGTH 40        // [0 bis *] Anzahl der Boden-Leds
 
-
-
-
 #if DEBUG == 1 && DEBUG_PLAYER == 1
 #   define LogPlayer(msg)   Serial.println("Player: " + (String)msg)
 #else

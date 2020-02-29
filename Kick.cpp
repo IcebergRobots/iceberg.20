@@ -13,7 +13,7 @@ void Kick::init()
 
 void Kick::update()
 {
-    if (millis() - _timer > 200)
+    if (millis() - _timer > 50)
         analogWrite(KICKER, 0);
 }
 

@@ -55,14 +55,14 @@ void Compass::firstCali()
 {
   LogCmps("calibrated");
   if(getAngle() != 0)
-    _firstOffset = 360 - getAngle();
+    _firstOffset = getAngle();
 }
 
 void Compass::cali()
 {
   LogCmps("recalibrated");
   if(getAngle() != 0)
-    _offset = 360 - ((_angle16 / 10 + _firstOffset) % 360);
+    _offset = (_angle16 / 10 - _firstOffset) % 360;
 }
 
 void Compass::storeCalibration()
@@ -151,7 +151,7 @@ int Compass::getTemperature()
 
 int Compass::getAngle()
 {
-  return (((_angle16 / 10 + _firstOffset) % 360) + _offset) % 360;
+  return (_angle16 / 10 - _firstOffset - _offset) % 360;
 }
 
 unsigned char Compass::getAngle8() { return _angle8; }

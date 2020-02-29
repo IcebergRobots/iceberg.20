@@ -15,7 +15,7 @@ extern Standby standby;
 Player *Offense::update()
 {
     currentState = State::offense;
-    if (_switchToDef && false)
+    if (_switchToDef)
     {
         LogPlayer("Defense");
         return &defense;
@@ -31,12 +31,14 @@ void Offense::play()
     rateBall();
     rateGoal();
 
-    // if (camera.getBPos() != 0 && _goalRating < 230)
-    //     follow();
-    // // else if(_goalRating > 230)
-    // //     m.drive(180,SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-    // else
-    //     search();
+    if (camera.getBPos() != 0 && _goalRating < 230)
+        follow();
+    // else if(_goalRating > 230)
+    //     m.drive(180,SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+    else
+        search();
+    if (ballTouch.hasBall())
+        kick.kick();
     rate();
     communicate();
 }
@@ -84,6 +86,7 @@ void Offense::rate()
 {
     if(bt.getMessage(BT_INDEX_SWITCH))
     {
+        Serial.println("Jo");
         #if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
             // _rating = _ballRating * RATE_BALL_WEIGHT / 100 + _goalRating * RATE_GOAL_WEIGHT / 100; would be correct
             _rating = _ballRating;

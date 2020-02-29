@@ -12,12 +12,15 @@ extern Bluetooth bt;
 extern Offense offense;
 extern Standby standby;
 
+
 void Defense::play()
 {
     rateGoal();
     rateBall();
     // defGoal();
     m.brake(false);
+    // m.drive(0,0,cmps.getPIDOutput());
+
     rate();
     communicate();
 }
@@ -41,18 +44,33 @@ Player *Defense::update()
 
 void Defense::defGoal()
 {
-    // m.drive(180,30 - cmps.getPIDOutput(), cmps.getPIDOutput());
     if (!_defDir)
     {
-        m.drive(270, 40 - cmps.getPIDOutput(), cmps.getPIDOutput());
-        if (us.getRight() < 40)
+            if(us.getBack() < 10)
+                m.drive(0,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+            else if(us.getBack() > 40)
+                m.drive(180,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+            else
+                m.drive(270, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+        if (us.getRight() < 55 && millis() - _defTimer >= 1300 || millis() - _defTimer >= 2300)
+        {
+            _defTimer = millis();
             _defDir = true;
+        }
     }
     else
     {
-        m.drive(90, 40 - cmps.getPIDOutput(), cmps.getPIDOutput());
-        if (us.getLeft() < 40)
+            if(us.getBack() < 10)
+                m.drive(0,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+            else if(us.getBack() > 55)
+                m.drive(180,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+            else
+                m.drive(90, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
+        if (us.getLeft() < 40 && millis() - _defTimer >= 1300 || millis() - _defTimer >= 2300)
+        {
+            _defTimer = millis();
             _defDir = false;
+        }
     }
 }
 
@@ -67,13 +85,13 @@ void Defense::rate()
     else
         _switchToOff = false;
 
-#if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
-    // _rating = (_ballRating * RATE_BALL_WEIGHT / 100) + (_goalRating * RATE_GOAL_WEIGHT / 100); this would be correct but getGoalWidth doesnt work properly
-    _rating = _ballRating;
-    _maybeSwitchToOff = _rating > 180;
-#elif
-    LogPlayer("Sum of weights doesnt equal 100%");
-#endif
+    #if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
+        // _rating = (_ballRating * RATE_BALL_WEIGHT / 100) + (_goalRating * RATE_GOAL_WEIGHT / 100); this would be correct but getGoalWidth doesnt work properly
+        _rating = _ballRating;
+        _maybeSwitchToOff = _rating > 160;
+    #elif
+        LogPlayer("Sum of weights doesnt equal 100%");
+    #endif
 }
 
 void Defense::communicate()

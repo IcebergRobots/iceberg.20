@@ -68,3 +68,8 @@
 #define LED_STRIKER     12    //not working 
 
 #define BOTTOM_LED       46   //  Hier können die RGB-LEDs des Bodensensors gesteuert werden
+
+#define INT_BODENSENSOR 3   //  hier sendet der Nano des Bodensensors sein Interruptsignal
+
+#define TX2             16  //  Serielles Senden zum Bodensensor Arduino Nano
+#define RX2             17  //  Serielles Empfangen vom Bodensensor Arduino Nano

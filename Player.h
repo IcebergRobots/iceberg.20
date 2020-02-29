@@ -12,6 +12,8 @@
 #include "Bluetooth.h"
 #include "Bottom.h"
 
+
+
 class Player
 {
 public:
@@ -29,8 +31,8 @@ public:
     virtual void communicate() = 0; // Daten zwischen Robotern austauschen (individuell welche daten)
 
     enum class State {
-        standby = 0, offense = 1, defense = 2 
-    };
+            standby = 0, offense = 1, defense = 2 
+        };
     State currentState;
 private:
 

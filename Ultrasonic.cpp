@@ -5,12 +5,8 @@ void Ultrasonic::init()
     if (getEn())
     {
         LogUs("enabled");
-        // for (int i = 0; i < NUM_OF_US; i++)
-        // {
-        //     I2c.write(_addresses[i], byte(0x02));
-        //     // I2c.write(byte(70)); //warum 70? sehe im datenblatt nichts
-        //     I2c.endTransmission();
-        // }
+        for (int i = 0; i < NUM_OF_US; i++)
+            I2c.write(_addresses[i], byte(0x02), byte(70));
         LogUs("Initlized");
     }else
         LogUs("disabled");
