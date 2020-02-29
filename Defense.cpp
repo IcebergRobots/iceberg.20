@@ -17,8 +17,7 @@ void Defense::play()
 {
     rateGoal();
     rateBall();
-    // defGoal();
-    m.brake(false);
+    defGoal();
     // m.drive(0,0,cmps.getPIDOutput());
 
     rate();
@@ -52,7 +51,7 @@ void Defense::defGoal()
                 m.drive(180,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
             else
                 m.drive(270, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-        if (us.getRight() < 55 && millis() - _defTimer >= 1300 || millis() - _defTimer >= 2300)
+        if (us.getRight() < 60 && millis() - _defTimer >= 1000 || millis() - _defTimer >= 2000)
         {
             _defTimer = millis();
             _defDir = true;
@@ -66,7 +65,7 @@ void Defense::defGoal()
                 m.drive(180,SPIELGESCHWINDIGKEIT  - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
             else
                 m.drive(90, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-        if (us.getLeft() < 40 && millis() - _defTimer >= 1300 || millis() - _defTimer >= 2300)
+        if (us.getLeft() < 60 && millis() - _defTimer >= 1000 || millis() - _defTimer >= 2000)
         {
             _defTimer = millis();
             _defDir = false;

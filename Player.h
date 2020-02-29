@@ -22,8 +22,11 @@ public:
     virtual Player *update() = 0;
     virtual void play() = 0;
 
-    bool getsLifted();
+    virtual bool getsLifted();
     
+    virtual void avoidLine();
+    virtual bool checkBounds();
+
     virtual int rateGoal();
     virtual int rateBall();
     virtual void rate() = 0;          //Position bewerten (individuell bestimmen)
@@ -37,6 +40,7 @@ public:
 private:
 
 protected:
+    unsigned long _checkTimer;
     int _goalRating;
     int _ballRating;
     float _rating;

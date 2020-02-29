@@ -29,7 +29,7 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(false);
+Compass cmps(true);
 Ultrasonic us(false);
 Pui pui(false);
 BallTouch ballTouch(false);
@@ -37,7 +37,7 @@ Chassis m(false);
 Camera camera(false);
 Kick kick(false, 240);
 Bluetooth bt(false);
-Bottom bottom(true);
+Bottom bottom(false);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt, &bottom};
 
@@ -59,6 +59,7 @@ Player *player;
 
 void setup()
 {
+  Serial3.begin(115200);
   Serial.begin(9600);
   I2c.begin();
   I2c.timeOut(3000);
@@ -86,12 +87,14 @@ void setup()
 void loop()
 {
   heartbeat();
-
   for (Hardware *hardware : hardwares)
     hardware->update();
+
+  // Serial.println(bottom.getAngel());
   
   // player = player->update();
   // player->play();
+  // Serial.println(cmps.getAngle16() / 10);
   
   // Serial.println(bottom.getAngel());
   // LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft() + "  FL: " + us.getFrontLeft() + "  FR: " + us.getFrontRight());

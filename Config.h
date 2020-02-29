@@ -6,7 +6,7 @@
 
 
 //Debugging
-#define DEBUG               1
+#define DEBUG               0
 
 #define DEBUG_PLAYER        1   
 #define DEBUG_COMPASS       1

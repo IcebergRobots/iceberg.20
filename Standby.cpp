@@ -22,8 +22,8 @@ void Standby::play()
         us.setEn(false);
     }
 
-    if(pui.button_compass)
-        cmps.cali();
+    // if(pui.button_compass)
+    //     cmps.cali();
 
     if(pui.button_lightBarrierCalibration)
     {
@@ -32,8 +32,8 @@ void Standby::play()
         ballTouch.setEn(false);
     }
 
-    if(!cmps.calibrated)
-        cmps.checkCalibration();
+    // if(!cmps.calibrated)
+    //     cmps.checkCalibration();
 }
 
 Player* Standby::update()
