@@ -22,8 +22,8 @@ void Standby::play()
         us.setEn(false);
     }
 
-    // if(pui.button_compass)
-    //     cmps.cali();
+    if(pui.button_compass)
+        cmps.cali();
 
     if(pui.button_lightBarrierCalibration)
     {

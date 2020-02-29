@@ -5,7 +5,10 @@
 #include "Config.h"
 #include "Hardware.h"
 #include "PID_v1.h"
-#include <Adafruit_L3GD20.h>
+#include "Adafruit_Sensor.h"
+#include "Adafruit_LSM303_U.h"
+#include "Adafruit_L3GD20.h"
+#include "Adafruit_9DOF.h"
 
 #define COMPASS_ADRESS 96
 
@@ -19,9 +22,14 @@ public:
         };
     void init() override;
     void update() override;
+    Adafruit_9DOF dof = Adafruit_9DOF();
+    Adafruit_LSM303_Mag_Unified   mag   = Adafruit_LSM303_Mag_Unified(30302);
 
-    // void cali();
-    // int getAngle();
+    sensors_event_t accel_event;
+  sensors_event_t mag_event;
+  sensors_vec_t   orientation;
+    void cali();
+    int getAngle();
     // unsigned char getAngle8();
     // int getAngle16();
     // int getPitch();
@@ -34,7 +42,6 @@ public:
     // void checkCalibration();
 
     int getPIDOutput();
-    Adafruit_L3GD20 gyro;
 
     // int getTemperature();
 private:
@@ -42,6 +49,7 @@ private:
     double _input, _output;          //CMPS Input, rotationsstärke
     PID _myPID = PID(&_input, &_output, &_setpoint, PID_FILTER_P, PID_FILTER_I, PID_FILTER_D, DIRECT);
 
+    int _angle;
     // void firstCali();
     // unsigned char _high_byte, _low_byte, _angle8, _high_byteTemp, _low_byteTemp;
     // int _pitch, _roll;
@@ -49,7 +57,7 @@ private:
     // int _temperature;
 
     // unsigned int _firstOffset; //need this because calibration doesnt work properly
-    // unsigned int _offset; //need this because calibration doesnt work properly
+    unsigned int _offset; //need this because calibration doesnt work properly
 
     // byte _checkCalibration;
 };

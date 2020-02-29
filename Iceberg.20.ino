@@ -30,13 +30,13 @@
 #include "Standby.h"
 
 Compass cmps(true);
-Ultrasonic us(false);
-Pui pui(false);
-BallTouch ballTouch(false);
-Chassis m(false);
-Camera camera(false);
-Kick kick(false, 240);
-Bluetooth bt(false);
+Ultrasonic us(true);
+Pui pui(true);
+BallTouch ballTouch(true);
+Chassis m(true);
+Camera camera(true);
+Kick kick(true, 240);
+Bluetooth bt(true);
 Bottom bottom(false);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt, &bottom};
@@ -90,10 +90,11 @@ void loop()
   for (Hardware *hardware : hardwares)
     hardware->update();
 
+  
   // Serial.println(bottom.getAngel());
   
-  // player = player->update();
-  // player->play();
+  player = player->update();
+  player->play();
   // Serial.println(cmps.getAngle16() / 10);
   
   // Serial.println(bottom.getAngel());

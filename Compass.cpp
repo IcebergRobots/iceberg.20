@@ -5,12 +5,11 @@ void Compass::init()
 {
   if (getEn())
   {
-    if (!gyro.begin(gyro.L3DS20_RANGE_250DPS))
-    //if (!gyro.begin(gyro.L3DS20_RANGE_500DPS))
-    //if (!gyro.begin(gyro.L3DS20_RANGE_2000DPS))
-    {
-    Serial.println("Oops ... unable to initialize the L3GD20. Check your wiring!");
-    while (1);
+     if(!mag.begin())
+  {
+    /* There was a problem detecting the LSM303 ... check your connections */
+    Serial.println("Ooops, no LSM303 detected ... Check your wiring!");
+    while(1);
   }
     // update();
     //firstCali();
@@ -29,10 +28,16 @@ void Compass::update()
 {
   if (getEn())
   {
-    gyro.read();
-  Serial.print("X: "); Serial.print((int)gyro.data.x);   Serial.print(" ");
-  Serial.print("Y: "); Serial.print((int)gyro.data.y);   Serial.print(" ");
-  Serial.print("Z: "); Serial.println((int)gyro.data.z); Serial.print(" ");
+   
+  mag.getEvent(&mag_event);
+  if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
+  {
+    /* 'orientation' should have valid .heading data now */
+    _angle = orientation.heading;
+  }
+
+
+
     //old
     // I2c.write(COMPASS_ADRESS, 0x01); //Sends the register we wish to start reading from
     
@@ -53,9 +58,14 @@ void Compass::update()
     //   _angle16 <<= 8;
     //   _angle16 += _low_byte;
     // }
-    // _input = -((getAngle() + 180) % 360 - 180);
-    // _myPID.Compute();
+    _input = -((getAngle() + 180) % 360 - 180);
+    _myPID.Compute();
   }
+}
+
+int Compass::getAngle()
+{
+   return (_angle - _offset) % 360;
 }
 
 int Compass::getPIDOutput()
@@ -71,12 +81,12 @@ int Compass::getPIDOutput()
 //     _firstOffset = getAngle();
 // }
 
-// void Compass::cali()
-// {
-//   LogCmps("recalibrated");
-//   if(getAngle() != 0)
-//     _offset = (_angle16 / 10 - _firstOffset) % 360;
-// }
+void Compass::cali()
+{
+  LogCmps("recalibrated");
+  _offset = _angle;
+  
+}
 
 // void Compass::storeCalibration()
 // {

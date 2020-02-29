@@ -76,4 +76,5 @@ bool Player::getsLifted()
     // if (cmps.getPitch() < 252 && cmps.getPitch() > 200)
     //     return true;
     // return false;
+    return false;
 }
