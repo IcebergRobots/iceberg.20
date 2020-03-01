@@ -20,12 +20,15 @@ public:
 
   void drive(int angle, int power, int rotation = 0);
 
+  void headstart();
+
   void brake(const bool& activ);
 
   void setMotEn(const bool& motEn);
   const bool getMotEn(); //neew this because the enable way is a different by the motors
 
 private:
+  unsigned long _headstartTimer;
   bool _motEn;
   Motor motors[4];
 };

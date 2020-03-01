@@ -109,6 +109,18 @@ void Chassis::calculate(int angle, int power, int rotation)
   motors[3].setPower(axis13 + rotation);
 }
 
+void Chassis::headstart()
+{
+  if(getEn())
+  {
+      for (int i = 0; i < 4; i++)
+      {
+        motors[i].setPower(255);
+        motors[i].steerMotor();
+      }
+  }
+}
+
 /*****************************************************
   bremse aktiv oder passiv alle Motoren
   @param activ: aktives Bremsen?

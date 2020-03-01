@@ -13,6 +13,8 @@ extern Defense defense;
 extern Offense offense;
 
 extern int robot;
+extern bool headstart;
+extern unsigned long headstartTimer;
 
 void Standby::play()
 {
@@ -33,6 +35,17 @@ void Standby::play()
         ballTouch.calibrate();
         ballTouch.setEn(false);
     }
+    if(pui.button_kick)
+    {
+        if(kick.getEn())
+            kick.kick();
+        else
+        {
+            kick.setEn(true);
+            kick.kick();
+            kick.setEn(false);
+        }
+    }
 
     // if(!cmps.calibrated)
     //     cmps.checkCalibration();
@@ -43,6 +56,8 @@ Player* Standby::update()
     currentState = State::standby;
     if(!getsLifted() && pui.button_start){
         _disOnce = true;
+        headstart = pui.switch_headstart;
+        headstartTimer = millis();
         m.setMotEn(true);
         ballTouch.setEn(true);
         us.setEn(true);

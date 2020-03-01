@@ -12,6 +12,9 @@ extern Bluetooth bt;
 extern Defense defense;
 extern Standby standby;
 
+extern bool headstart;
+extern unsigned long headstartTimer;
+
 Player *Offense::update()
 {
     currentState = State::offense;
@@ -34,38 +37,41 @@ void Offense::play()
     rateBall();
     // rateGoal();
 
-    // if (checkBounds())
-    // {
-    //     if (camera.getBPos() != 0 && _goalRating < 230)
-    //         follow();
-    //     // else if(_goalRating > 230)
-    //     //     m.drive(180,SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
-    //     else
-    //         search();
-    // }
-    // if (ballTouch.hasBall())
-    //     kick.kick();
-    if (millis() - _offTimer >= 500)
+    if (headstart && millis() - headstartTimer <= 400)
+        m.headstart();
+        // m.drive(0,255);
+    else
     {
-        if (us.getLeft() < 45)
+        headstart = false;
+        if (millis() - _offTimer >= 500)
         {
-            _offTimer = millis();
-            m.drive(270, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
-        }
-        else if (us.getLeft() < 45)
-        {
-            _offTimer = millis();
-            m.drive(270, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
-        }
-        else if (us.getBack() < 45)
-        {
-            _offTimer = millis();
-            m.drive(0, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
-        }
-        else if (us.getFrontRight() < 45)
-        {
-            _offTimer = millis();
-            m.drive(180, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
+            if (us.getLeft() < 45)
+            {
+                _offTimer = millis();
+                m.drive(270, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
+            }
+            else if (us.getLeft() < 45)
+            {
+                _offTimer = millis();
+                m.drive(270, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
+            }
+            else if (us.getBack() < 45)
+            {
+                _offTimer = millis();
+                m.drive(0, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
+            }
+            else if (us.getFrontRight() < 45)
+            {
+                _offTimer = millis();
+                m.drive(180, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
+            }
+            else
+            {
+                if (camera.getBPos() != 0)
+                    follow();
+                else
+                    search();
+            }
         }
         else
         {
@@ -74,13 +80,6 @@ void Offense::play()
             else
                 search();
         }
-    }
-    else
-    {
-        if (camera.getBPos() != 0)
-            follow();
-        else
-            search();
     }
 
     rate();

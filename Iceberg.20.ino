@@ -48,6 +48,8 @@ Standby standby;
 Player *player;
 
 int robot;
+bool headstart;
+unsigned long headstartTimer;
 
 //###################################################################################################
 //##                                                                                               ##
@@ -84,7 +86,7 @@ void setup()
   //   player = &defense;
   // else
   //   player = &offense;
-  player = &offense;
+  player = &standby;
   LogUtility("free SRAM: " + getFreeSRAM());
 
 }
@@ -110,7 +112,7 @@ void loop()
   
   player = player->update();
   player->play();
-
+  Serial.println(pui.switch_headstart);
   
   // Serial.println(bottom.getAngel());
   // LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft() + "  FL: " + us.getFrontLeft() + "  FR: " + us.getFrontRight());
