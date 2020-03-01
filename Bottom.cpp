@@ -1,10 +1,5 @@
 #include "Bottom.h"
 
-extern Ultrasonic us();
-
-int distance[] = {us.getBack(), us.getLeft(), us.getRight(), us.getFrontLeft()};
-int anglesUS[] = {0, 270, 90, 180};
-
 void Bottom::init()
 {
     if (getEn())
@@ -36,22 +31,22 @@ void Bottom::update()
                     Serial3.read();
                 }
                 _seesLine = true;
-                for (int i = 0; i < 4; i++){
-                    if(minDis > distance[i]){
-                        minDis = distance[i];
-                        _angle = anglesUS[i];
-                    }
-                }us.getBack()
             }else {
-                    _angle = -1;
-                    _seesLine = false;
-                }
+                //_angle = -1;
+                _seesLine = false;
+            }
     }
 
+}
 
 int Bottom::getAngel()
 {
     return _angle;
+}
+
+bool Bottom::seesLine()
+{
+    return _seesLine;
 }
 
 // void Bottom::seesLine()
