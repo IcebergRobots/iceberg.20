@@ -17,6 +17,7 @@ void Bottom::init()
 
 void Bottom::update()
 {
+    int minDis = 0; 
     if (getEn())
     {
         bottom.show();
@@ -25,29 +26,27 @@ void Bottom::update()
             // _seesLine = false;
             if(Serial3.available() >= 1)
             {
+                while (Serial3.available() > 1)
+                {
+                    Serial3.read();
+                }
                 _seesLine = true;
-                _angle = Serial3.read();
-                _angle = map(_angle, 0, 255, 0, 360);
-                if(_angle < 280 && _angle > 260)
-                        _angle = 270;
-                else if( _angle < 95 && _angle > 80)
-                        _angle = 90;
-                else if(_angle > 170 && _angle < 190)
-                        _angle = 180;
-                    // case _angle < 280 && _angle > 260:
-                    //     _angle = 270;
-                    //     break;
-                }
             }else {
-                    _angle = -1;
-                    _seesLine = false;
-                }
+                //_angle = -1;
+                _seesLine = false;
+            }
     }
 
+}
 
 int Bottom::getAngel()
 {
     return _angle;
+}
+
+bool Bottom::seesLine()
+{
+    return _seesLine;
 }
 
 // void Bottom::seesLine()

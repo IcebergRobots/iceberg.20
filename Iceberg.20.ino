@@ -37,7 +37,7 @@ Chassis m(true);
 Camera camera(true);
 Kick kick(true, 260);
 Bluetooth bt(false);
-Bottom bottom(false);
+Bottom bottom(true);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt, &bottom};
 

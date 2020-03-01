@@ -15,6 +15,7 @@ public:
     void update() override;
 
     int getAngel();
+    bool seesLine();
 
 private:
     // void seesLine();
