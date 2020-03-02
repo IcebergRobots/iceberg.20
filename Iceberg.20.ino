@@ -25,9 +25,27 @@
 
 */
 
-#include "Config.h"
-Ultrasonic us;
-Compass cmps;
+#include "Offense.h"
+#include "Defense.h"
+#include "Standby.h"
+
+Compass cmps(ENDISABLE_COMPASS);
+Ultrasonic us(ENDISABLE_ULTRASONIC);
+Pui pui(ENDISABLE_PUI);
+BallTouch ballTouch(ENDISABLE_BALLTOUCH);
+Chassis m(ENDISABLE_CHASSIS);
+Camera camera(ENDISABLE_CAMERA);
+Kick kick(ENDISABLE_KICK, 255);
+Bluetooth bt(ENDISABLE_BLUETOOTH);
+Bottom bottom(ENDISABLE_BOTTOM);
+
+Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt, &bottom};
+
+Offense offense;
+Defense defense;
+Standby standby;
+
+Player *player;
 
 //###################################################################################################
 //##                                                                                               ##
@@ -39,10 +57,25 @@ Compass cmps;
 //##                                                                                               ##
 //###################################################################################################
 
-void setup() {
-    Serial.begin(9600);
-    us.init();
-    cmps.init();
+void setup()
+{
+  Serial.begin(9600);
+
+  chooseRobot();
+  startSound();
+
+  I2c.begin();
+  I2c.timeOut(3000);
+  I2c.pullup(true);
+  // I2c.scan();
+
+
+  // Display::init(); //static class maybe cant init int foreach
+  for (Hardware *hardware : hardwares)
+    hardware->init();
+
+  player = &standby;
+  LogUtility("free SRAM: " + getFreeSRAM());
 }
 
 //###################################################################################################
@@ -55,9 +88,17 @@ void setup() {
 //##...............................................................................................##
 //###################################################################################################
 
-void loop() {
-    us.update();
-   // cmps.update();
-    Serial.println(100);
+void loop()
+{
+  heartbeat();
 
+  for (Hardware *hardware : hardwares)
+    hardware->update();
+
+  
+  player = player->update();
+  player->play();
+  
+  // LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft() + "  FL: " + us.getFrontLeft() + "  FR: " + us.getFrontRight());
+  // Display::update(); //maybe can implement it alltough its static class
 }
