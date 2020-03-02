@@ -73,8 +73,8 @@ int Player::rateGoal()
 
 bool Player::getsLifted()
 {
-    // if (cmps.getPitch() < 252 && cmps.getPitch() > 200)
-    //     return true;
-    // return false;
+    if (cmps.getPitch() > 15 && cmps.getPitch() < 35)
+        return true;
+    return false;
     return false;
 }

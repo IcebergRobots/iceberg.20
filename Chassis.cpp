@@ -111,13 +111,14 @@ void Chassis::calculate(int angle, int power, int rotation)
 
 void Chassis::headstart()
 {
-  if(getEn())
+  if(getEn() && millis() - headstartTimer <= 500)
   {
-      for (int i = 0; i < 4; i++)
-      {
-        motors[i].setPower(255);
-        motors[i].steerMotor();
-      }
+      // for (int i = 0; i < 4; i++)
+      // {
+      //   motors[i].setPower(255);
+      //   motors[i].steerMotor();
+      // }
+      drive(0, 255);
   }
 }
 

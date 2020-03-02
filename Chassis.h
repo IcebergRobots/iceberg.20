@@ -27,8 +27,8 @@ public:
   void setMotEn(const bool& motEn);
   const bool getMotEn(); //neew this because the enable way is a different by the motors
 
+  unsigned long headstartTimer;
 private:
-  unsigned long _headstartTimer;
   bool _motEn;
   Motor motors[4];
 };

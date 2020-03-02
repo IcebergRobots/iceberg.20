@@ -12,10 +12,6 @@ extern Bluetooth bt;
 extern Defense defense;
 extern Offense offense;
 
-extern int robot;
-extern bool headstart;
-extern unsigned long headstartTimer;
-
 void Standby::play()
 {
     if(_disOnce)
@@ -35,6 +31,7 @@ void Standby::play()
         ballTouch.calibrate();
         ballTouch.setEn(false);
     }
+
     if(pui.button_kick)
     {
         if(kick.getEn())
@@ -54,32 +51,19 @@ void Standby::play()
 Player* Standby::update()
 {
     currentState = State::standby;
-    if(!getsLifted() && pui.button_start){
+    if(pui.button_start){
         _disOnce = true;
-        headstart = pui.switch_headstart;
-        headstartTimer = millis();
         m.setMotEn(true);
         ballTouch.setEn(true);
         us.setEn(true);
-        LogPlayer("Offense");
-        // if(robot == 1)
+
+        m.headstartTimer = millis();
+        // LogPlayer("Offense");
+        // if(chooseRobot() == 1)
         //     return &defense;
         // else
         //     return &offense;
         return &offense;
-        // switch(lastState)
-        // {
-        //     case State::offense:
-        //         lastState = State::standby;
-        //         LogPlayer("Offense");
-        //         return &offense;
-        //         break;
-        //     case State::defense:
-        //         lastState = State::standby;
-                // LogPlayer("Defense");
-                // return &defense;
-        //         break;
-        // }
     }
     return this;
 }

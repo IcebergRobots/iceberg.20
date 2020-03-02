@@ -8,6 +8,7 @@ extern Chassis m;
 extern Camera camera;
 extern Kick kick;
 extern Bluetooth bt;
+extern Bottom bottom;
 
 extern Defense defense;
 extern Standby standby;
@@ -23,7 +24,6 @@ Player *Offense::update()
         LogPlayer("Defense");
         return &defense;
     }
-    // else if (getsLifted() || pui.button_stop)
     else if (pui.button_stop)
     {
         LogPlayer("Standby");
@@ -37,41 +37,23 @@ void Offense::play()
     rateBall();
     // rateGoal();
 
-    if (headstart && millis() - headstartTimer <= 400)
+    if (pui.switch_headstart)
         m.headstart();
-        // m.drive(0,255);
+
     else
     {
-        headstart = false;
-        if (millis() - _offTimer >= 500)
+        if (bottom.seesLine())
         {
-            if (us.getLeft() < 45)
-            {
-                _offTimer = millis();
-                m.drive(270, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
-            }
-            else if (us.getLeft() < 45)
-            {
-                _offTimer = millis();
-                m.drive(270, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
-            }
-            else if (us.getBack() < 45)
-            {
-                _offTimer = millis();
-                m.drive(0, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
-            }
-            else if (us.getFrontRight() < 45)
-            {
-                _offTimer = millis();
-                m.drive(180, SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
-            }
+            if (us.getLeft() < us.getRight() && (us.getLeft() < us.getFrontLeft() || us.getLeft() < us.getFrontRight()) && us.getLeft() < us.getBack())
+                m.drive(270, SPIELGESCHWINDIGKEIT + 10, cmps.getPIDOutput());
+            else if (us.getRight() < us.getLeft() && (us.getRight() < us.getFrontLeft() || us.getRight() < us.getFrontRight()) && us.getRight() < us.getBack())
+                m.drive(90, SPIELGESCHWINDIGKEIT + 10, cmps.getPIDOutput());
+            else if (us.getBack() < us.getLeft() && (us.getBack() < us.getFrontLeft() || us.getBack() < us.getFrontRight()) && us.getBack() < us.getRight())
+                m.drive(0, SPIELGESCHWINDIGKEIT + 10, cmps.getPIDOutput());
+            else if ((us.getFrontLeft() < us.getLeft() || us.getFrontRight() < us.getLeft()) && (us.getFrontLeft() < us.getRight() || us.getFrontRight() < us.getRight()) && (us.getFrontLeft() < us.getBack() || us.getFrontRight() < us.getBack()))
+                m.drive(180, SPIELGESCHWINDIGKEIT + 10, cmps.getPIDOutput());
             else
-            {
-                if (camera.getBPos() != 0)
-                    follow();
-                else
-                    search();
-            }
+                m.drive(180, SPIELGESCHWINDIGKEIT + 10, cmps.getPIDOutput());
         }
         else
         {
@@ -117,31 +99,26 @@ void Offense::follow()
     //     m.drive(_curveFlw, SPIELGESCHWINDIGKEIT - abs(cmps.getPIDOutput()), cmps.getPIDOutput());
     // }
 
-    // if (ballTouch.hasBall())
-    //     kick.kick();
-
     // _curveSearch = 0;
     // _lastBallPos = camera.getBPos();
     m.drive(map(camera.getBPos(), 0, 320, 90, -90), SPIELGESCHWINDIGKEIT, cmps.getPIDOutput());
     if (ballTouch.hasBall())
-    {
         kick.kick();
-    }
 }
 
 void Offense::rate()
 {
     if (bt.getMessage(BT_INDEX_SWITCH))
     {
-#if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
-        // _rating = _ballRating * RATE_BALL_WEIGHT / 100 + _goalRating * RATE_GOAL_WEIGHT / 100; would be correct
-        _rating = _ballRating;
-        // Serial.println(_rating);
-        _switchToDef = _rating < 20;
-        LogBluetooth("Switch to defense");
-#else
-        LogPlayer("Sum of weights doesnt equal 1");
-#endif
+        #if RATE_BALL_WEIGHT + RATE_GOAL_WEIGHT == 100
+            // _rating = _ballRating * RATE_BALL_WEIGHT / 100 + _goalRating * RATE_GOAL_WEIGHT / 100; would be correct
+            _rating = _ballRating;
+            // Serial.println(_rating);
+            _switchToDef = _rating < 20;
+            LogBluetooth("Switch to defense");
+        #else
+            LogPlayer("Sum of weights doesnt equal 1");
+        #endif
     }
     else
         _switchToDef = false;

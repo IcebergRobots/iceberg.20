@@ -19,9 +19,10 @@ void Kick::update()
 
 void Kick::kick()
 {
-    if (getEn() && _calibrated)
+    if (getEn() && _calibrated && millis() - _timeout > 1500)
     {
         _timer = millis();
+        _timeout = millis();
         analogWrite(KICKER, _power); // schuss bei 12, Poti bei A0
     }
  }

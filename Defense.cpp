@@ -33,8 +33,7 @@ Player *Defense::update()
         LogPlayer("Offense");
         return &offense;
     }
-    // if (getsLifted() || pui.button_stop)
-    else if (pui.button_stop)
+    if (pui.button_stop)
     {
         LogPlayer("Standby");
         return &standby;

@@ -12,6 +12,11 @@
 
 #define COMPASS_ADRESS 96
 
+// PID-Regler
+#define PID_FILTER_P 0.3   // [0 bis *]~.27 p:proportional
+#define PID_FILTER_I 0.1 // [0 bis *]~.02 i:vorausschauend 
+#define PID_FILTER_D 0.026  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
+
 class Compass : public Hardware
 {
 
@@ -20,14 +25,16 @@ public:
         {
             _enabled = enabled;
         };
+
     void init() override;
     void update() override;
+
     void cali();
     int getAngle();
     // unsigned char getAngle8();
     // int getAngle16();
-    // int getPitch();
-    // int getRoll();
+    int getPitch();
+    int getRoll();
 
     // void storeCalibration(); //notworking in the moment
     // void eraseCalibration(); //notworking in the moment
@@ -41,6 +48,7 @@ public:
 private:
     Adafruit_9DOF dof = Adafruit_9DOF();
     Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(30302);
+    Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(30301);
 
     sensors_event_t accel_event;
     sensors_event_t mag_event;
@@ -52,12 +60,11 @@ private:
     int _median[3] = {0,0,0};
     int _count;
 
-    int _tmpAngle;
-
+    int _medianPitch[3];
     int _angle;
     // void firstCali();
     // unsigned char _high_byte, _low_byte, _angle8, _high_byteTemp, _low_byteTemp;
-    // int _pitch, _roll;
+    int _pitch, _roll;
     // unsigned int _angle16;
     // int _temperature;
 

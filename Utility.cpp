@@ -16,7 +16,8 @@ void startSound()
   noTone(BUZZER);
 }
 
-uint16_t getFreeSRAM() {
+uint16_t getFreeSRAM()
+{
   uint8_t newVariable;
   // heap is empty, use bss as start memory address
   if ((uint16_t)__brkval == 0)
@@ -26,11 +27,27 @@ uint16_t getFreeSRAM() {
     return (((uint16_t)&newVariable) - ((uint16_t)__brkval));
 }
 
-void reset() {
-  asm ("jmp 0");   // starte den Arduino neu
+void reset()
+{
+  asm("jmp 0"); // starte den Arduino neu
 }
 
-void heartbeat(){
-  byte i = map(millis() % HEARTBEAT_LOOPTIME*2,0,HEARTBEAT_LOOPTIME,0,255);
-  analogWrite(HEARTBEAT_LED, i>255 ? i : 255-i);
+void heartbeat()
+{
+  byte i = map(millis() % HEARTBEAT_LOOPTIME * 2, 0, HEARTBEAT_LOOPTIME, 0, 255);
+  analogWrite(HEARTBEAT_LED, i > 255 ? i : 255 - i);
+}
+
+bool chooseRobot()
+{
+  if (initChooseRobot)
+  {
+    pinMode(HARDWARE_DIFFERENCE, INPUT_PULLUP);
+    if (digitalRead(HARDWARE_DIFFERENCE) == HIGH)
+      robot = 1; // RObot A
+    else
+      robot = 0; //RObot B
+    initChooseRobot = false;
+  }
+  return robot;
 }

@@ -24,5 +24,6 @@ class Kick : public Hardware
     private:
         bool _calibrated;
         unsigned long _timer;
+        unsigned long _timeout;
         unsigned int _power;
 };

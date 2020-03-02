@@ -5,6 +5,16 @@
 #include "EEPROM.h"
 
 
+#define ENDISABLE_COMPASS       1
+#define ENDISABLE_CAMERA        1
+#define ENDISABLE_CHASSIS       1
+#define ENDISABLE_BLUETOOTH     1
+#define ENDISABLE_ULTRASONIC    1
+#define ENDISABLE_KICK          1
+#define ENDISABLE_BALLTOUCH     1
+#define ENDISABLE_PUI           1
+#define ENDISABLE_BOTTOM        1
+
 //Debugging
 #define DEBUG               0
 
@@ -16,6 +26,7 @@
 #define DEBUG_ULTRASONIC    1
 #define DEBUG_KICK          0
 #define DEBUG_BALLTOUCH     0
+#define DEBUG_BOTTOM        1
 #define DEBUG_DISPLAY       0
 #define DEBUG_PUI           1
 #define DEBUG_UTILITY       1
@@ -27,21 +38,14 @@
 #define RATE_BALL_WEIGHT    20
 #define RATE_GOAL_WEIGHT    80
 
-// PID-Regler
-#define PID_FILTER_P 0.25   // [0 bis *]~.27 p:proportional
-#define PID_FILTER_I 0.1 // [0 bis *]~.02 i:vorausschauend 
-#define PID_FILTER_D 0.026  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
-
-//Bluetooth
-#define BT_MSG_SIZE         1
-#define BT_INDEX_SWITCH     0
-
 //EEPROM
 #define EEPROM_BALLTOUCH_THRESHOLD 0
 
-#define HEARTBEAT_LOOPTIME 500
 
-#define BOTTOM_LENGTH 40        // [0 bis *] Anzahl der Boden-Leds
+
+
+
+
 
 #if DEBUG == 1 && DEBUG_PLAYER == 1
 #   define LogPlayer(msg)   Serial.println("Player: " + (String)msg)
@@ -89,6 +93,12 @@
 #   define LogBalltouch(msg)   Serial.println("Balltouch: " + (String)msg)
 #else
 #   define LogBalltouch(msg)
+#endif
+
+#if DEBUG == 1 && DEBUG_BOTTOM == 1
+#   define LogBottom(msg)   Serial.println("Balltouch: " + (String)msg)
+#else
+#   define LogBottom(msg)
 #endif
 
 #if DEBUG == 1 && DEBUG_DISPLAY == 1

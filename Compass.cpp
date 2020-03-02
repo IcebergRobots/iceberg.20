@@ -5,12 +5,16 @@ void Compass::init()
 {
   if (getEn())
   {
-     if(!mag.begin())
-  {
-    /* There was a problem detecting the LSM303 ... check your connections */
-    Serial.println("Ooops, no LSM303 detected ... Check your wiring!");
-    while(1);
-  }
+    if (!mag.begin())
+    {
+      /* There was a problem detecting the LSM303 ... check your connections */
+      LogCmps("Ooops, no LSM303 detected ... Check your wiring!");
+    }
+    if (!accel.begin())
+    {
+      /* There was a problem detecting the LSM303 ... check your connections */
+      LogCmps("Ooops, no LSM303 detected ... Check your wiring!");
+    }
     // update();
     //firstCali();
     _myPID.SetMode(AUTOMATIC);
@@ -28,28 +32,46 @@ void Compass::update()
 {
   if (getEn())
   {
-   
-  mag.getEvent(&mag_event);
-  if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
-  {
-    /* 'orientation' should have valid .heading data now */
-    _tmpAngle = orientation.heading;
 
-    _median[0] = _median[1];
-    _median[1] = _median[2];
-    _median[2] = _tmpAngle;
+    mag.getEvent(&mag_event);
+    if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
+    {
+      /* 'orientation' should have valid .heading data now */
+      _angle = orientation.heading;
+
+      _median[0] = _median[1];
+      _median[1] = _median[2];
+      _median[2] = _angle;
+
+      if (_median[0] > _median[1] && _median[0] < _median[2])
+        _angle = _median[0];
+      else if (_median[1] > _median[0] && _median[1] < _median[2])
+        _angle = _median[1];
+      else
+        _angle = _median[2];
+    }
+
+    accel.getEvent(&accel_event);
+    if (dof.accelGetOrientation(&accel_event, &orientation))
+    {
+      _pitch = orientation.pitch;
+      _roll = orientation.roll;
+    _medianPitch[0] = _medianPitch[1];
+      _medianPitch[1] = _medianPitch[2];
+      _medianPitch[2] = _pitch;
+
+      if (_medianPitch[0] > _medianPitch[1] && _medianPitch[0] < _medianPitch[2])
+        _pitch = _medianPitch[0];
+      else if (_medianPitch[1] > _medianPitch[0] && _medianPitch[1] < _medianPitch[2])
+        _pitch = _medianPitch[1];
+      else
+        _pitch = _medianPitch[2];
     
-    if(_median[0] > _median[1] && _median[0] < _median[2])
-      _angle = _median[0];
-    else if(_median[1] > _median[0] && _median[1] < _median[2])
-      _angle = _median[1];
-    else
-      _angle = _median[2];
-  }
+    }
 
     //old
     // I2c.write(COMPASS_ADRESS, 0x01); //Sends the register we wish to start reading from
-    
+
     // // Request 5 bytes from the CMPS12
     // // this will give us the 8 bit bearing,
     // // both bytes of the 16 bit bearing, pitch and roll
@@ -74,12 +96,12 @@ void Compass::update()
 
 int Compass::getAngle()
 {
-   return (_angle - _offset + 180) % 360 -180;
+  return (_angle - _offset + 180) % 360 - 180;
 }
 
 int Compass::getPIDOutput()
 {
-    return constrain(getAngle() * PID_FILTER_P, -90, 90);
+  return constrain(getAngle() * PID_FILTER_P, -90, 90);
 }
 
 //old
@@ -96,14 +118,13 @@ void Compass::cali()
   update();
   LogCmps("recalibrated");
   _offset = _angle;
-  
 }
 
 // void Compass::storeCalibration()
 // {
 //   if (getEn())
 //   {
-    
+
 //     I2c.write(COMPASS_ADRESS, 0x00, 0xF0); //Sends the register we wish to start reading from
 //     delay(20);
 
@@ -119,7 +140,7 @@ void Compass::cali()
 // {
 //   if (getEn())
 //   {
-    
+
 //     I2c.write(COMPASS_ADRESS, 0x00, 0xE0); //Sends the register we wish to start reading from
 //     delay(20);
 
@@ -136,7 +157,7 @@ void Compass::cali()
 //   if (getEn())
 //   {
 //     I2c.write(COMPASS_ADRESS, 0x1E); //Sends the register we wish to start reading from
-    
+
 //     I2c.read(COMPASS_ADRESS, 1);
 //     if (I2c.available() >= 1)
 //     {
@@ -150,8 +171,8 @@ void Compass::cali()
 //         bits++; // Serial.print('1');
 //       else
 //       {
-//         // Serial.print('0'); 
-//       }      
+//         // Serial.print('0');
+//       }
 //     }
 //     if (bits == 8)
 //     {
@@ -167,7 +188,7 @@ void Compass::cali()
 //   if (getEn())
 //   {
 //     I2c.write(COMPASS_ADRESS, 0x18); //Sends the register we wish to start reading from
-    
+
 //     I2c.read(COMPASS_ADRESS, 2);
 //     if (I2c.available() >= 2)
 //     {
@@ -190,5 +211,5 @@ void Compass::cali()
 
 // unsigned char Compass::getAngle8() { return _angle8; }
 // int Compass::getAngle16() { return _angle16; }
-// int Compass::getPitch() { return _pitch; }
-// int Compass::getRoll() { return _roll; }
+int Compass::getPitch() { return _pitch; }
+int Compass::getRoll() { return _roll; }

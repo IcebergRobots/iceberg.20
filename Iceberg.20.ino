@@ -29,15 +29,15 @@
 #include "Defense.h"
 #include "Standby.h"
 
-Compass cmps(true);
-Ultrasonic us(true);
-Pui pui(true);
-BallTouch ballTouch(true);
-Chassis m(true);
-Camera camera(true);
-Kick kick(true, 260);
-Bluetooth bt(false);
-Bottom bottom(true);
+Compass cmps(ENDISABLE_COMPASS);
+Ultrasonic us(ENDISABLE_ULTRASONIC);
+Pui pui(ENDISABLE_PUI);
+BallTouch ballTouch(ENDISABLE_BALLTOUCH);
+Chassis m(ENDISABLE_CHASSIS);
+Camera camera(ENDISABLE_CAMERA);
+Kick kick(ENDISABLE_KICK, 255);
+Bluetooth bt(ENDISABLE_BLUETOOTH);
+Bottom bottom(ENDISABLE_BOTTOM);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt, &bottom};
 
@@ -46,10 +46,6 @@ Defense defense;
 Standby standby;
 
 Player *player;
-
-int robot;
-bool headstart;
-unsigned long headstartTimer;
 
 //###################################################################################################
 //##                                                                                               ##
@@ -63,32 +59,23 @@ unsigned long headstartTimer;
 
 void setup()
 {
-  Serial3.begin(115200);
   Serial.begin(9600);
 
-  pinMode(HARDWARE_DIFFERENCE, INPUT_PULLUP);
-  if(digitalRead(HARDWARE_DIFFERENCE) == HIGH)
-    robot = 1;                                  // RObot A
-  else
-    robot = 0;                                    //RObot B
+  chooseRobot();
+  startSound();
 
   I2c.begin();
   I2c.timeOut(3000);
   I2c.pullup(true);
   // I2c.scan();
-  startSound();
+
 
   // Display::init(); //static class maybe cant init int foreach
   for (Hardware *hardware : hardwares)
     hardware->init();
 
-  // if(robot == 1)
-  //   player = &defense;
-  // else
-  //   player = &offense;
   player = &standby;
   LogUtility("free SRAM: " + getFreeSRAM());
-
 }
 
 //###################################################################################################
@@ -104,17 +91,14 @@ void setup()
 void loop()
 {
   heartbeat();
+
   for (Hardware *hardware : hardwares)
     hardware->update();
 
   
-  // Serial.println(bottom.getAngel());
-  
   player = player->update();
   player->play();
-  Serial.println(pui.switch_headstart);
   
-  // Serial.println(bottom.getAngel());
   // LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft() + "  FL: " + us.getFrontLeft() + "  FR: " + us.getFrontRight());
   // Display::update(); //maybe can implement it alltough its static class
 }
