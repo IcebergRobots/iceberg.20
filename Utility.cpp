@@ -3,13 +3,13 @@
 void startSound()
 {
   //Fiepen, welches Programstart signalisiert
-  LogUtility("Robot started");
+
   for (int i = 10; i < 2000; i += 10)
   {
-    // if(isTypeA)
-    // tone(BUZZER, i);
-    // else
-    tone(BUZZER, 2010 - i);
+    if (isRobotA)
+      tone(BUZZER, i);
+    else
+      tone(BUZZER, 2010 - i);
 
     delay(1);
   }
@@ -44,10 +44,17 @@ bool chooseRobot()
   {
     pinMode(HARDWARE_DIFFERENCE, INPUT_PULLUP);
     if (digitalRead(HARDWARE_DIFFERENCE) == HIGH)
-      robot = 1; // RObot A
+    {
+      LogUtility("Robot A started");
+      isRobotA = true;
+    }
     else
-      robot = 0; //RObot B
+    {
+      LogUtility("Robot B started");
+      isRobotA = false; //RObot B
+    }
+
     initChooseRobot = false;
   }
-  return robot;
+  return isRobotA;
 }

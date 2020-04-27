@@ -10,6 +10,7 @@ extern Kick kick;
 extern Bluetooth bt;
 
 extern Player *player;
+extern Shared shared;
 
 // You might need to change NexConfig.h file in your ITEADLIB_Arduino_Nextion folder
 // Set the baudrate which is for debug and communicate with Nextion screen
@@ -127,11 +128,11 @@ void Display::goRAM(void *ptr)
 
 void Display::goState(void *ptr)
 {
-  if(player->currentState == player->State::standby)
+  if(shared.currentState == shared.standby)
     _state.setText("Standby");
-  else if(player->currentState == player->State::offense)
+  else if(shared.currentState == shared.offense)
     _state.setText("Offense");
-  else if(player->currentState == player->State::defense)
+  else if(shared.currentState == shared.defense)
     _state.setText("Defense");
 }
 

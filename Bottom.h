@@ -16,6 +16,8 @@ public:
     void init() override;
     void update() override;
 
+    void setEn(const bool& enabled) override;
+
     bool seesLine();
 
 private:

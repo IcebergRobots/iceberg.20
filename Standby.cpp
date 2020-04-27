@@ -8,9 +8,12 @@ extern Chassis m;
 extern Camera camera;
 extern Kick kick;
 extern Bluetooth bt;
+extern Bottom bottom;
 
 extern Defense defense;
 extern Offense offense;
+
+extern Shared shared;
 
 void Standby::play()
 {
@@ -20,6 +23,7 @@ void Standby::play()
         m.setMotEn(false);
         ballTouch.setEn(false);
         us.setEn(false);
+        bottom.setEn(false);
     }
 
     if(pui.button_compass)
@@ -50,20 +54,27 @@ void Standby::play()
 
 Player* Standby::update()
 {
-    currentState = State::standby;
-    if(pui.button_start){
+    shared.currentState = shared.standby;
+    if(pui.button_start || bt.getMessage(BT_INDEX_CURRENTSTATE) != shared.standby){
         _disOnce = true;
-        m.setMotEn(true);
-        ballTouch.setEn(true);
-        us.setEn(true);
+        m.setMotEn(ENDISABLE_CHASSIS);
+        ballTouch.setEn(ENDISABLE_BALLTOUCH);
+        us.setEn(ENDISABLE_ULTRASONIC);
+        bottom.setEn(ENDISABLE_BOTTOM);
 
-        m.headstartTimer = millis();
-        // LogPlayer("Offense");
-        // if(chooseRobot() == 1)
-        //     return &defense;
-        // else
-        //     return &offense;
-        return &offense;
+        shared.enHeadstart = pui.switch_headstart;
+        shared.headstartTimer = millis();
+//        if(chooseRobot() == 1)
+//        {
+//            LogPlayer("Defense");
+//            return &defense;
+//        }
+//        else
+//        {
+//            LogPlayer("Offense");
+//            return &offense;
+//        }
+          return &defense;
     }
     return this;
 }
@@ -75,5 +86,5 @@ void Standby::rate()
 
 void Standby::communicate()
 {
-
+    
 }

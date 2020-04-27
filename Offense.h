@@ -22,6 +22,11 @@ private:
     float _curveSearch;
     float _curveFlw;
 
+    //avoid line
+    unsigned long _lastTimeSawLine = 300;
+    bool _stillSees;
+    unsigned long _stillSeesTimer;
+
     //rating
     bool _switchToDef;
 };

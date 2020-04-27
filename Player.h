@@ -11,8 +11,12 @@
 #include "Kick.h"
 #include "Bluetooth.h"
 #include "Bottom.h"
+#include "Shared.h"
 
-
+//driveDates index
+#define ANGLE       0
+#define POWER       1
+#define ROTATION    2
 
 class Player
 {
@@ -23,9 +27,10 @@ public:
     virtual void play() = 0;
 
     virtual bool getsLifted();
+
+    void headstart(); 
     
-    // virtual void avoidLine();
-    // virtual bool checkBounds();
+    virtual bool avoidLine();
 
     virtual int rateGoal();
     virtual int rateBall();
@@ -33,17 +38,17 @@ public:
 
     virtual void communicate() = 0; // Daten zwischen Robotern austauschen (individuell welche daten)
 
-    enum class State {
-            standby = 0, offense = 1, defense = 2 
-        };
-    State currentState;
-private:
-
 protected:
-    unsigned long _checkTimer;
     int _goalRating;
     int _ballRating;
     float _rating;
+
+    int _driveDates[3];
+    int _lastDriveDates[3];
+
+    //avoidLine
+    bool _sawLine;
+    unsigned long _sawTimer;
 
     byte _setMsg[BT_MSG_SIZE];
 };

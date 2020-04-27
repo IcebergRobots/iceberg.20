@@ -15,6 +15,13 @@ void Compass::init()
       /* There was a problem detecting the LSM303 ... check your connections */
       LogCmps("Ooops, no LSM303 detected ... Check your wiring!");
     }
+
+  //   if(!bno.begin())
+  // {
+  //   /* There was a problem detecting the BNO055 ... check your connections */
+  //   Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+  //   while(1);
+  // }
     // update();
     //firstCali();
     _myPID.SetMode(AUTOMATIC);
@@ -89,8 +96,8 @@ void Compass::update()
     //   _angle16 <<= 8;
     //   _angle16 += _low_byte;
     // }
-    // _input = -((getAngle() + 180) % 360 - 180);
-    // _myPID.Compute();
+    _input = getAngle();
+    _myPID.Compute();
   }
 }
 
@@ -102,6 +109,7 @@ int Compass::getAngle()
 int Compass::getPIDOutput()
 {
   return constrain(getAngle() * PID_FILTER_P, -90, 90);
+  // return _output;
 }
 
 //old
@@ -125,14 +133,14 @@ void Compass::cali()
 //   if (getEn())
 //   {
 
-//     I2c.write(COMPASS_ADRESS, 0x00, 0xF0); //Sends the register we wish to start reading from
-//     delay(20);
+    // I2c.write(COMPASS_ADRESS, 0x00, 0xF0); //Sends the register we wish to start reading from
+    // delay(20);
 
-//     I2c.write(COMPASS_ADRESS, 0x00, 0xF5); //Sends the register we wish to start reading from
-//     delay(20);
+    // I2c.write(COMPASS_ADRESS, 0x00, 0xF5); //Sends the register we wish to start reading from
+    // delay(20);
 
-//     I2c.write(COMPASS_ADRESS, 0x00, 0xF6); //Sends the register we wish to start reading from
-//     delay(20);
+    // I2c.write(COMPASS_ADRESS, 0x00, 0xF6); //Sends the register we wish to start reading from
+    // delay(20);
 //   }
 // }
 

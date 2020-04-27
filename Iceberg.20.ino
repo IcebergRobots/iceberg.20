@@ -47,6 +47,9 @@ Standby standby;
 
 Player *player;
 
+Shared shared;
+
+
 //###################################################################################################
 //##                                                                                               ##
 //##    ####   ######  ######  ##  ##  #####                                                       ##
@@ -75,6 +78,8 @@ void setup()
     hardware->init();
 
   player = &standby;
+
+  //Debug
   LogUtility("free SRAM: " + getFreeSRAM());
 }
 
@@ -98,7 +103,16 @@ void loop()
   
   player = player->update();
   player->play();
+// if(pui.button_compass)
+//         cmps.cali();
+//           Serial.println(cmps.getPIDOutput());
+
   
-  // LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft() + "  FL: " + us.getFrontLeft() + "  FR: " + us.getFrontRight());
   // Display::update(); //maybe can implement it alltough its static class
+
+  //Debug
+  LogBalltouch("Has sees Ball: " + ballTouch.hasBall());
+  LogBottom("Sees line: " + bottom.seesLine());
+  LogCmps("Angle" + cmps.getAngle() + "  Pitch: " + cmps.getPitch() + "  Roll: " + cmps.getRoll());
+  LogUs("B: " + us.getBack() + "  R: " + us.getRight() + "  L: " + us.getLeft() + "  FL: " + us.getFrontLeft() + "  FR: " + us.getFrontRight());
 }

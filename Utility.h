@@ -16,5 +16,5 @@ uint16_t getFreeSRAM();
 
 
 static bool initChooseRobot = true;
-static bool robot;
+static bool isRobotA;
 bool chooseRobot(); 

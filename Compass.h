@@ -9,13 +9,14 @@
 #include "Adafruit_LSM303_U.h"
 #include "Adafruit_L3GD20.h"
 #include "Adafruit_9DOF.h"
+#include "Adafruit_BNO055.h"
 
 #define COMPASS_ADRESS 96
 
 // PID-Regler
 #define PID_FILTER_P 0.3   // [0 bis *]~.27 p:proportional
-#define PID_FILTER_I 0.1 // [0 bis *]~.02 i:vorausschauend 
-#define PID_FILTER_D 0.026  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
+#define PID_FILTER_I 0 // [0 bis *]~.02 i:vorausschauend 
+#define PID_FILTER_D 0.05  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
 
 class Compass : public Hardware
 {
@@ -53,6 +54,8 @@ private:
     sensors_event_t accel_event;
     sensors_event_t mag_event;
     sensors_vec_t   orientation;
+
+    Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
     double _setpoint = 0;    //PID Zielwert
     double _input, _output;          //CMPS Input, rotationsstärke

@@ -97,8 +97,8 @@ void Chassis::calculate(int angle, int power, int rotation)
   }
 
   //                                                      IDs:  .--.
-  int sinA02 = sinus[(((ANGLE / 2) - angle) + 360) % 360]; //berechne Zwischenwert für Achse der Motoren 1 und 3      3 /    \ 0
-  int sinA13 = sinus[(((ANGLE / 2) + angle) + 360) % 360]; //berechne Zwischenwert für Achse der Motoren 2 und 4      2 \    / 1
+  int sinA02 = sinus[(((ANGLE_M / 2) - angle) + 360) % 360]; //berechne Zwischenwert für Achse der Motoren 1 und 3      3 /    \ 0
+  int sinA13 = sinus[(((ANGLE_M / 2) + angle) + 360) % 360]; //berechne Zwischenwert für Achse der Motoren 2 und 4      2 \    / 1
   //                                                            '--'
   int axis02 = power * (double)sinA02 / 10000; //berechne Motorstärken für Achse 1&3
   int axis13 = power * (double)sinA13 / 10000; //berechne Motorstärken für Achse 2&4
@@ -107,19 +107,6 @@ void Chassis::calculate(int angle, int power, int rotation)
   motors[1].setPower(axis13 - rotation);
   motors[2].setPower(axis02 + rotation);
   motors[3].setPower(axis13 + rotation);
-}
-
-void Chassis::headstart()
-{
-  if(getEn() && millis() - headstartTimer <= 500)
-  {
-      // for (int i = 0; i < 4; i++)
-      // {
-      //   motors[i].setPower(255);
-      //   motors[i].steerMotor();
-      // }
-      drive(0, 255);
-  }
 }
 
 /*****************************************************

@@ -4,8 +4,9 @@
 #include "Hardware.h"
 
 //Bluetooth
-#define BT_MSG_SIZE         1
-#define BT_INDEX_SWITCH     0
+#define BT_MSG_SIZE           2
+#define BT_INDEX_SWITCH       0
+#define BT_INDEX_CURRENTSTATE 1
 
 #define START_MARKER 254
 #define END_MARKER  255

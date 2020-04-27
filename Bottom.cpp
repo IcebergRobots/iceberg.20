@@ -32,6 +32,20 @@ void Bottom::update()
     }
 }
 
+void Bottom::setEn(const bool& enabled)
+{
+    if(!enabled)
+    {
+        _bottom.setBrightness(0);
+        _bottom.show();
+    }else {
+        _bottom.setBrightness(255);
+        for (int i = 0; i < 40; i++)
+            _bottom.setPixelColor(i, _bottom.Color(255, 255, 255));
+    }
+    _enabled = enabled;
+}
+
 bool Bottom::seesLine()
 {
     return _seesLine;

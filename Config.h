@@ -4,7 +4,7 @@
 #include "Pin.h"
 #include "EEPROM.h"
 
-
+//En/Disabling hardware Components
 #define ENDISABLE_COMPASS       1
 #define ENDISABLE_CAMERA        1
 #define ENDISABLE_CHASSIS       1
@@ -16,23 +16,23 @@
 #define ENDISABLE_BOTTOM        1
 
 //Debugging
-#define DEBUG               0
+#define DEBUG               1
 
-#define DEBUG_PLAYER        1   
-#define DEBUG_COMPASS       1
+#define DEBUG_PLAYER        1
+#define DEBUG_COMPASS       0
 #define DEBUG_CAMERA        0
 #define DEBUG_CHASSIS       0
 #define DEBUG_BLUETOOTH     0
-#define DEBUG_ULTRASONIC    1
+#define DEBUG_ULTRASONIC    0
 #define DEBUG_KICK          0
 #define DEBUG_BALLTOUCH     0
-#define DEBUG_BOTTOM        1
+#define DEBUG_BOTTOM        0
 #define DEBUG_DISPLAY       0
-#define DEBUG_PUI           1
+#define DEBUG_PUI           0
 #define DEBUG_UTILITY       1
 
 
-#define SPIELGESCHWINDIGKEIT 40
+#define SPIELGESCHWINDIGKEIT 50
 
 //Rateing   weights in % sum should equal 100%
 #define RATE_BALL_WEIGHT    20

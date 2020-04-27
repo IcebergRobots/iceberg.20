@@ -6,7 +6,7 @@ void Ultrasonic::init()
     {
         LogUs("enabled");
         for (int i = 0; i < NUM_OF_US; i++)
-            I2c.write(_addresses[i], byte(0x02), byte(70));
+            I2c.write(_addresses[i], 0x02, 0x46);
         LogUs("Initlized");
     }else
         LogUs("disabled");
@@ -23,7 +23,7 @@ void Ultrasonic::update()
         }
         if (millis() - _lastMeasurement > 65)
         {
-            I2c.write(0, byte(0x00), byte(0x51));
+            I2c.write(0, 0x00, 0x51);
             _lastMeasurement = millis();
             _fetched = false;
         }
@@ -34,7 +34,7 @@ void Ultrasonic::fetch()
 {
     for (int i = 0; i < NUM_OF_US; i++)
     {
-        I2c.write(_addresses[i], byte(0x02));
+        I2c.write(_addresses[i], 0x02);
         I2c.read((int)_addresses[i], (int)2);
 
         if (2 <= I2c.available())

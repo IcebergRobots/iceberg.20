@@ -16,8 +16,10 @@ public:
     void defGoal();
 
 private:
-    int _defTimer;
-    bool _defDir;
     bool _maybeSwitchToOff;
     bool _switchToOff;
+
+    //def goal
+    bool _defDir;
+    unsigned long _defDirTimer;
 };
