@@ -10,7 +10,6 @@ extern Kick kick;
 extern Bluetooth bt;
 extern Bottom bottom;
 
-extern Shared shared;
 
 int Player::rateBall()
 {
@@ -21,7 +20,7 @@ int Player::rateBall()
 void Player::headstart()
 {
     Serial.println("yo");
-    if (millis() - shared.headstartTimer <= 500)
+    if (millis() - headstartTimer <= 500)
     {
         Serial.println("headstart");
         // for (int i = 0; i < 4; i++)
@@ -33,7 +32,7 @@ void Player::headstart()
         _driveDates[POWER] = 255;
     }
     else
-        shared.enHeadstart = false;
+        enHeadstart = false;
 }
 
 bool Player::avoidLine()
@@ -81,7 +80,7 @@ bool Player::avoidLine()
 
 int Player::rateGoal()
 {
-    _goalRating = camera.getGWidth() / 30 * 255 / 10;
+    _goalRating = camera.getGWidth();
     return _goalRating;
 }
 

@@ -47,7 +47,7 @@ Standby standby;
 
 Player *player;
 
-Shared shared;
+//Shared shared;
 
 
 //###################################################################################################
@@ -100,16 +100,18 @@ void loop()
   for (Hardware *hardware : hardwares)
     hardware->update();
 
-  
-  player = player->update();
-  player->play();
+  if(PLAY)
+  {
+    player = player->update();
+    player->play();
+  }
 // if(pui.button_compass)
 //         cmps.cali();
 //           Serial.println(cmps.getPIDOutput());
 
   
   // Display::update(); //maybe can implement it alltough its static class
-
+  LogPlayer("Goal Rating: " + player->rateGoal() + "    Ball Rating: " + player->rateBall());
   //Debug
   LogBalltouch("Has sees Ball: " + ballTouch.hasBall());
   LogBottom("Sees line: " + bottom.seesLine());

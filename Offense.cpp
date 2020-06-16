@@ -13,11 +13,10 @@ extern Bottom bottom;
 extern Defense defense;
 extern Standby standby;
 
-extern Shared shared;
 
 Player *Offense::update()
 {
-    shared.currentState = shared.offense;
+    currentState = STATE_OFFENSE;
     if (_switchToDef)
     {
         LogPlayer("Defense");
@@ -39,7 +38,7 @@ void Offense::play()
     _driveDates[POWER] = SPIELGESCHWINDIGKEIT;
     _driveDates[ROTATION] = cmps.getPIDOutput();
 
-    if (shared.enHeadstart)
+    if (enHeadstart)
         headstart();
     else
     {
@@ -178,6 +177,6 @@ void Offense::rate()
 void Offense::communicate()
 {
     _setMsg[BT_INDEX_SWITCH] = _switchToDef;
-    _setMsg[BT_INDEX_CURRENTSTATE] = shared.currentState;   //0 = standby, 1 = offense, 2 = defense
+    _setMsg[BT_INDEX_CURRENTSTATE] = currentState;   //0 = standby, 1 = offense, 2 = defense
     bt.setMessage(_setMsg);
 }

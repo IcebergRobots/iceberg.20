@@ -6,24 +6,14 @@ void Compass::init()
   if (getEn())
   {
     if (!mag.begin())
-    {
-      /* There was a problem detecting the LSM303 ... check your connections */
       LogCmps("Ooops, no LSM303 detected ... Check your wiring!");
-    }
-    if (!accel.begin())
-    {
-      /* There was a problem detecting the LSM303 ... check your connections */
-      LogCmps("Ooops, no LSM303 detected ... Check your wiring!");
-    }
 
-  //   if(!bno.begin())
-  // {
-  //   /* There was a problem detecting the BNO055 ... check your connections */
-  //   Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-  //   while(1);
-  // }
-    // update();
+    if (!accel.begin())
+      LogCmps("Ooops, no LSM303 detected ... Check your wiring!");
+    
+    //update();
     //firstCali();
+
     _myPID.SetMode(AUTOMATIC);
     // konfiguriere PID-Regler
     _myPID.SetTunings(PID_FILTER_P, PID_FILTER_I, PID_FILTER_D);
@@ -39,7 +29,7 @@ void Compass::update()
 {
   if (getEn())
   {
-
+    //Angle
     mag.getEvent(&mag_event);
     if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
     {
@@ -58,12 +48,13 @@ void Compass::update()
         _angle = _median[2];
     }
 
+    //Pitch Roll
     accel.getEvent(&accel_event);
     if (dof.accelGetOrientation(&accel_event, &orientation))
     {
       _pitch = orientation.pitch;
       _roll = orientation.roll;
-    _medianPitch[0] = _medianPitch[1];
+      _medianPitch[0] = _medianPitch[1];
       _medianPitch[1] = _medianPitch[2];
       _medianPitch[2] = _pitch;
 
@@ -73,9 +64,10 @@ void Compass::update()
         _pitch = _medianPitch[1];
       else
         _pitch = _medianPitch[2];
-    
     }
 
+    _input = getAngle();
+    _myPID.Compute();
     //old
     // I2c.write(COMPASS_ADRESS, 0x01); //Sends the register we wish to start reading from
 
@@ -96,8 +88,6 @@ void Compass::update()
     //   _angle16 <<= 8;
     //   _angle16 += _low_byte;
     // }
-    _input = getAngle();
-    _myPID.Compute();
   }
 }
 
@@ -109,16 +99,9 @@ int Compass::getAngle()
 int Compass::getPIDOutput()
 {
   return constrain(getAngle() * PID_FILTER_P, -90, 90);
-  // return _output;
+  //return constrain(_output, -90, 90);
 }
 
-//old
-// void Compass::firstCali()
-// {
-//   LogCmps("calibrated");
-//   if(getAngle() != 0)
-//     _firstOffset = getAngle();
-// }
 
 void Compass::cali()
 {
@@ -128,6 +111,16 @@ void Compass::cali()
   _offset = _angle;
 }
 
+int Compass::getPitch() { return _pitch; }
+int Compass::getRoll() { return _roll; }
+
+//old
+// void Compass::firstCali()
+// {
+//   LogCmps("calibrated");
+//   if(getAngle() != 0)
+//     _firstOffset = getAngle();
+// }
 // void Compass::storeCalibration()
 // {
 //   if (getEn())
@@ -219,5 +212,3 @@ void Compass::cali()
 
 // unsigned char Compass::getAngle8() { return _angle8; }
 // int Compass::getAngle16() { return _angle16; }
-int Compass::getPitch() { return _pitch; }
-int Compass::getRoll() { return _roll; }

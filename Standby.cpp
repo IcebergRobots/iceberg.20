@@ -13,7 +13,6 @@ extern Bottom bottom;
 extern Defense defense;
 extern Offense offense;
 
-extern Shared shared;
 
 void Standby::play()
 {
@@ -54,16 +53,16 @@ void Standby::play()
 
 Player* Standby::update()
 {
-    shared.currentState = shared.standby;
-    if(pui.button_start || bt.getMessage(BT_INDEX_CURRENTSTATE) != shared.standby){
+    currentState = STATE_STANDBY;
+    if(pui.button_start || bt.getMessage(BT_INDEX_CURRENTSTATE) != STATE_STANDBY){
         _disOnce = true;
         m.setMotEn(ENDISABLE_CHASSIS);
         ballTouch.setEn(ENDISABLE_BALLTOUCH);
         us.setEn(ENDISABLE_ULTRASONIC);
         bottom.setEn(ENDISABLE_BOTTOM);
 
-        shared.enHeadstart = pui.switch_headstart;
-        shared.headstartTimer = millis();
+        enHeadstart = pui.switch_headstart;
+        headstartTimer = millis();
 //        if(chooseRobot() == 1)
 //        {
 //            LogPlayer("Defense");

@@ -14,9 +14,9 @@
 #define COMPASS_ADRESS 96
 
 // PID-Regler
-#define PID_FILTER_P 0.3   // [0 bis *]~.27 p:proportional
-#define PID_FILTER_I 0 // [0 bis *]~.02 i:vorausschauend 
-#define PID_FILTER_D 0.05  // [0 bis *]~.03 d:Schwung herausnehmen (nicht zu weit drehen)
+#define PID_FILTER_P 0.3   //p:proportional
+#define PID_FILTER_I 0 //i:vorausschauend 
+#define PID_FILTER_D 0.05  //d:Schwung herausnehmen (nicht zu weit drehen)
 
 class Compass : public Hardware
 {

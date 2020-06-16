@@ -19,6 +19,7 @@ void Ultrasonic::update()
         if (millis() - _lastMeasurement > 25 && !_fetched)
         {
             fetch();
+            filter();
             _fetched = true;
         }
         if (millis() - _lastMeasurement > 65)
@@ -39,15 +40,33 @@ void Ultrasonic::fetch()
 
         if (2 <= I2c.available())
         {
-            _distance[i] = I2c.receive() << 8;
-            _distance[i] |= I2c.receive();
+            for(int j = 0; j < FILTER_VALUES - 1; j++ )
+            {
+                _distance[i][j] = _distance[i][j+1];
+            }
+            _distance[i][FILTER_VALUES-1] = I2c.receive() << 8;
+            _distance[i][FILTER_VALUES-1] |= I2c.receive();
         }
     }
 }
 
-int Ultrasonic::getFrontLeft() { return _distance[0]; }
-int Ultrasonic::getLeft() { return _distance[1]; }
-int Ultrasonic::getBack() { return _distance[2]; }
-int Ultrasonic::getRight() { return _distance[3]; }
-int Ultrasonic::getFrontRight() { return _distance[4]; }
+void Ultrasonic::filter()
+{
+    int distanceSum = 0;
+    for(int i = 0; i < NUM_OF_US;i ++)
+    {
+        for(int j = 0; j < FILTER_VALUES; j++)
+        {
+            distanceSum += _distance[i][j];
+        }
+        _filteredDistance[i] = distanceSum / FILTER_VALUES;
+        distanceSum = 0;
+    }
+}
+
+int Ultrasonic::getFrontLeft() { return _filteredDistance[0]; }
+int Ultrasonic::getLeft() { return _filteredDistance[1]; }
+int Ultrasonic::getBack() { return _filteredDistance[2]; }
+int Ultrasonic::getRight() { return _filteredDistance[3]; }
+int Ultrasonic::getFrontRight() { return _filteredDistance[4]; }
 int Ultrasonic::getFront() { return min(getFrontLeft(), getFrontRight()); }

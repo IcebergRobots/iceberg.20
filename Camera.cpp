@@ -25,7 +25,8 @@ void Camera::update()
         _goalWidth = 0;
         _goalHeight = 0;
         _blockCount = getBlocks();
-        if (_blockCount != 0)
+        Serial.println(_blockCount);
+        if (_blockCount)
         {
             for (int i = 0; i < _blockCount; i++)
             {
@@ -33,23 +34,23 @@ void Camera::update()
                 switch (signature)
                 {
                 case SIG_BALL:
-                    if (blocks[i].height * blocks[i].width > _ballArea)
-                    {
+                    // if (blocks[i].height * blocks[i].width > _ballArea)
+                    // {
                         _ballHeight = blocks[i].height;
                         _ballPos = blocks[i].x;
                         _ballWidth = blocks[i].width;
                         _ballArea = _ballHeight * _ballWidth;
                         _ballCount++;
-                    }
+                    // }
                 case SIG_GOAL:
-                    if (blocks[i].height * blocks[i].width > _goalArea)
-                    {
+                    // if (blocks[i].height * blocks[i].width > _goalArea)
+                    // {
                         _goalHeight = blocks[i].height;
                         _goalPos = blocks[i].x;
                         _goalWidth = blocks[i].width;
                         _goalArea = _goalHeight * _goalWidth;
                         _goalCount++;
-                    }
+                    // }
                 }
             }
         }

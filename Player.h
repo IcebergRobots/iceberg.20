@@ -11,7 +11,7 @@
 #include "Kick.h"
 #include "Bluetooth.h"
 #include "Bottom.h"
-#include "Shared.h"
+//#include "Shared.h"
 
 //driveDates index
 #define ANGLE       0
@@ -37,6 +37,11 @@ public:
     virtual void rate() = 0;          //Position bewerten (individuell bestimmen)
 
     virtual void communicate() = 0; // Daten zwischen Robotern austauschen (individuell welche daten)
+
+    static unsigned long headstartTimer;
+    static bool enHeadstart;
+
+    static int currentState;
 
 protected:
     int _goalRating;

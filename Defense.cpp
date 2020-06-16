@@ -12,8 +12,6 @@ extern Bluetooth bt;
 extern Offense offense;
 extern Standby standby;
 
-extern Shared shared;
-
 void Defense::play()
 {
     rateGoal();
@@ -37,7 +35,7 @@ void Defense::play()
 
 Player *Defense::update()
 {
-    shared.currentState = shared.defense;
+   currentState = STATE_DEFENSE;
     if (_switchToOff)
     // if (!camera.getBPos() && false)
     {
@@ -109,6 +107,6 @@ void Defense::rate()
 void Defense::communicate()
 {
     _setMsg[BT_INDEX_SWITCH] = _maybeSwitchToOff;
-    _setMsg[BT_INDEX_CURRENTSTATE] = shared.currentState;
+    _setMsg[BT_INDEX_CURRENTSTATE] = currentState;
     bt.setMessage(_setMsg);
 }
