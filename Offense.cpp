@@ -13,6 +13,9 @@ extern Bottom bottom;
 extern Defense defense;
 extern Standby standby;
 
+extern unsigned long Player::headstartTimer;
+extern bool Player::enHeadstart;
+extern int Player::currentState;
 
 Player *Offense::update()
 {

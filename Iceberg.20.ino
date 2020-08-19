@@ -41,9 +41,11 @@ Bottom bottom(ENDISABLE_BOTTOM);
 
 Hardware *hardwares[] = {&cmps, &us, &pui, &ballTouch, &m, &camera, &kick, &bt, &bottom};
 
+//Maybe union
 Offense offense;
 Defense defense;
 Standby standby;
+
 
 Player *player;
 
